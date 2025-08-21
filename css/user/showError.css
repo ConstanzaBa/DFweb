@@ -1,0 +1,246 @@
+/* ===== ERROR MESSAGE STYLES ===== */
+
+/* Error container grid layout */
+#error-container {
+  display: grid;
+  gap: 1.5rem;
+  width: 100%;
+  max-width: 320px;
+  margin: 0;
+}
+
+/* Base error container */
+.error {
+  font-family: var(--fuenteparrafos);
+  width: 100%;
+  padding: 10px 14px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  border-radius: 12px;
+  background: linear-gradient(135deg, var(--primario), var(--secundario));
+  box-shadow: 0 6px 20px rgba(255, 68, 0, 0.3);
+  animation: slideIn 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+  position: relative;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* Error container hover effect */
+.error:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 8px 25px rgba(255, 68, 0, 0.4);
+  transition: all 0.3s ease;
+}
+
+/* Error icon and close button */
+.error__icon,
+.error__close {
+  width: 20px;
+  height: 20px;
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.3));
+  transition: all 0.3s ease;
+}
+
+.error__icon path,
+.error__close path {
+  fill: #fff;
+}
+
+/* Error title */
+.error__title {
+  font-weight: 400;
+  font-size: 13px;
+  color: #fff;
+  flex: 1;
+  margin: 0 12px;
+  line-height: 1.3;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+}
+
+/* Close button */
+.error__close {
+  cursor: pointer;
+  margin-left: auto;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 50%;
+  padding: 3px;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.error__close:hover {
+  background: rgba(255, 255, 255, 0.2);
+  transform: scale(1.05);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+}
+
+/* Error with icon only (no close button) */
+.error:not(:has(.error__close)) .error__title {
+  margin-left: 0;
+}
+
+/* ===== ANIMATIONS ===== */
+
+/* Slide in animation */
+@keyframes slideIn {
+  0% {
+    opacity: 0;
+    transform: translateY(-15px) scale(0.95);
+  }
+  50% {
+    transform: translateY(-3px) scale(0.98);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+/* Highlight flash animation */
+@keyframes highlightFlash {
+  0% { 
+    box-shadow: 0 6px 20px rgba(255, 68, 0, 0.3);
+    transform: scale(1);
+  }
+  25% { 
+    box-shadow: 0 0 15px rgba(255, 255, 255, 0.6);
+    transform: scale(1.01);
+  }
+  50% { 
+    box-shadow: 0 0 20px rgba(255, 255, 255, 0.8);
+    transform: scale(1.02);
+  }
+  75% { 
+    box-shadow: 0 0 15px rgba(255, 255, 255, 0.6);
+    transform: scale(1.01);
+  }
+  100% { 
+    box-shadow: 0 6px 20px rgba(255, 68, 0, 0.3);
+    transform: scale(1);
+  }
+}
+
+/* Error highlight state */
+.error.highlight {
+  animation: highlightFlash 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55) !important;
+}
+
+/* ===== ERROR TYPES ===== */
+
+/* Success error (for validation messages) */
+.error.success {
+  background: linear-gradient(135deg, #28a745, #20c997);
+  box-shadow: 0 6px 20px rgba(40, 167, 69, 0.3);
+}
+
+.error.success:hover {
+  box-shadow: 0 8px 25px rgba(40, 167, 69, 0.4);
+}
+
+/* Warning error */
+.error.warning {
+  background: linear-gradient(135deg, #ffc107, #fd7e14);
+  box-shadow: 0 6px 20px rgba(255, 193, 7, 0.3);
+}
+
+.error.warning:hover {
+  box-shadow: 0 8px 25px rgba(255, 193, 7, 0.4);
+}
+
+/* Info error */
+.error.info {
+  background: linear-gradient(135deg, #17a2b8, #6f42c1);
+  box-shadow: 0 6px 20px rgba(23, 162, 184, 0.3);
+}
+
+.error.info:hover {
+  box-shadow: 0 8px 25px rgba(23, 162, 184, 0.4);
+}
+
+/* ===== RESPONSIVE DESIGN ===== */
+
+@media (max-width: 768px) {
+  .error-container {
+    max-width: 85%;
+    gap: 6px;
+  }
+  
+  .error {
+    padding: 8px 12px;
+  }
+  
+  .error__title {
+    font-size: 12px;
+    margin: 0 10px;
+  }
+  
+  .error__icon,
+  .error__close {
+    width: 18px;
+    height: 18px;
+  }
+}
+
+@media (max-width: 480px) {
+  .error-container {
+    max-width: 90%;
+    gap: 5px;
+  }
+  
+  .error {
+    padding: 8px 10px;
+    border-radius: 10px;
+  }
+  
+  .error__title {
+    font-size: 11px;
+    margin: 0 8px;
+  }
+  
+  .error__icon,
+  .error__close {
+    width: 16px;
+    height: 16px;
+  }
+}
+
+/* ===== ACCESSIBILITY ===== */
+
+/* Focus states for keyboard navigation */
+.error__close:focus {
+  outline: 2px solid rgba(255, 255, 255, 0.5);
+  outline-offset: 2px;
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+  .error {
+    border: 2px solid #fff;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+  }
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+  .error {
+    animation: none;
+    transition: none;
+  }
+  
+  .error.highlight {
+    animation: none !important;
+  }
+  
+  .error:hover {
+    transform: none;
+  }
+  
+  .error__close:hover {
+    transform: none;
+  }
+}
+

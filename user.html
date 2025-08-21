@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Perfil de Usuario</title>
+
+  <link rel="preload" href="css/styles.css" as="style" />
+  <link rel="preload" href="css/index.css" as="style" />
+  <link rel="preload" href="css/components/Header.css" as="style" />
+  <link rel="preload" href="css/components/LanguageToggle.css" as="style" />
+  <link rel="preload" href="css/components/Footer.css" as="style" />
+
+  <link rel="stylesheet" href="css/styles.css" />
+  <link rel="stylesheet" href="css/index.css" />
+  <link rel="stylesheet" href="css/components/Header.css" />
+  <link rel="stylesheet" href="css/components/LanguageToggle.css" />
+  <link rel="stylesheet" href="css/components/Footer.css" />
+  <link rel="stylesheet" href="css/user/perfil.css" />
+  
+
+  <!-- Scripts -->
+  <script type="module" src="js/web/components/Header.js"></script>
+  <script type="module" src="js/api/endpoints/GetUserById.js" defer></script>
+  <script type="module" src="js/web/components/LanguageToggle.js"></script>
+  <script type="module" src="js/web/user/loadUserFavorites.js" defer></script>
+  <script src="js/web/components/Footer.js"></script>
+  <script type="module" src="js/scripts.js"></script>
+  <script type="module" src="js/web/user/index.js"></script>
+
+
+
+</head>
+<body>
+      <div id="header" class="header__perfil "></div>
+      
+  <main class="profile-container">
+    <header class="profile-header">
+      <div class="profile-avatar-container">
+        <img alt="Avatar del usuario" id="profile-avatarImg" class="profile-avatar" />
+        <button class="profile-editBtn">
+          <svg height="1em" viewBox="0 0 512 512">
+            <path d="M410.3 231l11.3-11.3-33.9-33.9-62.1-62.1L291.7 89.8l-11.3 11.3-22.6 22.6L58.6 322.9c-10.4 10.4-18 23.3-22.2 37.4L1 480.7c-2.5 8.4-.2 17.5 6.1 23.7s15.3 8.5 23.7 6.1l120.3-35.4c14.1-4.2 27-11.8 37.4-22.2L387.7 253.7 410.3 231zM160 399.4l-9.1 22.7c-4 3.1-8.5 5.4-13.3 6.9L59.4 452l23-78.1c1.4-4.9 3.8-9.4 6.9-13.3l22.7-9.1v32c0 8.8 7.2 16 16 16h32zM362.7 18.7L348.3 33.2 325.7 55.8 314.3 67.1l33.9 33.9 62.1 62.1 33.9 33.9 11.3-11.3 22.6-22.6 14.5-14.5c25-25 25-65.5 0-90.5L453.3 18.7c-25-25-65.5-25-90.5 0zm-47.4 168l-144 144c-6.2 6.2-16.4 6.2-22.6 0s-6.2-16.4 0-22.6l144-144c6.2-6.2 16.4-6.2 22.6 0s6.2 16.4 0 22.6z"></path>
+          </svg>
+        </button> 
+      </div>
+
+      <div>
+        <div class="profile-username" id="profile-username">username</div>
+        <div class="profile-stats">
+          <div class="profile-stat">
+            <div id="profile-reviews">0</div>
+            <small>Reseñas</small>
+
+          </div>
+          <div class="profile-stat">
+            <div id="profile-favorites">0</div>
+            <small>Favoritos</small>
+          </div>
+        </div>
+      </div>
+      
+      <button class="profile-button">
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" viewBox="0 0 20 20" height="20" fill="none" class="profile-svg-icon">
+          <g stroke-width="1.5" stroke-linecap="round" stroke="#fff">
+            <circle r="2.5" cy="10" cx="10"></circle>
+            <path fill-rule="evenodd" d="m8.39079 2.80235c.53842-1.51424 2.67991-1.51424 3.21831-.00001.3392.95358 1.4284 1.40477 2.3425.97027 1.4514-.68995 2.9657.82427 2.2758 2.27575-.4345.91407.0166 2.00334.9702 2.34248 1.5143.53842 1.5143 2.67996 0 3.21836-.9536.3391-1.4047 1.4284-.9702 2.3425.6899 1.4514-.8244 2.9656-2.2758 2.2757-.9141-.4345-2.0033.0167-2.3425.9703-.5384 1.5142-2.67989 1.5142-3.21831 0-.33914-.9536-1.4284-1.4048-2.34247-.9703-1.45148.6899-2.96571-.8243-2.27575-2.2757.43449-.9141-.01669-2.0034-.97028-2.3425-1.51422-.5384-1.51422-2.67994.00001-3.21836.95358-.33914 1.40476-1.42841.97027-2.34248-.68996-1.45148.82427-2.9657 2.27575-2.27575.91407.4345 2.00333-.01669 2.34247-.97026z" clip-rule="evenodd"></path>
+          </g>
+        </svg>
+        <span class="profile-label-s">Settings</span>
+      </button>
+    </header>
+
+ <main class="contenedor">
+
+
+            <section class="headings">
+
+                <h3 id="fav-label" data-translate="favMovies">Favoritas</h3>
+
+                <div class="peliculas" id="fav-movies">
+
+                    <div id="pelicula_card"></div>
+
+                </div>
+
+            </section>
+
+
+        </main>
+
+
+    <!-- <section class="profile-tab-section">
+      <div class="profile-tab-container">
+        <input type="radio" name="profile-tab" id="profile-tab1" class="profile-tab" checked />
+        <label for="profile-tab1" class="profile-tab_label">Todos</label>
+
+        <input type="radio" name="profile-tab" id="profile-tab2" class="profile-tab" />
+        <label for="profile-tab2" class="profile-tab_label">Rese�as</label>
+
+        <input type="radio" name="profile-tab" id="profile-tab3" class="profile-tab" />
+        <label for="profile-tab3" class="profile-tab_label">Favoritos</label>
+
+        <div class="profile-indicator"></div>
+      </div>
+    </section> -->
+
+
+  </main>
+
+   <div id="footer"></div>
+</body>
+</html>

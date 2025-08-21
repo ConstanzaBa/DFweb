@@ -1,0 +1,43 @@
+<html>
+  <head>
+    <title>Configuraci��n</title>
+    <script src="js/web/user/Cookies.js"></script>
+    <!-- Script para actualizar usuario -->
+    <script src="js/api/endpoints/UpdateUser.js" defer></script>
+    <!-- Script para eliminar usuario -->
+    <script src="js/api/endpoints/DeleteUser.js" defer></script>
+  </head>
+  <body>
+    <h1>Modificar usuario</h1>
+    <form id="updateForm">
+  <input
+    type="text"
+    name="username"
+    id="username"
+    placeholder="Nuevo nombre de usuario"
+    required
+  />
+  <input
+    type="password"
+    name="password"
+    id="password"
+    placeholder="Nueva contraseña"
+    required
+  />
+  <label>Género:</label>
+  <input type="radio" name="gender" value="M" id="genderM" required /><label for="genderM">Masculino</label>
+  <input type="radio" name="gender" value="F" id="genderF" required /><label for="genderF">Femenino</label>
+  <input
+    type="text"
+    name="avatar"
+    id="avatar"
+    placeholder="URL o ruta de avatar"
+    required
+  />
+  <button type="submit">Actualizar</button>
+</form>
+
+
+    <button id="deleteAccount">Eliminar cuenta</button>
+  </body>
+</html>
