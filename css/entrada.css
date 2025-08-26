@@ -101,7 +101,6 @@
 }
 
 
-
 .entrada__info__facts__favoritos {
 
   display: flex;
@@ -114,75 +113,57 @@
 
   cursor: pointer;
 
+  background: none;
+
   font-size: var(--fuenteparrafossize);
 
   user-select: none;
 
   fill: var(--amarillo);
 
+  padding: 0;
+
 }
 
-
-
-.entrada__info__facts__favoritos .save-regular {
+.entrada__info__facts__favoritos input {
 
   position: absolute;
 
-  animation: keyframes-fill .5s;
+  opacity: 0;
 
-  transform-origin: top;}
+  width: 0;
 
+  height: 0;
 
-
-.entrada__info__facts__favoritos .save-solid {
-
-  position: absolute;
-
-  animation: keyframes-fill .5s;
-
-  display: none;
-
-  transform-origin: top;
+  cursor: pointer;
 
 }
 
+.entrada__info__facts__favoritos .checkmark {
 
+  width: 2rem;
 
-.entrada__info__facts__favoritos:checked .save-regular {
+  height: 2rem;
 
-  display: none;
-
-}
-
-
-
-.entrada__info__facts__favoritos:checked .save-solid {
-
-  display: block;
+  transition: 0.2s;
 
 }
 
+.entrada__info__facts__favoritos input:checked ~ .checkmark path {
 
+  fill: var(--primario);
 
-@keyframes keyframes-fill {
+  stroke-width: 0;
 
-  0% {
-
-    transform: scale(0);
-
-    opacity: 0;
-
-  }
-
-  50% {
-
-    transform: scaleY(1.2);
-
-  }
+  transition: fill 0.3s ease;
 
 }
 
+.entrada__info__facts__favoritos:hover .checkmark {
 
+  transform: scale(1.1);
+
+}
 
 .entrada__info__facts__release {
 
@@ -191,7 +172,6 @@
   align-content: center;
 
 }
-
 
 
 .circulo {
@@ -711,41 +691,6 @@
 
   column-gap: 2rem;
 
-}
-
-#favorite-btn {
-  position: relative;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  background: none;
-  border: none;
-  padding: 0;
-}
-
-#favorite-btn input {
-  position: absolute;
-  opacity: 0;
-  width: 0;
-  height: 0;
-  cursor: pointer;
-}
-
-#favorite-btn .checkmark {
-  width: 2em;
-  height: 2em;
-  transition: 0.2s;
-}
-
-#favorite-btn input:checked ~ .checkmark path {
-  fill: #ff5353; /* color favorito */
-  stroke-width: 0;
-  transition: fill 0.3s ease;
-}
-
-#favorite-btn:hover .checkmark {
-  transform: scale(1.1);
 }
 
 .reviews-container {
