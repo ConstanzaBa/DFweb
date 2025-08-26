@@ -454,157 +454,124 @@
 
                 </section>
 
+                <section class="entrada__reviews" id="comments-section">
 
-
-            </div>
-
-
-
-        </div>
-
-
-
-        <div class="entrada__reviews">
-
-            <section class="entrada__reviews__contenedor">
-
-                <h3 data-translate="calification">Calificaciones</h3>
-
-                <div class="reviews-container">
-
-                    <!-- Sección de ratings -->
-                    <div class="ratings-summary">
-
-                        <div class="average-rating">
-
-                            <span class="average-number">4.3</span>
-
-                            <div class="average-stars">
-                                <span class="star filled">★</span>
-                                <span class="star filled">★</span>
-                                <span class="star filled">★</span>
-                                <span class="star filled">★</span>
-                                <span class="star">★</span>
+                    <div class="comments-wrapper">
+                        <div class="comments" id="comments-container">
+                            <div class="comment">
+                                <div class="comment-header">
+                                    <strong>Juan Pérez</strong>
+                                    <div class="rating">★★★★★</div>
+                                </div>
+                                <div class="comment-title">Excelente</div>
+                                <p class="comment-text">La película me encantó, la recomiendo.</p>
                             </div>
 
-                            <span class="total-reviews">209 calificaciones</span>
+                            <div class="comment">
+                                <div class="comment-header">
+                                    <strong>Ana López</strong>
+                                    <div class="rating">★★★☆☆</div>
+                                </div>
+                                <div class="comment-title">Más o menos</div>
+                                <p class="comment-text">Algunas partes fueron aburridas.</p>
+                            </div>
+                        </div>
 
-                            <div class="rating-row">
-                                <span class="star-label">5★</span>
-                                <div class="bar-container">
-                                    <div class="bar" style="width: 70%;"></div>
-                                </div>
-                                <span class="count">140</span>
-                            </div>
+                        <div class="text-box">
+                            <div class="box-container">
+                                <div class="input-wrapper">
+                                    <input type="text" id="review-title" placeholder="Título (opcional)" />
+                                    <textarea id="review-text" placeholder="Escribe un comentario..."></textarea>
 
-                            <div class="rating-row">
-                                <span class="star-label">4★</span>
-                                <div class="bar-container">
-                                    <div class="bar" style="width: 15%;"></div>
+                                    <p class="raiting-title">Puntuación</p>
+                                    <div class="rating">
+                                        <input type="radio" name="rating" id="star5" value="5">
+                                        <label for="star5"></label>
+                                        <input type="radio" name="rating" id="star4" value="4">
+                                        <label for="star4"></label>
+                                        <input type="radio" name="rating" id="star3" value="3">
+                                        <label for="star3"></label>
+                                        <input type="radio" name="rating" id="star2" value="2">
+                                        <label for="star2"></label>
+                                        <input type="radio" name="rating" id="star1" value="1">
+                                        <label for="star1"></label>
+                                    </div>
+
+                                    <button id="send-review" class="send" title="Enviar">
+                                        <svg width="20" height="20" viewBox="0 0 25 25" fill="none" stroke="#fff"
+                                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                            <path d="M22 2L11 13"></path>
+                                            <path d="M22 2L15 22L11 13L2 9L22 2Z"></path>
+                                        </svg>
+                                    </button>
                                 </div>
-                                <span class="count">30</span>
-                            </div>
-                            <div class="rating-row">
-                                <span class="star-label">3★</span>
-                                <div class="bar-container">
-                                    <div class="bar" style="width: 10%;"></div>
-                                </div>
-                                <span class="count">20</span>
-                            </div>
-                            <div class="rating-row">
-                                <span class="star-label">2★</span>
-                                <div class="bar-container">
-                                    <div class="bar" style="width: 3%;"></div>
-                                </div>
-                                <span class="count">5</span>
-                            </div>
-                            <div class="rating-row">
-                                <span class="star-label">1★</span>
-                                <div class="bar-container">
-                                    <div class="bar" style="width: 2%;"></div>
-                                </div>
-                                <span class="count">4</span>
                             </div>
                         </div>
                     </div>
+                </section>
 
-                        <!-- Sección de comentarios -->
-                        <div class="card" id="comments-section">
+                <section class=".entrada__reviews__puntaje">
 
-                            <div class="comments-wrapper">
-                                <div class="comments" id="comments-container">
-                                    <div class="comment">
-                                        <div class="comment-header">
-                                            <strong>Juan Pérez</strong>
-                                            <div class="rating">★★★★★</div>
-                                        </div>
-                                        <div class="comment-title">Excelente</div>
-                                        <p class="comment-text">La película me encantó, la recomiendo.</p>
-                                    </div>
+                    <div class="average-rating">
 
-                                    <div class="comment">
-                                        <div class="comment-header">
-                                            <strong>Ana López</strong>
-                                            <div class="rating">★★★☆☆</div>
-                                        </div>
-                                        <div class="comment-title">Más o menos</div>
-                                        <p class="comment-text">Algunas partes fueron aburridas.</p>
-                                    </div>
-                                </div>
-                                
-                            <div class="text-box">
-                                <div class="box-container">
-                                    <div class="input-wrapper">
-                                        <input type="text" id="review-title" placeholder="Título (opcional)" />
-                                        <textarea id="review-text" placeholder="Escribe un comentario..."></textarea>
+                        <span class="average-number">4.3</span>
 
-                                        <p class="raiting-title">Puntuación</p>
-                                        <div class="rating">
-                                            <input type="radio" name="rating" id="star5" value="5">
-                                            <label for="star5"></label>
-                                            <input type="radio" name="rating" id="star4" value="4">
-                                            <label for="star4"></label>
-                                            <input type="radio" name="rating" id="star3" value="3">
-                                            <label for="star3"></label>
-                                            <input type="radio" name="rating" id="star2" value="2">
-                                            <label for="star2"></label>
-                                            <input type="radio" name="rating" id="star1" value="1">
-                                            <label for="star1"></label>
-                                        </div>
-
-                                        <button id="send-review" class="send" title="Enviar">
-                                            <svg width="20" height="20" viewBox="0 0 25 25" fill="none" stroke="#fff"
-                                                stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                                <path d="M22 2L11 13"></path>
-                                                <path d="M22 2L15 22L11 13L2 9L22 2Z"></path>
-                                            </svg>
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
-                            </div>
+                        <div class="average-stars">
+                            <span class="star filled">★</span>
+                            <span class="star filled">★</span>
+                            <span class="star filled">★</span>
+                            <span class="star filled">★</span>
+                            <span class="star">★</span>
                         </div>
-                </div>
-            </section>
 
+                        <span class="total-reviews">209 calificaciones</span>
+
+                        <div class="rating-row">
+                            <span class="star-label">5★</span>
+                            <div class="bar-container">
+                                <div class="bar" style="width: 70%;"></div>
+                            </div>
+                            <span class="count">140</span>
+                        </div>
+
+                        <div class="rating-row">
+                            <span class="star-label">4★</span>
+                            <div class="bar-container">
+                                <div class="bar" style="width: 15%;"></div>
+                            </div>
+                            <span class="count">30</span>
+                        </div>
+                        <div class="rating-row">
+                            <span class="star-label">3★</span>
+                            <div class="bar-container">
+                                <div class="bar" style="width: 10%;"></div>
+                            </div>
+                            <span class="count">20</span>
+                        </div>
+                        <div class="rating-row">
+                            <span class="star-label">2★</span>
+                            <div class="bar-container">
+                                <div class="bar" style="width: 3%;"></div>
+                            </div>
+                            <span class="count">5</span>
+                        </div>
+                        <div class="rating-row">
+                            <span class="star-label">1★</span>
+                            <div class="bar-container">
+                                <div class="bar" style="width: 2%;"></div>
+                            </div>
+                            <span class="count">4</span>
+                        </div>
+                    </div>
+                </section>
+            </div>
         </div>
-
-
-
     </main>
-
 
     <div id="chatbot"></div>
 
     <div id="footer"></div>
 
-
 </body>
-
-
-
-
-
-
 
 </html>
