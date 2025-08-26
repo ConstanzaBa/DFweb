@@ -713,34 +713,6 @@
 
 }
 
-
-
-@media (max-width: 2000px) {
-
-  .entrada__reviews {
-
-    display: flex;
-
-    flex-direction: column;
-
-    column-gap: 2rem;
-
-  }
-
-
-
-  .entrada__reviews__contenedor {
-
-    max-width: 120rem;
-
-    column-gap: 2rem;
-
-    padding: 0 1rem;
-
-  }
-
-}
-
 #favorite-btn {
   position: relative;
   display: flex;
@@ -780,7 +752,7 @@
   display: flex;
   justify-content: center;
   place-items: flex-start;
-  gap: 2rem;
+  gap: 3.5rem;
   padding: 1rem;
 }
 
@@ -869,7 +841,6 @@
    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
   border-radius: 17px;
   display: flex;
-  margin-left: 37px;
   flex-direction: column;
 }
 
