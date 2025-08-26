@@ -43,6 +43,7 @@ const translations = {
     streaming: "Streaming",
     trailer: "Trailer",
     captura: "Captura",
+    reviews: "Reseñas"
   },
   "en-US": {
     currentLanguage: "EN",
@@ -58,6 +59,7 @@ const translations = {
     streaming: "Streaming",
     trailer: "Trailer",
     captura: "Capture",
+    reviews: "Reviews"
   },
 };
 
