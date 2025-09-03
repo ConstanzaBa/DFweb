@@ -399,7 +399,7 @@ padding-left:25px;
   padding: 4px 13px;
   font-size: 12px;
   color: #fff;
-  background-color: #ff6200;
+  background-color: var(--primario);
   white-space: nowrap;
 }
 
@@ -410,14 +410,14 @@ padding-left:25px;
 }
 
 .options svg {
-  fill: #9fa4aa;
+  fill: var(--gris);
   width: 20px;
   height: 20px;
   transition: fill 0.2s ease-in-out;
 }
 
 .options:hover svg {
-  fill: #ff6200;
+  fill: var(--primario);
 }
 
 /* ==== TEXTO DE REVIEW ==== */
@@ -428,14 +428,14 @@ padding-left:25px;
 .comment-title {
   font-weight: 700;
   font-size: 14px;
-  color: #47484b;
+  color: var(--negro);
   margin-bottom: 4px;
 }
 
 .comment-text {
   font-size: 13px;
   line-height: 1.5;
-  color: #5f6064;
+  color: var(--gris);
 }
 
 /* ==== TABS ==== */
@@ -472,19 +472,19 @@ padding-left:25px;
   padding: 14px 0;
   display: block;
   font-weight: 500;
-  color: #555;
+  color: var(--gris);
   transition: color 0.3s, font-weight 0.3s;
 }
 
 .tabs ul li label:hover {
-  color: orange;
+  color: var(--primario);
 }
 
 /* Estado activo */
 #tab-recientes:checked ~ ul li:nth-child(1) label,
 #tab-reviews:checked ~ ul li:nth-child(2) label,
 #tab-favorites:checked ~ ul li:nth-child(3) label {
-  color: #000;
+  color: var(--negro);
   font-weight: bold;
 }
 
@@ -504,14 +504,14 @@ padding-left:25px;
 .slider {
   position: relative;
   height: 3px;
-  background: #ddd;
+  background: var(--gris);
 }
 
 .indicator {
   position: absolute;
   height: 3px;
   width: 33.33%;
-  background: orange;
+  background: var(--primario);
   transition: transform 0.3s ease;
 }
 
@@ -594,12 +594,12 @@ padding-left:25px;
 }
 
 .reviews-carousel::-webkit-scrollbar-thumb {
-  background: #ff6200;
+  background: var(--primario);
   border-radius: 4px;
 }
 
 .reviews-carousel::-webkit-scrollbar-track {
-  background: #f0f0f0;
+  background: var(--gris);
 }
 
 /* Cards dentro del carousel → HORIZONTALES */
@@ -637,12 +637,12 @@ padding-left:25px;
 .review-card.carousel .review-title {
   font-size: 14px;
   font-weight: 600;
-  color: #ff6200;
+  color: var(--primario);
 }
 
 .review-card.carousel .review-text {
   font-size: 13px;
-  color: #444;
+  color: var(--negro);
   line-height: 1.4;
   max-height: 60px;         /* limitar altura */
   overflow: hidden;
@@ -690,13 +690,13 @@ padding-left:25px;
   margin-top:20px;
   font-size: 20px;
   font-weight: 600;
-  color: #ff6200;
+  color: var(--primario);
 }
 
 .review-card.page .review-text {
   font-size: 16px;
   line-height: 1.4;
-  color: #444;
+  color: var(--negro);
 }
 
 /* ==== ESTRELLAS ==== */
@@ -707,11 +707,11 @@ padding-left:25px;
 }
 
 .review-card .star {
-  color: #ddd;
+  color: var(--gris);
 }
 
 .review-card .star.filled {
-  color: #ff6200;
+  color: var(--primario);
 }
 
 /* ==== PAGINACIÓN ==== */
@@ -724,7 +724,7 @@ padding-left:25px;
 
 .pagination button {
   padding: 6px 12px;
-  border: 1px solid #ddd;
+  border: 1px solid var(--gris);
   border-radius: 6px;
   cursor: pointer;
   background-color: #fff;
@@ -732,15 +732,15 @@ padding-left:25px;
 }
 
 .pagination button:hover {
-  background-color: orange;
-  color: #fff;
-  border-color: orange;
+  background-color: var(--primario);
+  color: var(--blanco);
+  border-color: var(--primario);
 }
 
 .pagination button.active {
-  background-color: orange;
-  color: #fff;
-  border-color: orange;
+  background-color: var(--primario);
+  color: var(--blanco);
+  border-color: var(--primario);
   font-weight: bold;
 }
 
@@ -748,7 +748,7 @@ padding-left:25px;
 .empty-state {
   text-align: center;
   font-size: 16px;
-  color: #777;
+  color: var(--gris);
   padding: 30px 0;
 }
 
