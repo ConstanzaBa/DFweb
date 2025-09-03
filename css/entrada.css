@@ -663,7 +663,7 @@
 }
 
 .character-name {
-  color: #666;
+  color: var(--gris);
   font-size: 1.2rem;
   margin: 0;
   font-style: italic;
@@ -718,17 +718,17 @@
 
 .star {
   font-size: 20px;
-  color: #ddd;
+  color: var(--gris);
 }
 
 .star.filled {
-  color: #ff6200;
+  color: var(--primario);
 }
 
 .total-reviews {
   display: block;
   font-size: 12px;
-  color: #666;
+  color: var(--gris);
   margin-top: 3px;
 }
 
@@ -743,20 +743,20 @@
 .star-label {
   width: 25px;
   font-size: 13px;
-  color: #333;
+  color: var(--negro);
 }
 
 .bar-container {
   flex: 1;
   height: 10px;
-  background: #ddd;
+  background: var(--gris);
   border-radius: 5px;
   overflow: hidden;
 }
 
 .bar {
   height: 100%;
-  background: #ff6200;
+  background: var(--primario);
   border-radius: 5px;
 }
 
@@ -764,7 +764,7 @@
   width: 30px;
   text-align: right;
   font-size: 12px;
-  color: #333;
+  color: var(--negro);
 }
 
 /* Título comentarios */
@@ -773,10 +773,10 @@
   display: flex;
   align-items: center;
   padding-left: 20px;
-  border-bottom: 1px solid #f1f1f1;
+  border-bottom: 1px solid var(--gris);
   font-weight: 700;
   font-size: 13px;
-  color: #47484b;
+  color: var(--negro);
 }
 
 /* Lista de comentarios */
@@ -803,7 +803,7 @@
 }
 
 .comments::-webkit-scrollbar-thumb {
-  background: #ff6200;
+  background: var(--primario);
   border-radius: 4px;
 }
 
@@ -825,20 +825,20 @@
 .comment-header strong {
   font-weight: 700;
   font-size: 22px;
-  color: #47484b;
+  color: var(--negro);
 }
 
 .comment-title {
   font-weight: 600;
   font-size: 18px;
-  color: #fd7a0d;
+  color: var(--primario);
   margin-left: 80px;
 }
 
 .comment-text {
   font-size: 16px;
   line-height: 18px;
-  color: #5f6064;
+  color: var(--gris);
   margin-left: 80px;
 }
 
@@ -847,7 +847,7 @@
   border-radius: 15px;
   padding: 1.5rem;
   margin: 2rem 0rem;
-  background: #f1f1f1;
+  background: var(--gris);
 }
 
 .box-container {
@@ -860,33 +860,32 @@
   display: flex;
   flex-direction: column;
   gap: 10px;
-  background: #fff;
+  background: var(--blanco);
   border-radius: 15px;
   padding: 15px;
-  border: 1px solid #ddd;
 }
 
 .input-wrapper input[type="text"] {
   width: 100%;
-  border: none;
+  border: 0.02rem solid var(--gris);
   border-radius: 8px;
   padding: 8px 12px;
   font-size: 14px;
   outline: none;
-  background: #f9f9f9;
+  background: var(--blanco);
 }
 
 .input-wrapper textarea {
   width: 100%;
   height: 100px;
-  border: none;
   resize: vertical;
+  border: 0.02rem solid var(--gris);
   border-radius: 12px;
   padding: 10px 12px;
   font-size: 14px;
   outline: none;
   line-height: 18px;
-  background: #f9f9f9;
+  background: var(--blanco);
 }
 
 .input-wrapper .send {
@@ -895,7 +894,7 @@
   height: 36px;
   border: none;
   border-radius: 50%;
-  background: #ff6200;
+  background: var(--primario);
   display: flex;
   align-items: center;
   justify-content: left;
@@ -906,7 +905,7 @@
 }
 
 .input-wrapper .send:hover {
-  background: #e05500;
+  background: var(--primario);
 }
 
 /* Estrellas de puntuación en formulario */
@@ -917,7 +916,7 @@
   gap: 6px;
   margin-top: 5px;
   padding: 0.5rem ;
-  color: #e05500;
+  color: var(--primario);
   margin-right: 540px;
 }
 
@@ -927,7 +926,7 @@
 
 .rating-form label {
   font-size: 26px;
-  color: #ccc;
+  color: var(--gris);
   cursor: pointer;
   transition: color 0.3s;
 }
@@ -938,25 +937,25 @@
 
 .rating-form label:hover,
 .rating-form label:hover ~ label {
-  color: #ff6200;
+  color: var(--primario);
 }
 
 .rating-form input:checked ~ label {
-  color: #ff6200;
+  color: var(--primario);
 }
 
 .rating-comment .star {
   font-size: 20px;
-  color: #ddd;
+  color: var(--gris);
 }
 
 .rating-comment .star.filled {
-  color: #ff6200;
+  color: var(--primario);
 }
 
 .raiting-title {
   font-size: 14px;
-  color: #666;
+  color: var(--gris);
   margin-left: 7px;
   margin-bottom: -20px;
 }
@@ -998,27 +997,27 @@
     height: 50px;
     border-radius: 50%;
     object-fit: cover;
-    border: 2px solid #ff6200;
+    border: 2px solid var(--primario);
 }
 
 .rating-comment {
   font-size: 2rem; 
-  color: #e05500;   
+  color: var(--primario);   
   margin-left: 440px;
 }
 
 .login-warning {
   padding: 1rem;
-  background: #fff3e6;
-  border: 1px solid #ffb366;
+  background: var(--gris);
+  border: 1px solid var(--primario);
   border-radius: 8px;
-  color: #cc5200;
+  color: var(--primario);
   font-size: 14px;
   text-align: center;
 }
 
 .login-warning a {
-  color: #ff6200;
+  color: var(--primario);
   font-weight: bold;
   text-decoration: none;
 }
