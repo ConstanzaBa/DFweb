@@ -49,11 +49,10 @@ export async function loadUserReviews() {
         const movie = await fetchFromApi.movieDetails(movieId);
         return { 
           ...review, 
-          nombre_pelicula: movie.title || movie.name || "Película", 
           poster_path: movie.poster_path || null 
         };
       } catch {
-        return { ...review, nombre_pelicula: "Película desconocida", poster_path: null };
+        return { ...review, poster_path: null };
       }
     }));
 
@@ -88,9 +87,8 @@ function createReviewCard(review, size='page') {
     <div class="review-card ${size}">
       <div class="review-left">
         <a href="https://dragonfilms.space/web/entrada.html?id=${movieId}" target="_blank">
-          <img src="${posterUrl}" alt="${review.nombre_pelicula}" />
+          <img src="${posterUrl}" alt="${review.poster_path}" />
         </a>
-        <h3 class="review-movie-title">${review.nombre_pelicula}</h3>
       </div>
       <div class="review-right">
         <div class="review-title">${review.titulo || ''}</div>
