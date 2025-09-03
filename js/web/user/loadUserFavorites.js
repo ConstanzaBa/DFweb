@@ -1,46 +1,86 @@
 import { TMDB_imgBaseUrl } from "../../utils/consts.js";
-import { fetchConToken } from "../../utils/AuthFetch.js"; // usamos fetchConToken
-import { API_BASE_URL } from "../../utils/config.js";
+import { fetchConToken } from "../../utils/AuthFetch.js";
+
+const ITEMS_PER_PAGE = 20;
+let currentPage = 1;
+let favoritos = [];
 
 document.addEventListener("DOMContentLoaded", async () => {
   await loadUserFavorites();
 });
 
 export async function loadUserFavorites() {
-  const container = document.getElementById("fav-movies");
-  if (!container) return;
+  const recientesContainer = document.getElementById("fav-movies");
+  const favoritosContainer = document.getElementById("tab-only-favorites");
+  const paginationContainer = document.getElementById("favorites-pagination");
 
   try {
-    // Hacemos la llamada al endpoint de favoritos usando fetchConToken
-    const response = await fetchConToken('/Favoritos/GetFavoritoByUser.php', {
+
+    const response = await fetchConToken("/Favoritos/GetFavoritoByUser.php", {
       method: "GET",
-      headers: { "Content-Type": "application/json" }
+      headers: { "Content-Type": "application/json" },
     });
 
     if (!response.ok) throw new Error("Error al obtener favoritos");
 
     const data = await response.json();
-    const favoritos = data.favorites || []; // <- aquí usamos la propiedad correcta
+    favoritos = data.favorites || [];
 
-    if (!favoritos.length) {
-      container.innerHTML = `<div class="empty-state"><p>No tienes películas favoritas</p></div>`;
-      return;
-    }
-
-    container.innerHTML = favoritos.map(createFavoriteCard).join("");
-
-    // Actualizar contador de favoritos en el perfil
     const favoritesCount = document.getElementById("profile-favorites");
     if (favoritesCount) favoritesCount.textContent = favoritos.length;
 
+    if (recientesContainer) {
+      if (!favoritos.length) {
+        recientesContainer.innerHTML = `<div class="empty-state"><p>No tienes películas favoritas</p></div>`;
+      } else {
+        const recientes = favoritos.slice(0, 10);
+        recientesContainer.innerHTML = recientes.map(createFavoriteCard).join("");
+        attachCardClicks(recientesContainer);
+      }
+    }
+
+    if (favoritosContainer) {
+      renderFavoritesPage(favoritosContainer, paginationContainer);
+    }
   } catch (error) {
     console.error("Error cargando favoritos:", error);
-    container.innerHTML = `
-      <div class="error-state">
-        <p>Error al cargar tus favoritos</p>
-        <p>Por favor, intenta de nuevo más tarde</p>
-      </div>
-    `;
+
+    if (recientesContainer) {
+      recientesContainer.innerHTML = `
+        <div class="error-state">
+          <p>Error al cargar tus favoritos</p>
+          <p>Por favor, intenta de nuevo más tarde</p>
+        </div>
+      `;
+    }
+  }
+}
+
+function renderFavoritesPage(favoritosContainer, paginationContainer) {
+  if (!favoritos.length) {
+    favoritosContainer.innerHTML = `<div class="empty-state"><p>No tienes películas favoritas</p></div>`;
+    if (paginationContainer) paginationContainer.innerHTML = "";
+    return;
+  }
+
+  const start = (currentPage - 1) * ITEMS_PER_PAGE;
+  const end = start + ITEMS_PER_PAGE;
+  const paginatedItems = favoritos.slice(start, end);
+
+  favoritosContainer.innerHTML = paginatedItems.map(createFavoriteCard).join("");
+  attachCardClicks(favoritosContainer);
+
+  
+  const totalPages = Math.ceil(favoritos.length / ITEMS_PER_PAGE);
+  if (paginationContainer) {
+    paginationContainer.innerHTML = createPagination(totalPages);
+
+    document.querySelectorAll(".page-btn").forEach((btn) => {
+      btn.addEventListener("click", (e) => {
+        currentPage = parseInt(e.target.dataset.page, 10);
+        renderFavoritesPage(favoritosContainer, paginationContainer);
+      });
+    });
   }
 }
 
@@ -50,16 +90,37 @@ function createFavoriteCard(movie) {
     : "source/img/no-poster.jpg";
 
   return `
-    <div class="pelicula__card">
-      <a class="pelicula__card__link" href="entrada.html?id=${movie.pelicula_id}">
-        <img src="${posterPath}" alt="${movie.titulo}" loading="lazy" />
-        <section class="pelicula__card__info">
-          <h1>${movie.titulo}</h1>
-          <section class="pelicula__card__info__puntaje">
-            <h2><i class="fa-brands fa-imdb"></i> ${movie.calificacion || "N/A"}</h2>
-          </section>
+    <div class="pelicula__card" data-id="${movie.pelicula_id}">
+      <img src="${posterPath}" alt="${movie.titulo}" loading="lazy" />
+      <section class="pelicula__card__info">
+        <h1>${movie.titulo}</h1>
+        <section class="pelicula__card__info__puntaje">
+          <h2><i class="fa-brands fa-imdb"></i> ${movie.calificacion || "N/A"}</h2>
         </section>
-      </a>
+      </section>
     </div>
   `;
+}
+
+
+function attachCardClicks(container) {
+  container.querySelectorAll('.pelicula__card').forEach(card => {
+    card.addEventListener('click', () => {
+      const id = card.dataset.id;
+      window.open(`https://dragonfilms.space/web/entrada.html?id=${id}`, '_blank');
+    });
+  });
+}
+
+
+function createPagination(totalPages) {
+  let buttons = "";
+  for (let i = 1; i <= totalPages; i++) {
+    buttons += `
+      <button class="page-btn ${i === currentPage ? "active" : ""}" data-page="${i}">
+        ${i}
+      </button>
+    `;
+  }
+  return buttons;
 }

@@ -72,6 +72,7 @@
     <script type="module" src="js/web/components/FavoriteButton.js"></script>
     <script type="module" src="js/web/components/Header.js"></script>
     <script type="module" src="js/web/components/Footer.js"></script>
+    
 </head>
 
 
@@ -81,6 +82,7 @@
 
 
 
+ 
     <div id="header" class="header__entrada relative"></div>
 
 
@@ -101,8 +103,7 @@
 
 
 
-                <img class="entrada__info__poster no-margin" loading="lazy" src="source/img/poster-1.png"
-                    alt="imagen del blog">
+                <img class="entrada__info__poster no-margin" loading="lazy"  alt="imagen del blog">
 
 
 
@@ -115,13 +116,11 @@
 
 
                     <button id="favorite-btn" class="entrada__info__facts__favoritos no-margin">
-                        <input type="checkbox" id="favorite-checkbox" />
+                        <input type="checkbox" id="favorite-checkbox">
                         <div class="checkmark">
                             <svg viewBox="0 0 256 256">
                                 <rect fill="none" height="256" width="256"></rect>
-                                <path
-                                    d="M224.6,51.9a59.5,59.5,0,0,0-43-19.9,60.5,60.5,0,0,0-44,17.6L128,59.1l-7.5-7.4C97.2,28.3,59.2,26.3,35.9,47.4a59.9,59.9,0,0,0-2.3,87l83.1,83.1a15.9,15.9,0,0,0,22.6,0l81-81C243.7,113.2,245.6,75.2,224.6,51.9Z"
-                                    stroke-width="20px" stroke="#000" fill="none"></path>
+                                <path d="M224.6,51.9a59.5,59.5,0,0,0-43-19.9,60.5,60.5,0,0,0-44,17.6L128,59.1l-7.5-7.4C97.2,28.3,59.2,26.3,35.9,47.4a59.9,59.9,0,0,0-2.3,87l83.1,83.1a15.9,15.9,0,0,0,22.6,0l81-81C243.7,113.2,245.6,75.2,224.6,51.9Z" stroke-width="20px" stroke="#000" fill="none"></path>
                             </svg>
                         </div>
                     </button>
@@ -224,7 +223,7 @@
 
 
 
-            <div class="entrada__multimedia">
+            <div class="entrada__multimedia" data-measuring="true">
 
 
 
@@ -232,7 +231,7 @@
 
 
 
-                    <video src="" loop controls class="video-principal"></video>
+                    <video src="" loop="" controls="" class="video-principal"></video>
 
 
 
@@ -252,7 +251,7 @@
 
 
 
-                        <img src="source/img/dune.jpg" class="imagen-lista">
+                        <img  class="imagen-lista">
 
 
 
@@ -272,7 +271,7 @@
 
 
 
-                        <img src="source/img/dune-1.jpg" class="imagen-lista">
+                        <img  class="imagen-lista">
 
 
 
@@ -292,7 +291,7 @@
 
 
 
-                        <img src="source/img/interstellar-2.jpg" class="imagen-lista">
+                        <img  class="imagen-lista">
 
 
 
@@ -312,7 +311,7 @@
 
 
 
-                        <img src="source/img/interstellar-3.jpg" class="imagen-lista">
+                        <img class="imagen-lista">
 
 
 
@@ -332,7 +331,7 @@
 
 
 
-                        <img src="source/img/interstellar-4.jpg" class="imagen-lista">
+                        <img  class="imagen-lista">
 
 
 
@@ -352,7 +351,7 @@
 
 
 
-                        <img src="source/img/interstellar-5.jpg" class="imagen-lista">
+                        <img  class="imagen-lista">
 
 
 
@@ -372,7 +371,7 @@
 
 
 
-                        <img src="source/img/interstellar-6.jpg" class="imagen-lista">
+                        <img  class="imagen-lista">
 
 
 
@@ -392,7 +391,7 @@
 
 
 
-                        <img src="source/img/interstellar-7.jpg" class="imagen-lista">
+                        <img  class="imagen-lista">
 
 
 
@@ -454,125 +453,84 @@
 
                 </section>
 
-                <h3 data-translate="reviews"></h3>
+<h3 data-translate="reviews"></h3>
 
-                <section class="entrada__reviews" id="comments-section">
+<section class="entrada__reviews" id="comments-section">
+  <div class="comments-wrapper" data-measuring="true">
+    <div class="comments" id="comments-container">
+      <!-- Aquí se inyectan las reseñas desde JS -->
+    </div>
 
-                    <div class="comments-wrapper">
-                        <div class="comments" id="comments-container">
-                            <div class="comment">
-                                <div class="comment-header">
-                                    <strong>Juan Pérez</strong>
-                                    <div class="rating">★★★★★</div>
-                                </div>
-                                <div class="comment-title">Excelente</div>
-                                <p class="comment-text">La película me encantó, la recomiendo.</p>
-                            </div>
+    <div class="text-box">
+      <div class="box-container">
+        <div class="input-wrapper">
+          <input type="text" id="review-title" placeholder="Título (opcional)">
+          <textarea id="review-text" placeholder="Escribe un comentario..."></textarea>
 
-                            <div class="comment">
-                                <div class="comment-header">
-                                    <strong>Ana López</strong>
-                                    <div class="rating">★★★☆☆</div>
-                                </div>
-                                <div class="comment-title">Más o menos</div>
-                                <p class="comment-text">Algunas partes fueron aburridas.</p>
-                            </div>
-                        </div>
+          <p class="raiting-title">Puntuación</p>
+          <!-- ⭐ Cambié la clase "rating" por "rating-form" -->
+          <div class="rating-form">
+            <input type="radio" name="rating" id="star5" value="5"><label for="star5"></label>
+            <input type="radio" name="rating" id="star4" value="4"><label for="star4"></label>
+            <input type="radio" name="rating" id="star3" value="3"><label for="star3"></label>
+            <input type="radio" name="rating" id="star2" value="2"><label for="star2"></label>
+            <input type="radio" name="rating" id="star1" value="1"><label for="star1"></label>
+          </div>
 
-                        <div class="text-box">
-                            <div class="box-container">
-                                <div class="input-wrapper">
-                                    <input type="text" id="review-title" placeholder="Título (opcional)" />
-                                    <textarea id="review-text" placeholder="Escribe un comentario..."></textarea>
+          <button id="send-review" class="send" title="Enviar">
+            <svg width="30" height="30" viewBox="0 0 25 25" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M22 2L11 13"></path>
+              <path d="M22 2L15 22L11 13L2 9L22 2Z"></path>
+            </svg>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
 
-                                    <p class="raiting-title">Puntuación</p>
-                                    <div class="rating">
-                                        <input type="radio" name="rating" id="star5" value="5">
-                                        <label for="star5"></label>
-                                        <input type="radio" name="rating" id="star4" value="4">
-                                        <label for="star4"></label>
-                                        <input type="radio" name="rating" id="star3" value="3">
-                                        <label for="star3"></label>
-                                        <input type="radio" name="rating" id="star2" value="2">
-                                        <label for="star2"></label>
-                                        <input type="radio" name="rating" id="star1" value="1">
-                                        <label for="star1"></label>
-                                    </div>
+<section class="entrada__reviews__puntaje" data-selected="true" data-label-id="0">
+  <div class="average-rating custom-position custom-size">
+    <span class="average-number">0.0</span>
+    <div class="average-stars">☆☆☆☆☆</div>
+    <span class="total-reviews">0 calificaciones</span>
 
-                                    <button id="send-review" class="send" title="Enviar">
-                                        <svg width="20" height="20" viewBox="0 0 25 25" fill="none" stroke="#fff"
-                                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                            <path d="M22 2L11 13"></path>
-                                            <path d="M22 2L15 22L11 13L2 9L22 2Z"></path>
-                                        </svg>
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </section>
+    <div class="rating-row" data-star="5">
+      <span class="star-label">5★</span>
+      <div class="bar-container"><div class="bar"></div></div>
+      <span class="count">0</span>
+    </div>
+    <div class="rating-row" data-star="4">
+      <span class="star-label">4★</span>
+      <div class="bar-container"><div class="bar"></div></div>
+      <span class="count">0</span>
+    </div>
+    <div class="rating-row" data-star="3">
+      <span class="star-label">3★</span>
+      <div class="bar-container"><div class="bar"></div></div>
+      <span class="count">0</span>
+    </div>
+    <div class="rating-row" data-star="2">
+      <span class="star-label">2★</span>
+      <div class="bar-container"><div class="bar"></div></div>
+      <span class="count">0</span>
+    </div>
+    <div class="rating-row" data-star="1">
+      <span class="star-label">1★</span>
+      <div class="bar-container"><div class="bar"></div></div>
+      <span class="count">0</span>
+    </div>
+  </div>
+</section>
 
-                <section class=".entrada__reviews__puntaje">
-
-                    <div class="average-rating">
-
-                        <span class="average-number">4.3</span>
-
-                        <div class="average-stars">
-                            <span class="star filled">★</span>
-                            <span class="star filled">★</span>
-                            <span class="star filled">★</span>
-                            <span class="star filled">★</span>
-                            <span class="star">★</span>
-                        </div>
-
-                        <span class="total-reviews">209 calificaciones</span>
-
-                        <div class="rating-row">
-                            <span class="star-label">5★</span>
-                            <div class="bar-container">
-                                <div class="bar" style="width: 70%;"></div>
-                            </div>
-                            <span class="count">140</span>
-                        </div>
-
-                        <div class="rating-row">
-                            <span class="star-label">4★</span>
-                            <div class="bar-container">
-                                <div class="bar" style="width: 15%;"></div>
-                            </div>
-                            <span class="count">30</span>
-                        </div>
-                        <div class="rating-row">
-                            <span class="star-label">3★</span>
-                            <div class="bar-container">
-                                <div class="bar" style="width: 10%;"></div>
-                            </div>
-                            <span class="count">20</span>
-                        </div>
-                        <div class="rating-row">
-                            <span class="star-label">2★</span>
-                            <div class="bar-container">
-                                <div class="bar" style="width: 3%;"></div>
-                            </div>
-                            <span class="count">5</span>
-                        </div>
-                        <div class="rating-row">
-                            <span class="star-label">1★</span>
-                            <div class="bar-container">
-                                <div class="bar" style="width: 2%;"></div>
-                            </div>
-                            <span class="count">4</span>
-                        </div>
-                    </div>
-                </section>
             </div>
         </div>
     </main>
 
-    <div id="chatbot"></div>
+        <div id="chatbot"></div>
 
-    <div id="footer"></div>
+        <div id="footer"></div>
+
 
 </body>
 

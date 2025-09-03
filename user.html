@@ -5,35 +5,26 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Perfil de Usuario</title>
 
-  <link rel="preload" href="css/styles.css" as="style" />
-  <link rel="preload" href="css/index.css" as="style" />
-  <link rel="preload" href="css/components/Header.css" as="style" />
-  <link rel="preload" href="css/components/LanguageToggle.css" as="style" />
-  <link rel="preload" href="css/components/Footer.css" as="style" />
-
   <link rel="stylesheet" href="css/styles.css" />
   <link rel="stylesheet" href="css/index.css" />
   <link rel="stylesheet" href="css/components/Header.css" />
   <link rel="stylesheet" href="css/components/LanguageToggle.css" />
   <link rel="stylesheet" href="css/components/Footer.css" />
   <link rel="stylesheet" href="css/user/perfil.css" />
-  
 
   <!-- Scripts -->
   <script type="module" src="js/web/components/Header.js"></script>
   <script type="module" src="js/api/endpoints/GetUserById.js" defer></script>
   <script type="module" src="js/web/components/LanguageToggle.js"></script>
   <script type="module" src="js/web/user/loadUserFavorites.js" defer></script>
+  <script type="module" src="js/web/user/loadUserReviews.js" defer></script>
   <script src="js/web/components/Footer.js"></script>
   <script type="module" src="js/scripts.js"></script>
   <script type="module" src="js/web/user/index.js"></script>
-
-
-
 </head>
 <body>
-      <div id="header" class="header__perfil "></div>
-      
+  <div id="header" class="header__perfil"></div>
+  
   <main class="profile-container">
     <header class="profile-header">
       <div class="profile-avatar-container">
@@ -51,7 +42,6 @@
           <div class="profile-stat">
             <div id="profile-reviews">0</div>
             <small>Reseñas</small>
-
           </div>
           <div class="profile-stat">
             <div id="profile-favorites">0</div>
@@ -71,43 +61,52 @@
       </button>
     </header>
 
- <main class="contenedor">
+    <!-- Tabs -->
+    <div class="tabs">
+      <input type="radio" id="tab-recientes" name="tab-control" checked>
+      <input type="radio" id="tab-reviews" name="tab-control">
+      <input type="radio" id="tab-favorites" name="tab-control">
 
+      <ul>
+        <li title="Recientes"><label for="tab-recientes" role="button"><span>Recientes</span></label></li>
+        <li title="Reseñas"><label for="tab-reviews" role="button"><span>Reseñas</span></label></li>
+        <li title="Favoritos"><label for="tab-favorites" role="button"><span>Favoritos</span></label></li>
+      </ul>
 
-            <section class="headings">
+      <div class="slider"><div class="indicator"></div></div>
 
-                <h3 id="fav-label" data-translate="favMovies">Favoritas</h3>
+      <div class="content">
+        <!-- Recientes: favoritos + reseñas -->
+        <section>
+          <h3 id="fav-label" data-translate="favMovies">Favoritas</h3>
+          <div class="peliculas" id="fav-movies">
+            <div id="pelicula_card"></div>
+          </div>
 
-                <div class="peliculas" id="fav-movies">
+          <h3 data-translate="userReviews">Reseñas</h3>
+          <div class="reviews-carousel" id="user-reviews"></div>
+        </section>
 
-                    <div id="pelicula_card"></div>
+        <!-- Reseñas solas -->
+        <section>
+          <h3>Reseñas</h3>
+         <div id="tab-only-reviews"></div>
+  <div id="reviews-pagination" class="pagination"></div>
+        </section>
 
-                </div>
+        <!-- Favoritos solas -->
+       <!-- Favoritos solas -->
+<section>
+  <h3>Favoritos</h3>
+  <div id="tab-only-favorites"></div>
+  <div id="favorites-pagination" class="pagination"></div>
+</section>
 
-            </section>
-
-
-        </main>
-
-
-    <!-- <section class="profile-tab-section">
-      <div class="profile-tab-container">
-        <input type="radio" name="profile-tab" id="profile-tab1" class="profile-tab" checked />
-        <label for="profile-tab1" class="profile-tab_label">Todos</label>
-
-        <input type="radio" name="profile-tab" id="profile-tab2" class="profile-tab" />
-        <label for="profile-tab2" class="profile-tab_label">Rese�as</label>
-
-        <input type="radio" name="profile-tab" id="profile-tab3" class="profile-tab" />
-        <label for="profile-tab3" class="profile-tab_label">Favoritos</label>
-
-        <div class="profile-indicator"></div>
       </div>
-    </section> -->
-
+    </div>
 
   </main>
 
-   <div id="footer"></div>
+  <div id="footer"></div>
 </body>
 </html>

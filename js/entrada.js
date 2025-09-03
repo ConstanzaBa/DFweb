@@ -3,6 +3,7 @@ import { getCurrentLanguage, toggleLanguage, changeLanguage } from "./web/compon
 import { getMovieId, setMovieId } from "./movies.js";
 import { fetchFromApi } from "./api/components/FetchFromApi.js";
 import { setupFavoriteButton } from "./web/components/FavoriteButton.js";
+import { renderReviews, setupReviewForm } from "./web/components/Reviews.js"; // módulo de reseñas
 
 let language = getCurrentLanguage();
 
@@ -18,7 +19,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   setMovieId(movieId);
 
-  // Cargar detalles de la película
+  // --------------------- Cargar detalles de la película ---------------------
   fetchFromApi.movieDetails(movieId)
     .then(async movieData => {
       displayMovieDetails(movieData);
@@ -30,7 +31,7 @@ document.addEventListener("DOMContentLoaded", () => {
     })
     .catch(error => console.error("Error loading movie details:", error));
 
-  // Cargar proveedores de streaming
+  // --------------------- Cargar proveedores de streaming ---------------------
   fetchFromApi.movieProviders(movieId)
     .then(providers => {
       const region = language.split("-")[1] || "US";
@@ -38,7 +39,7 @@ document.addEventListener("DOMContentLoaded", () => {
     })
     .catch(error => console.error("Error loading providers:", error));
 
-  // Toggle de idioma
+  // --------------------- Toggle de idioma ---------------------
   const languageToggle = document.getElementById("languageToggle");
   if (languageToggle) {
     languageToggle.addEventListener("click", event => {
@@ -51,7 +52,6 @@ document.addEventListener("DOMContentLoaded", () => {
           if (movieData.credits) displayMovieCast(movieData.credits);
           if (movieData.images) displayMovieMultimedia(movieData.images, movieData);
 
-          // Re-inicializar el botón de favoritos
           await setupFavoriteButton(movieId, movieData);
         })
         .catch(error => console.error("Error reloading movie details:", error));
@@ -65,7 +65,10 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  // Aquí podrías llamar a getReviewsbyUser(movieId) si lo necesitas
+  // --------------------- Renderizar reseñas dinámicamente ---------------------
+  // Usamos window.onload para asegurar carga completa del DOM de reseñas
+  renderReviews(movieId);
+  setupReviewForm(movieId);
 });
 
 // --------------------- FUNCIONES DE DISPLAY ---------------------

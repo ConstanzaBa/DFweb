@@ -6,20 +6,32 @@ const favoriteBtn = document.getElementById("favorite-btn");
 const favoriteCheckbox = favoriteBtn?.querySelector("input");
 
 export async function setupFavoriteButton(movieId, movieData) {
-  if (!favoriteBtn || !favoriteCheckbox) return; // Evita errores si no existe el botón o el input
+  if (!favoriteBtn || !favoriteCheckbox) return;
 
-  // 1️⃣ Verificar si ya está en favoritos
-  try {
-    const checkData = await checkFavorito(movieId);
-    if (checkData.success && checkData.es_favorito) {
-      favoriteCheckbox.checked = true;
+  const token = localStorage.getItem("token");
+
+  // 1️⃣ Solo verificar favorito si hay usuario logueado
+  let esFavorito = false;
+  if (token) {
+    try {
+      const checkData = await checkFavorito(movieId);
+      esFavorito = checkData.success && checkData.es_favorito;
+      favoriteCheckbox.checked = esFavorito;
+    } catch (error) {
+      console.error("Error al verificar favorito:", error);
     }
-  } catch (error) {
-    console.error("Error al verificar favorito:", error);
+  } else {
+    // Si no hay token, deshabilitar el botón o dejar sin marcar
+    favoriteCheckbox.checked = false;
   }
 
   // 2️⃣ Click en el botón
   favoriteBtn.addEventListener("click", async () => {
+    if (!token) {
+      alert("Debes iniciar sesión para usar favoritos");
+      return;
+    }
+
     const isFavorited = favoriteCheckbox.checked;
 
     try {
@@ -38,8 +50,7 @@ export async function setupFavoriteButton(movieId, movieData) {
       }
 
       if (result.success) {
-        favoriteCheckbox.checked = !isFavorited; // activa/desactiva animación y color
-        // Opcional: mostrar mensaje al usuario
+        favoriteCheckbox.checked = !isFavorited;
         alert(result.message || "Estado actualizado");
       } else {
         alert(result.error || "Error al actualizar favorito");

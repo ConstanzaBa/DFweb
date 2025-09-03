@@ -713,6 +713,7 @@
 
 .average-stars {
   margin: 5px 0;
+  font-size: 25px;
 }
 
 .star {
@@ -785,11 +786,25 @@
   padding: 3rem;
 }
 
+/* Lista de comentarios */
 .comments {
   display: flex;
   flex-direction: column;
   gap: 20px;
-  overflow-y: auto;
+
+  max-height: 600px;   /* 🔥 limita la altura (aprox. 3 reseñas) */
+  overflow-y: auto;    /* 🔥 activa scroll si hay más */
+  padding-right: 8px;  /* deja lugar al scrollbar */
+}
+
+/* Scrollbar personalizado */
+.comments::-webkit-scrollbar {
+  width: 8px;
+}
+
+.comments::-webkit-scrollbar-thumb {
+  background: #ff6200;
+  border-radius: 4px;
 }
 
 .comment {
@@ -797,31 +812,34 @@
   flex-direction: column;
   gap: 8px;
   border-bottom: 0.1rem solid var(--gris);
-  padding-bottom: 10px;
+  padding-bottom: 30px;
 }
 
 .comment-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+    display: flex;
+    align-items: center;
+    gap: 30px;
 }
+
 
 .comment-header strong {
   font-weight: 700;
-  font-size: 13px;
+  font-size: 22px;
   color: #47484b;
 }
 
 .comment-title {
   font-weight: 600;
-  font-size: 13px;
-  color: #333;
+  font-size: 18px;
+  color: #fd7a0d;
+  margin-left: 80px;
 }
 
 .comment-text {
-  font-size: 13px;
+  font-size: 16px;
   line-height: 18px;
   color: #5f6064;
+  margin-left: 80px;
 }
 
 /* Caja para nuevo comentario */
@@ -880,46 +898,59 @@
   background: #ff6200;
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: left;
   cursor: pointer;
   transition: background 0.2s;
+  align-content: center;
+  flex-wrap: nowrap;
 }
 
 .input-wrapper .send:hover {
   background: #e05500;
 }
 
-/* Estrellas de puntuación en textarea */
-.rating {
+/* Estrellas de puntuación en formulario */
+.rating-form {
+  font-size: 50x;
   display: flex;
   flex-direction: row-reverse;
-  justify-content: flex-end;
   gap: 6px;
-  margin-top: 0px;
-  padding: 0.5rem;
+  margin-top: 5px;
+  padding: 0.5rem ;
+  color: #e05500;
+  margin-right: 540px;
 }
 
-.rating input {
+.rating-form input {
   display: none;
 }
 
-.rating label {
-  font-size: 22px;
+.rating-form label {
+  font-size: 26px;
   color: #ccc;
   cursor: pointer;
   transition: color 0.3s;
 }
 
-.rating label:before {
+.rating-form label:before {
   content: "★";
 }
 
-.rating label:hover,
-.rating label:hover~label {
+.rating-form label:hover,
+.rating-form label:hover ~ label {
   color: #ff6200;
 }
 
-.rating input:checked~label {
+.rating-form input:checked ~ label {
+  color: #ff6200;
+}
+
+.rating-comment .star {
+  font-size: 20px;
+  color: #ddd;
+}
+
+.rating-comment .star.filled {
   color: #ff6200;
 }
 
@@ -929,3 +960,70 @@
   margin-left: 7px;
   margin-bottom: -20px;
 }
+
+.custom-position {
+  position: relative;
+  left: -775px;
+  top: -715px;
+  transform: translate(291.2px, 0px);
+}
+
+.custom-size {
+  width: 372px;
+  height: 43.2px;
+}
+
+.bar-70 {
+  width: 70%;
+}
+
+.bar-15 {
+  width: 15%;
+}
+
+.bar-10 {
+  width: 10%;
+}
+
+.bar-3 {
+  width: 3%;
+}
+
+.bar-2 {
+  width: 2%;
+}
+
+.comment-header img.comment-avatar {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid #ff6200;
+}
+
+.rating-comment {
+  font-size: 2rem; 
+  color: #e05500;   
+  margin-left: 440px;
+}
+
+.login-warning {
+  padding: 1rem;
+  background: #fff3e6;
+  border: 1px solid #ffb366;
+  border-radius: 8px;
+  color: #cc5200;
+  font-size: 14px;
+  text-align: center;
+}
+
+.login-warning a {
+  color: #ff6200;
+  font-weight: bold;
+  text-decoration: none;
+}
+
+.login-warning a:hover {
+  text-decoration: underline;
+}
+

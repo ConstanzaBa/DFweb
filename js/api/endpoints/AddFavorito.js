@@ -9,7 +9,7 @@ export async function addFavorito(movieData) {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        "Authorization": `Bearer ${token}` // ✅ obligatorio
+        "Authorization": `Bearer ${token}` 
       },
       body: JSON.stringify(movieData),
     });
