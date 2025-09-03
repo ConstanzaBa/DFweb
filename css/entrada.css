@@ -687,11 +687,11 @@
 
   column-gap: 2rem;
 
-  width: 300px;
+  width: 30rem;
 
   border-radius: 5px;
 
-  padding: 15px;
+  padding: 1.5rem;
 
   position: sticky;
 
@@ -699,25 +699,19 @@
 
 }
 
-/* Rating average */
-.average-rating {
-  text-align: center;
-  margin-bottom: 15px;
-}
-
 .average-number {
-  font-size: 32px;
+  font-size: 3.2rem;
   font-weight: 700;
   color: #333;
 }
 
 .average-stars {
-  margin: 5px 0;
-  font-size: 25px;
+  margin: 0.5rem 0;
+  font-size: 2.5rem;
 }
 
 .star {
-  font-size: 20px;
+  font-size: 2rem;
   color: var(--gris);
 }
 
@@ -727,7 +721,7 @@
 
 .total-reviews {
   display: block;
-  font-size: 12px;
+  font-size: 1.2rem;
   color: var(--gris);
   margin-top: 3px;
 }
@@ -736,19 +730,19 @@
 .rating-row {
   display: flex;
   align-items: center;
-  gap: 8px;
-  margin-bottom: 6px;
+  gap: 0.8rem;
+  margin-bottom: 0.6rem;
 }
 
 .star-label {
-  width: 25px;
-  font-size: 13px;
+  width: 2.5rem;
+  font-size: 1.3rem;
   color: var(--negro);
 }
 
 .bar-container {
   flex: 1;
-  height: 10px;
+  height: 1rem;
   background: var(--gris);
   border-radius: 5px;
   overflow: hidden;
@@ -761,21 +755,21 @@
 }
 
 .count {
-  width: 30px;
+  width: 3rem;
   text-align: right;
-  font-size: 12px;
+  font-size: 1.2rem;
   color: var(--negro);
 }
 
 /* Título comentarios */
 .title {
-  height: 50px;
+  height: 5rem;
   display: flex;
   align-items: center;
-  padding-left: 20px;
+  padding-left: 2rem;
   border-bottom: 1px solid var(--gris);
   font-weight: 700;
-  font-size: 13px;
+  font-size: 1.3rem;
   color: var(--negro);
 }
 
@@ -790,61 +784,61 @@
 .comments {
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  gap: 2rem;
 
-  max-height: 600px;   /* 🔥 limita la altura (aprox. 3 reseñas) */
+  max-height: 40rem;   /* 🔥 limita la altura (aprox. 3 reseñas) */
   overflow-y: auto;    /* 🔥 activa scroll si hay más */
-  padding-right: 8px;  /* deja lugar al scrollbar */
+  padding-right: 0.8rem;  /* deja lugar al scrollbar */
 }
 
 /* Scrollbar personalizado */
 .comments::-webkit-scrollbar {
-  width: 8px;
+  width: 0.8rem;
 }
 
 .comments::-webkit-scrollbar-thumb {
   background: var(--primario);
-  border-radius: 4px;
+  border-radius: 0.4rem;
 }
 
 .comment {
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: 1rem;
   border-bottom: 0.1rem solid var(--gris);
-  padding-bottom: 30px;
+  padding-bottom: 3rem;
 }
 
 .comment-header {
     display: flex;
     align-items: center;
-    gap: 30px;
+    gap: 3rem;
 }
 
 
 .comment-header strong {
   font-weight: 700;
-  font-size: 22px;
+  font-size: 1.6rem;
   color: var(--negro);
 }
 
 .comment-title {
   font-weight: 600;
-  font-size: 18px;
+  font-size: 1.8rem;
   color: var(--primario);
-  margin-left: 80px;
+  margin-left: 8rem;
 }
 
 .comment-text {
-  font-size: 16px;
-  line-height: 18px;
+  font-size: 1.6rem;
+  line-height: 1.8rem;
   color: var(--gris);
-  margin-left: 80px;
+  margin-left: 8rem;
 }
 
 /* Caja para nuevo comentario */
 .text-box {
-  border-radius: 15px;
+  border-radius: 1.5rem;
   padding: 1.5rem;
   margin: 2rem 0rem;
   background: var(--gris);
@@ -853,36 +847,36 @@
 .box-container {
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: 1.2rem;
 }
 
 .input-wrapper {
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 1rem;
   background: var(--blanco);
   border-radius: 15px;
-  padding: 15px;
+  padding: 1.5rem;
 }
 
 .input-wrapper input[type="text"] {
   width: 100%;
   border: 0.02rem solid var(--gris);
-  border-radius: 8px;
-  padding: 8px 12px;
-  font-size: 14px;
+  border-radius: 1rem;
+  padding: 0.8rem 1.2rem;
+  font-size: 1.4rem;
   outline: none;
   background: var(--blanco);
 }
 
 .input-wrapper textarea {
   width: 100%;
-  height: 100px;
+  height: 10rem;
   resize: vertical;
   border: 0.02rem solid var(--gris);
-  border-radius: 12px;
-  padding: 10px 12px;
-  font-size: 14px;
+  border-radius: 1rem;
+  padding: 1rem 1.2rem;
+  font-size: 1.4rem;
   outline: none;
   line-height: 18px;
   background: var(--blanco);
@@ -890,8 +884,8 @@
 
 .input-wrapper .send {
   align-self: flex-end;
-  width: 36px;
-  height: 36px;
+  width: 3.6rem;
+  height: 3.6rem;
   border: none;
   border-radius: 50%;
   background: var(--primario);
@@ -910,14 +904,13 @@
 
 /* Estrellas de puntuación en formulario */
 .rating-form {
-  font-size: 50x;
+  font-size: 5rem;
   display: flex;
   flex-direction: row-reverse;
-  gap: 6px;
-  margin-top: 5px;
-  padding: 0.5rem ;
+  gap: 0.5rem;
+  padding: 0.5rem;
   color: var(--primario);
-  margin-right: 540px;
+  margin-right: 54rem;
 }
 
 .rating-form input {
@@ -925,7 +918,7 @@
 }
 
 .rating-form label {
-  font-size: 26px;
+  font-size: 2.6rem;
   color: var(--gris);
   cursor: pointer;
   transition: color 0.3s;
@@ -945,7 +938,7 @@
 }
 
 .rating-comment .star {
-  font-size: 20px;
+  font-size: 2rem;
   color: var(--gris);
 }
 
@@ -954,22 +947,9 @@
 }
 
 .raiting-title {
-  font-size: 14px;
+  font-size: var(--fuenteparrafossize);
   color: var(--gris);
-  margin-left: 7px;
-  margin-bottom: -20px;
-}
-
-.custom-position {
-  position: relative;
-  left: -775px;
-  top: -715px;
-  transform: translate(291.2px, 0px);
-}
-
-.custom-size {
-  width: 372px;
-  height: 43.2px;
+  margin: 0rem 1rem;
 }
 
 .bar-70 {
@@ -993,8 +973,8 @@
 }
 
 .comment-header img.comment-avatar {
-    width: 50px;
-    height: 50px;
+    width: 4rem;
+    height: 4rem;
     border-radius: 50%;
     object-fit: cover;
     border: 2px solid var(--primario);
@@ -1003,16 +983,16 @@
 .rating-comment {
   font-size: 2rem; 
   color: var(--primario);   
-  margin-left: 440px;
+  margin-left: 44rem;
 }
 
 .login-warning {
   padding: 1rem;
   background: var(--gris);
   border: 1px solid var(--primario);
-  border-radius: 8px;
+  border-radius: 0.8rem;
   color: var(--primario);
-  font-size: 14px;
+  font-size: var(--fuenteparrafossize);
   text-align: center;
 }
 
