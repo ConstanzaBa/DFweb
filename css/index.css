@@ -18,8 +18,6 @@
   padding-top: 1rem;
   padding-bottom: 3rem;
   overflow-x: scroll;
-  scroll-snap-type: mandatory;
-  -webkit-overflow-scrolling: touch;
 }
 
 .peliculas::-webkit-scrollbar {

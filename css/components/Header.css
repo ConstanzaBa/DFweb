@@ -11,10 +11,7 @@
 
 .header__usuario,
 .header__entrada {
-  width: 100%;
   background-color: var(--negro);
-  place-content: center;
-  place-items: center;
 }
 
 .barra-header {
