@@ -988,6 +988,7 @@
 }
 
 .login-warning {
+  margin: 0;
   padding: 1rem;
   background: var(--gris);
   border: 1px solid var(--primario);
