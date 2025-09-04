@@ -13,57 +13,33 @@
   <!-- Google Fonts (preconnect + preload + stylesheet) -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link
-    rel="preload"
+  <link rel="preload"
     href="https://fonts.googleapis.com/css2?family=Open+Sans:ital@0;1&family=PT+Sans:wght@400;700&display=swap"
-    as="style"
-    crossorigin="anonymous"
-  />
-  <link
-    rel="stylesheet"
+    as="style" crossorigin="anonymous" />
+  <link rel="stylesheet"
     href="https://fonts.googleapis.com/css2?family=Open+Sans:ital@0;1&family=PT+Sans:wght@400;700&display=swap"
-    crossorigin="anonymous"
-  />
+    crossorigin="anonymous" />
 
   <!-- Material Symbols -->
-  <link
-    rel="preload"
+  <link rel="preload"
+    href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" as="style"
+    crossorigin="anonymous" />
+  <link rel="stylesheet"
     href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0"
-    as="style"
-    crossorigin="anonymous"
-  />
-  <link
-    rel="stylesheet"
-    href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0"
-    crossorigin="anonymous"
-  />
+    crossorigin="anonymous" />
 
   <!-- Remix Icon -->
-  <link
-    rel="preload"
-    href="https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css"
-    as="style"
-    crossorigin="anonymous"
-  />
-  <link
-    rel="stylesheet"
-    href="https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css"
-    crossorigin="anonymous"
-  />
+  <link rel="preload" href="https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css" as="style"
+    crossorigin="anonymous" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css"
+    crossorigin="anonymous" />
 
   <!-- Font Awesome -->
-  <link
-    rel="stylesheet"
-    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
-    crossorigin="anonymous"
-  />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+    crossorigin="anonymous" />
 
   <!-- Line Icons -->
-  <link
-    rel="stylesheet"
-    href="https://cdn.lineicons.com/5.0/lineicons.css"
-    crossorigin="anonymous"
-  />
+  <link rel="stylesheet" href="https://cdn.lineicons.com/5.0/lineicons.css" crossorigin="anonymous" />
 
   <!-- App CSS (preload + stylesheet) -->
   <link rel="preload" href="css/styles.css" as="style" />
@@ -98,111 +74,110 @@
 
 
 <body>
-    <div id="header" class="header absolute"></div>
+  <div id="header" class="header absolute"></div>
 
 
-    <div class="media__display">
+  <div class="media__display">
 
-        <div class="background-slider"></div>
+    <div class="background-slider"></div>
 
-        <div class="media__display__content">
+    <div class="media__display__content">
 
-            <h1 data-translate="welcomeMessage">Bienvenido.</h1>
+      <h1 data-translate="welcomeMessage">Bienvenido.</h1>
 
-            <h3 data-translate="welcomeSubtitle">Millones de películas, series y personas por descubrir.</h3>                    
+      <h3 data-translate="welcomeSubtitle">Millones de películas, series y personas por descubrir.</h3>
 
-            <section class="busqueda no-margin">
+      <section class="busqueda no-margin">
 
-                <form class="busqueda__form" id="busqueda__barra">
+        <form class="busqueda__form" id="busqueda__barra">
 
-                    <input class="busqueda__input" type="text" placeholder="Busca lo que quieras ver..."
+          <input class="busqueda__input" type="text" placeholder="Busca lo que quieras ver..." name="q"
+            data-translate="searchPlaceholder">
 
-                        name="q" data-translate="searchPlaceholder">
+          <div class="busqueda__boton" id="busqueda__boton">
 
-                    <div class="busqueda__boton" id="busqueda__boton">
+            <i class="ri-search-2-line busqueda__boton__icono"></i>
 
-                        <i class="ri-search-2-line busqueda__boton__icono"></i>
+          </div>
 
-                    </div>
+        </form>
 
-                </form>
-
-            </section>
-
-        </div>
+      </section>
 
     </div>
 
-
-
-    <main class="contenedor">
-
-        <section class="headings">
-
-            <h3 id="popular" data-translate="popularMovies">Populares</h3>
-
-                <div class="peliculas" id="popular-movies">
-
-                    <div id="pelicula_card"></div>
-
-                </div>
-
-            </section>
+  </div>
 
 
 
+  <main class="contenedor">
 
+    <section class="headings">
 
-            <section class="headings">
+      <h3 id="popular" data-translate="popularMovies">Populares</h3>
 
-                <h3 id="now-playing-label" data-translate="nowPlaying">En Cartelera</h3>
+      <div class="peliculas" id="popular-movies">
 
-                <div class="peliculas" id="now-playing-movies">
+        <div id="pelicula_card"></div>
 
-                    <div id="pelicula_card"></div>
+      </div>
 
-                </div>
-
-            </section>
+    </section>
 
 
 
 
 
-            <section class="headings">
+    <section class="headings">
 
-                <h3 id="top-rated-label" data-translate="topRatedMovies">Mejor Valoradas</h3>
+      <h3 id="now-playing-label" data-translate="nowPlaying">En Cartelera</h3>
 
-                <div class="peliculas" id="top-rated-movies">
+      <div class="peliculas" id="now-playing-movies">
 
-                    <div id="pelicula_card"></div>y
+        <div id="pelicula_card"></div>
 
-                </div>
+      </div>
 
-            </section>
-
-
+    </section>
 
 
 
-            <section class="headings">
 
-                <h3 id="upcoming-label" data-translate="upcomingMovies">Próximos Estrenos</h3>
 
-                <div class="peliculas" id="upcoming-movies">
+    <section class="headings">
 
-                    <div id="pelicula_card"></div>
+      <h3 id="top-rated-label" data-translate="topRatedMovies">Mejor Valoradas</h3>
 
-                </div>
+      <div class="peliculas" id="top-rated-movies">
 
-            </section>
+        <div id="pelicula_card"></div>y
 
-        </main>
+      </div>
 
-        <div id="chatbot"></div>
+    </section>
 
-        <div id="footer"></div>
-        
+
+
+
+
+    <section class="headings">
+
+      <h3 id="upcoming-label" data-translate="upcomingMovies">Próximos Estrenos</h3>
+
+      <div class="peliculas" id="upcoming-movies">
+
+        <div id="pelicula_card"></div>
+
+      </div>
+
+    </section>
+
+  </main>
+
+  <div id="chatbot"></div>
+
+  <div id="footer"></div>
+
 
 </body>
 

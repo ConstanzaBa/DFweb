@@ -1,43 +1,18 @@
-body {
-  font-family: "Segoe UI", sans-serif;
-  margin: 0;
-  padding: 0;
-  background: #f9f9fc;
-  display: flex;
-  flex-direction: column;
-  min-height: 100vh;
-  color: var(--negro);
-   display: flex;
-  flex-direction: column;
-  min-height: 100vh;
-  margin: 0;
-  padding: 0;
-}
-
 .profile-container {
   position: relative;
   max-width: 1300px;
   min-width: 1300px;
   margin: 30px auto 20px auto;
-  background: white;
+  background: var(--blanco);
   border-radius: 12px;
   box-shadow: 0 0 20px rgba(0,0,0,0.05);
   padding: 30px;
-}
-
-#h
-
-#header-container {
-  flex-shrink: 0;
 }
 
 .profile-container {
   flex: 1 ;
 }
 
-#footer-container {
-  flex-shrink: 0;
-}
 .profile-header {
   display: flex;
   align-items: center;
@@ -57,7 +32,7 @@ body {
   height: 120px;
   border-radius: 50%;
   object-fit: cover;
-  border: 2px solid orange; 
+  border: 2px solid var(--primario); 
   display: block;
   box-sizing: border-box; 
   position: relative;
@@ -88,7 +63,7 @@ padding-left:25px;
 }
 
 .profile-stat small {
-  color: #777;
+  color: var(--gris);
 }
 
 .profile-tab-section {
@@ -105,7 +80,7 @@ padding-left:25px;
   display: flex;
   justify-content: center;
   position: relative;
-  background-color: orange; 
+  background-color: var(--primario); 
   border-radius: 9px;
   padding: 2px;
   margin: 0 auto;
@@ -150,7 +125,7 @@ padding-left:25px;
   align-items: center;
   gap: 8px;
   padding: 8px 16px;
-  background-color: rgba(128, 128, 128, 0.15);
+  background-color: rgba(var(--gris), 0.15);
   border: none;
   border-radius: 20px;
   color: var(--blanco);
@@ -165,7 +140,7 @@ padding-left:25px;
 }
 
 .profile-button:hover {
-  background-color: rgba(255, 165, 0, 0.3);
+  background-color: rgba(var(--primario), 0.3);
 }
 
 .profile-svg-icon {
@@ -185,7 +160,7 @@ padding-left:25px;
 }
 
 .profile-label-s {
-  color: rgb(0, 0, 0);
+  color: var(--negro);
   line-height: 20px;
   font-size: 16px;
   letter-spacing: 2px;
@@ -206,7 +181,7 @@ padding-left:25px;
   height: 30px;
   border-radius: 50%;
   border: none;
-  background-color: orange;
+  background-color: var(--primario);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -246,7 +221,7 @@ padding-left:25px;
   height: 30px;
   border-radius: 50%;
   border: none;
-  background-color: orange; 
+  background-color: var(--primario); 
   display: flex;
   align-items: center;
   justify-content: center;
@@ -284,7 +259,7 @@ padding-left:25px;
   content: "";
   width: 200%;
   height: 200%;
-  background-color: rgba(255, 165, 0, 0.7);
+  background-color: rgba(var(--primario), 0.7);
   position: absolute;
   z-index: 1;
   transform: scale(0);
@@ -299,7 +274,7 @@ padding-left:25px;
 
 .profile-editBtn:hover {
   background-color: var(--primario);
-  box-shadow: 0px 4px 10px rgba(255, 165, 0, 0.7);
+  box-shadow: 0px 4px 10px rgba(var(--primario), 0.7);
 }
 
 .profile-editBtn svg {
@@ -384,7 +359,7 @@ padding-left:25px;
 
 .task:hover {
   box-shadow: rgba(99, 99, 99, 0.2) 0px 4px 12px;
-  border-color: rgba(255, 98, 0, 0.3);
+  border-color: rgba(var(--primario), 0.3);
 }
 
 /* ==== HEADER DE CARD ==== */
@@ -491,7 +466,7 @@ padding-left:25px;
 /* Contenido de las secciones */
 .tabs .content section {
   display: none;
-  padding: 20px 0;
+  padding: 1rem 0;
 }
 
 #tab-recientes:checked ~ .content section:nth-child(1),
@@ -537,32 +512,6 @@ padding-left:25px;
   padding: 10px 0;
   justify-items: center; /* centra cada card */
 }
-
-/* ==== CARDS ==== */
-.pelicula__card {
-  position: relative;
-  cursor: pointer;
-  z-index: 1;
-  max-width: 320px; /* controla el tamaño de cada card */
-  max-height: 320px ;
-  transition: transform 0.2s ease;
-}
-
-.pelicula__card:hover {
-  transform: scale(1.05);
-}
-
-.pelicula__card img {
-  display: block;
-  width: 100%;
-  border-radius: 8px;
-}
-
-.pelicula__card__info {
-  padding: 20px 0;
-  text-align: center;
-}
-
 
 /* ==== REVIEWS COMUNES ==== */
 .review-card {
