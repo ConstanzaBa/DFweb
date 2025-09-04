@@ -212,9 +212,15 @@
 
 .entrada__info__streaming,
 
-.entrada__info__cinemas {
+.entrada__info__cinemas, 
+
+.entrada__reviews__puntaje {
 
   display: grid;
+
+  gap: 1rem;
+
+  margin: 5rem 0;
 
   grid-area: 2 / 2;
 
@@ -226,9 +232,11 @@
 
 .entrada__info__streaming h3,
 
-.entrada__info__cinemas h3 {
+.entrada__info__cinemas h3, 
 
-  margin-bottom: 0.2rem;
+.entrada__reviews__puntaje h3 {
+
+  margin: 0;
 
 }
 
@@ -680,21 +688,12 @@
 }
 
 .entrada__reviews__puntaje {
-
+  display: grid;
   align-items: center;
-
-  place-content: center;
-
   column-gap: 2rem;
-
   width: 30rem;
-
   border-radius: 5px;
-
   padding: 1.5rem;
-
-  top: 20px;
-
 }
 
 .average-number {
