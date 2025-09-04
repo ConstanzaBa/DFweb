@@ -343,11 +343,11 @@
   
   .star-widget input:not(:checked) ~ label:hover,
   .star-widget input:not(:checked) ~ label:hover ~ label {
-    color: #fd4;
+    color: var(--primario);
   }
   
   .star-widget input:checked ~ label {
-    color: #fd4;
+    color: var(--primario);
   }
   
   .empty-state {
@@ -375,19 +375,19 @@
     width: 100%;
     padding: 4rem 2rem;
     text-align: center;
-    background-color: #ffebee;
+    background-color: var(--gris);
     border-radius: 1rem;
     margin: 2rem 0;
   }
   
   .error-state p:first-child {
     font-size: 2rem;
-    color: #c62828;
+    color: var(--secundario); 
     margin-bottom: 1rem;
     font-weight: bold;
   }
   
   .error-state p:last-child {
     font-size: 1.6rem;
-    color: #b71c1c;
+    color: var(--secundario);
   }

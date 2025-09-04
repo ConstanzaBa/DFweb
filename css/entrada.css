@@ -824,16 +824,16 @@
 
 .comment-title {
   font-weight: 600;
-  font-size: 1.8rem;
+  font-size: var(--fuenteparrafossize);
   color: var(--primario);
-  margin-left: 8rem;
+  padding-left: 1rem;
 }
 
 .comment-text {
-  font-size: 1.6rem;
+  font-size: var(--fuenteparrafossize);
   line-height: 1.8rem;
   color: var(--gris);
-  margin-left: 8rem;
+  padding-left: 1rem;
 }
 
 /* Caja para nuevo comentario */
@@ -864,7 +864,7 @@
   border: 0.02rem solid var(--gris);
   border-radius: 1rem;
   padding: 0.8rem 1.2rem;
-  font-size: 1.4rem;
+  font-size: var(--fuenteparrafossize);
   outline: none;
   background: var(--blanco);
 }
@@ -876,7 +876,7 @@
   border: 0.02rem solid var(--gris);
   border-radius: 1rem;
   padding: 1rem 1.2rem;
-  font-size: 1.4rem;
+  font-size: var(--fuenteparrafossize);
   outline: none;
   line-height: 18px;
   background: var(--blanco);
@@ -884,8 +884,8 @@
 
 .input-wrapper .send {
   align-self: flex-end;
-  width: 3.6rem;
-  height: 3.6rem;
+  width: 3.5rem;
+  height: 3.5rem;
   border: none;
   border-radius: 50%;
   background: var(--primario);

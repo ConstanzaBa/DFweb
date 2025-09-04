@@ -6,7 +6,7 @@ body {
   display: flex;
   flex-direction: column;
   min-height: 100vh;
-  color: #000;
+  color: var(--negro);
    display: flex;
   flex-direction: column;
   min-height: 100vh;
@@ -67,7 +67,7 @@ body {
 .profile-username {
   font-size: 34px;
   font-weight: bold;
-  color: #000; 
+  color: var(--negro); 
 padding-left:25px;
 }
 
@@ -84,7 +84,7 @@ padding-left:25px;
 .profile-stat div {
   font-size: 18px;
   font-weight: bold;
-  color: #000; 
+  color: var(--negro); 
 }
 
 .profile-stat small {
@@ -98,7 +98,7 @@ padding-left:25px;
 .profile-tab-section h2 {
   text-align: center;
   margin-bottom: 20px;
-  color: #000;
+  color: var(--negro);
 }
 
 .profile-tab-container {
@@ -126,7 +126,7 @@ padding-left:25px;
   opacity: 0.6;
   cursor: pointer;
   z-index: 1;
-  color: #000; 
+  color: var(--negro); 
 }
 
 .profile-indicator {
@@ -135,7 +135,7 @@ padding-left:25px;
   left: 2px;
   width: 130px;
   height: 28px;
-  background: #fff;
+  background: var(--blanco);
   border-radius: 7px;
   box-shadow: 0px 3px 8px rgba(0,0,0,0.12), 0px 3px 1px rgba(0,0,0,0.04);
   transition: all 0.2s ease-out;
@@ -153,7 +153,7 @@ padding-left:25px;
   background-color: rgba(128, 128, 128, 0.15);
   border: none;
   border-radius: 20px;
-  color: white;
+  color: var(--blanco);
   font-weight: 600;
   font-size: 1rem;
   cursor: pointer;
@@ -169,7 +169,7 @@ padding-left:25px;
 }
 
 .profile-svg-icon {
-  stroke: white;
+  stroke: var(--blanco);
   width: 20px;
   height: 20px;
   transition: transform 0.8s linear infinite;
@@ -193,7 +193,7 @@ padding-left:25px;
 }
 
 .profile-button:hover .profile-label-s {
-  color: white;
+  color: var(--blanco);
   text-shadow: 0 0 5px rgba(255, 255, 255, 0.7);
 }
 
@@ -224,7 +224,7 @@ padding-left:25px;
 .profile-label {
   line-height: 20px;
   font-size: 17px;
-  color: #000; 
+  color: var(--negro); 
   font-family: sans-serif;
   letter-spacing: 1px;
 }
@@ -298,14 +298,14 @@ padding-left:25px;
 }
 
 .profile-editBtn:hover {
-  background-color: #ffb347;
+  background-color: var(--primario);
   box-shadow: 0px 4px 10px rgba(255, 165, 0, 0.7);
 }
 
 .profile-editBtn svg {
   height: 16px;
   width: 16px;
-  fill: #ffffff;
+  fill: var(--blanco);
   z-index: 3;
   transition: all 0.2s;
   transform-origin: center;
@@ -322,7 +322,7 @@ padding-left:25px;
   position: absolute;
   bottom: 5px;
   left: -9px;
-  background-color: white;
+  background-color: var(--blanco);
   border-radius: 2px;
   z-index: 1;
   transform: scaleX(0);
@@ -345,7 +345,7 @@ padding-left:25px;
   padding: 1rem 0;
   scroll-snap-type: x mandatory;
   scrollbar-width: thin;
-  scrollbar-color: #ff6200 #f0f0f0;
+  scrollbar-color: var(--primario) var(--gris);
 }
 
 .reviews-carousel::-webkit-scrollbar {
@@ -353,12 +353,12 @@ padding-left:25px;
 }
 
 .reviews-carousel::-webkit-scrollbar-thumb {
-  background: #ff6200;
+  background: var(--primario);
   border-radius: 4px;
 }
 
 .reviews-carousel::-webkit-scrollbar-track {
-  background: #f0f0f0;
+  background: var(--gris);
 }
 
 .reviews-carousel .task {
@@ -371,9 +371,9 @@ padding-left:25px;
 /* ==== REVIEW CARDS (task) ==== */
 .task {
   position: relative;
-  color: #2e2e2f;
+  color: var(--negro);
   cursor: grab;
-  background-color: #fff;
+  background-color: var(--blanco);
   padding: 1rem;
   border-radius: 12px;
   box-shadow: rgba(99, 99, 99, 0.1) 0px 2px 8px;
@@ -398,7 +398,7 @@ padding-left:25px;
   border-radius: 100px;
   padding: 4px 13px;
   font-size: 12px;
-  color: #fff;
+  color: var(--blanco);
   background-color: var(--primario);
   white-space: nowrap;
 }
@@ -458,7 +458,7 @@ padding-left:25px;
   list-style: none;
   padding: 0;
   margin: 0;
-  border-bottom: 1px solid #e0e0e0;
+  border-bottom: 1px solid var(--gris);
 }
 
 .tabs ul li {
@@ -566,17 +566,17 @@ padding-left:25px;
 
 /* ==== REVIEWS COMUNES ==== */
 .review-card {
-  background-color: #fff;
+  background-color: var(--blanco);
   border-radius: 12px;
   box-shadow: rgba(99, 99, 99, 0.1) 0px 2px 8px;
   overflow: hidden;
   border: 2px solid transparent;
   transition: all 0.2s ease-in-out;
-  color: #2e2e2f;
+  color: var(--negro);
 }
 
 .review-card:hover {
-  border-color: rgba(255, 98, 0, 0.3);
+  border-color: rgba(var(--primario), 0.3);
   box-shadow: rgba(99, 99, 99, 0.2) 0px 4px 12px;
 }
 
@@ -727,7 +727,7 @@ padding-left:25px;
   border: 1px solid var(--gris);
   border-radius: 6px;
   cursor: pointer;
-  background-color: #fff;
+  background-color: var(--blanco);
   transition: all 0.2s;
 }
 
