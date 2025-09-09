@@ -1,7 +1,9 @@
 import { getReviewsByPelicula } from '../../api/endpoints/GetReviewsByPelicula.js';
 import { addReview } from '../../api/endpoints/AddReview.js';
+import { checkReview } from '../../api/endpoints/CheckReview.js';
 import { fetchConToken } from '../../utils/AuthFetch.js';
 import { API_BASE_URL } from '../../utils/config.js';
+import { showError } from "../user/ShowError.js"; // <- importamos showError
 
 // Renderiza las reseñas de la película
 export async function renderReviews(pelicula_id) {
@@ -31,7 +33,6 @@ export async function renderReviews(pelicula_id) {
 
         commentsContainer.innerHTML = "";
         let sumRatings = 0;
-
         const counts = { 5: 0, 4: 0, 3: 0, 2: 0, 1: 0 };
 
         for (const review of data.reviews) {
@@ -39,11 +40,9 @@ export async function renderReviews(pelicula_id) {
             sumRatings += score;
             counts[score]++;
 
-            // Obtener info del usuario sin token (visible para todos)
             const userResponse = await fetch(
-    `${API_BASE_URL}/Usuarios/GetUserPublic.php?usuario_id=${review.usuario_id}`
-);
-
+                `${API_BASE_URL}/Usuarios/GetUserPublic.php?usuario_id=${review.usuario_id}`
+            );
             const userData = await userResponse.json();
 
             let avatarUrl = userData.avatar || "assets/avatars/default-avatar.png";
@@ -76,7 +75,6 @@ export async function renderReviews(pelicula_id) {
         totalReviewsSpan.textContent = `${data.reviews.length} calificaciones`;
 
         const maxCount = Math.max(...Object.values(counts));
-
         Object.keys(counts).forEach(star => {
             const row = document.querySelector(`.rating-row[data-star="${star}"]`);
             if (row) {
@@ -90,13 +88,13 @@ export async function renderReviews(pelicula_id) {
 
     } catch (error) {
         console.error("Error al cargar reseñas:", error);
-        commentsContainer.innerHTML = "<p>Error al cargar reseñas.</p>";
+        showError("Error al cargar reseñas", "error");
     }
 }
 
-// Función para configurar el formulario de reseñas (solo para usuarios logueados)
+// Función para configurar el formulario de reseñas (solo para usuarios logueados y que no hayan reseñado)
 export function setupReviewForm(pelicula_id) {
-    window.onload = () => {
+    window.onload = async () => {
         const formWrapper = document.querySelector('.text-box');
         const sendBtn = document.getElementById('send-review');
         if (!formWrapper) return;
@@ -111,6 +109,23 @@ export function setupReviewForm(pelicula_id) {
             return;
         }
 
+        // Verificar si ya dejó una reseña
+        try {
+            const reviewExists = await checkReview(pelicula_id);
+            if (reviewExists.success && reviewExists.exists) {
+                formWrapper.innerHTML = `
+                    <p class="login-warning">
+                        Ya dejaste una reseña en esta película.
+                    </p>
+                `;
+                return;
+            }
+        } catch (err) {
+            console.error("Error al verificar reseña existente:", err);
+            showError("Error al verificar reseña existente", "error");
+            return;
+        }
+
         if (!sendBtn) return;
 
         sendBtn.addEventListener('click', async (event) => {
@@ -121,24 +136,24 @@ export function setupReviewForm(pelicula_id) {
             const puntuacion = puntuacionInput ? parseInt(puntuacionInput.value, 10) : null;
 
             if (!review || !puntuacion) {
-                alert("Debes escribir un comentario y seleccionar una puntuación");
+                showError("Debes escribir un comentario y seleccionar una puntuación", "warning");
                 return;
             }
 
             try {
                 const result = await addReview(pelicula_id, review, puntuacion, titulo);
                 if (result.success) {
-                    alert("Reseña agregada correctamente");
+                    showError("Reseña agregada correctamente", "success");
                     document.getElementById('review-title').value = '';
                     document.getElementById('review-text').value = '';
                     if (puntuacionInput) puntuacionInput.checked = false;
                     await renderReviews(pelicula_id);
                 } else {
-                    alert("Error al agregar reseña: " + (result.error || result.message || "Error desconocido"));
+                    showError(result.error || result.message || "Error al agregar reseña", "error");
                 }
             } catch (err) {
                 console.error("Error al enviar la review:", err);
-                alert("Hubo un error al enviar la reseña: " + err.message);
+                showError("Hubo un error al enviar la reseña: " + err.message, "error");
             }
         });
     };

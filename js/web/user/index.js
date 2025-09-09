@@ -1,54 +1,63 @@
 import { fetchConToken } from '../../utils/AuthFetch.js';
 import { API_BASE_URL } from '../../utils/config.js';
+import { loadUserFavorites } from './loadUserFavorites.js';
+import { loadUserReviews } from './loadUserReviews.js';
 
 document.addEventListener('DOMContentLoaded', async () => {
   const token = localStorage.getItem('token');
 
   if (!token) {
-    console.warn("No hay token en localStorage, usuario no autenticado.");
-    return;
+   return;
   }
 
   try {
     const response = await fetchConToken('/Usuarios/GetUserById.php');
-
-    if (!response || !response.ok) {
-      throw new Error('Token inválido o expirado');
-    }
+    if (!response || !response.ok) throw new Error('Token inválido o expirado');
 
     const userData = await response.json();
+    if (!userData || !userData.usuario) throw new Error('Datos de usuario no válidos');
 
-    if (!userData || !userData.usuario) {
-      throw new Error('Datos de usuario no válidos');
-    }
-
-    const avatarImg = document.getElementById('avatarImg');
+    // Avatar
+    const avatarImg = document.getElementById('profile-avatarImg');
     if (avatarImg) {
       let avatarUrl = userData.avatar;
-
       if (!avatarUrl || avatarUrl === '') {
-        // Avatar por defecto según género (si lo tenés en userData)
         const genero = userData.genero || 'Masculino';
         avatarUrl = genero === 'Femenino'
           ? `${API_BASE_URL}/assets/avatars/female-default.png`
           : `${API_BASE_URL}/assets/avatars/male-default.png`;
       } else if (!avatarUrl.startsWith('http')) {
-        // Avatar subido por el usuario
         avatarUrl = `${API_BASE_URL}/${avatarUrl}`;
       }
-
       avatarImg.src = avatarUrl;
     }
 
-    const usernameDiv = document.getElementById('username');
-    if (usernameDiv) {
-      usernameDiv.textContent = userData.usuario;
-    }
+    // Username
+    const usernameDiv = document.getElementById('profile-username');
+    if (usernameDiv) usernameDiv.textContent = userData.usuario;
+
+    // Actualizar contadores de "cargando..."
+    const reviewsCount = document.getElementById('profile-reviews');
+    const favoritesCount = document.getElementById('profile-favorites');
+    if (reviewsCount) reviewsCount.textContent = '…';
+    if (favoritesCount) favoritesCount.textContent = '…';
+
+    // Cargar datos de reseñas y favoritos
+    await Promise.all([
+      loadUserFavorites(token),
+      loadUserReviews(token)
+    ]);
 
   } catch (error) {
     console.error('Error al autenticar usuario:', error);
     localStorage.removeItem('token');
     localStorage.removeItem('username');
     localStorage.removeItem('avatar');
+
+    // Poner contadores en 0 por seguridad
+    const reviewsCount = document.getElementById('profile-reviews');
+    const favoritesCount = document.getElementById('profile-favorites');
+    if (reviewsCount) reviewsCount.textContent = 0;
+    if (favoritesCount) favoritesCount.textContent = 0;
   }
 });

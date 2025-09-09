@@ -1,3 +1,4 @@
+/* contenedor principal */
 .profile-container {
   flex: 1;
   position: relative;
@@ -10,6 +11,22 @@
   padding: 0 4rem;
 }
 
+@media (max-width: 1300px) {
+  .profile-container {
+    max-width: 100%;
+    min-width: unset;
+    padding: 0 2rem;
+  }
+}
+
+@media (max-width: 600px) {
+  .profile-container {
+    padding: 0 1rem;
+    margin: 20px 0;
+  }
+}
+
+/* header */
 .profile-header {
   display: flex;
   align-items: center;
@@ -17,13 +34,17 @@
   padding: 4rem 0;
 }
 
+/* avatar usuario */
 .profile-avatar-container {
+  position: relative;
+  width: 15rem;
+  height: 15rem;
   border-radius: 50%;
 }
 
 .profile-avatar {
-  width: 15rem;
-  height: 15rem;
+  width: 100%;
+  height: 100%;
   border-radius: 50%;
   object-fit: cover;
   border: 2px solid var(--primario);
@@ -31,12 +52,57 @@
   box-sizing: border-box;
 }
 
-.profile-username {
-  font-size: var(--fuenteheadingssize);
-  font-weight: bold;
-  color: var(--negro);
+.profile-editBtn {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  width: 4rem;
+  height: 4rem;
+  border-radius: 50%;
+  border: none;
+  background-color: var(--primario);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 10;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
 }
 
+.profile-avatar-container:hover .profile-editBtn {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.profile-editBtn svg {
+  fill: white;
+}
+
+@media (max-width: 768px) {
+  .profile-avatar-container {
+    width: 12rem;
+    height: 12rem;
+  }
+  .profile-editBtn {
+    width: 3.5rem;
+    height: 3.5rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .profile-avatar-container {
+    width: 10rem;
+    height: 10rem;
+  }
+  .profile-editBtn {
+    width: 3rem;
+    height: 3rem;
+  }
+}
+
+/* estad�sticas del usuario */
 .profile-stats {
   display: flex;
   gap: 1rem;
@@ -53,9 +119,28 @@
 }
 
 .profile-stat small {
-  color: var(--gris);
+  color: var(--gris2);
 }
 
+@media (max-width: 600px) {
+  .profile-stats {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+}
+
+
+/* username */
+.profile-username {
+  font-size: var(--fuenteheadingssize);
+  font-family: var(--fuenteheading);
+  place-content: center;
+  font-weight: bold;
+  color: var(--negro);
+  place-content: center;
+}
+
+/* tabs secci�n */
 .profile-tab-section {
   margin-top: 40px;
 }
@@ -94,6 +179,17 @@
   color: var(--negro);
 }
 
+@media (max-width: 480px) {
+  .profile-tab_label {
+    width: 80px;
+    font-size: 0.65rem;
+  }
+  .profile-indicator {
+    width: 80px;
+    height: 25px;
+  }
+}
+
 .profile-indicator {
   position: absolute;
   top: 2px;
@@ -107,51 +203,13 @@
   z-index: 0;
 }
 
-.profile-button {
-  position: absolute;
-  top: 20px;
-  right: 20px;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  padding: 8px 16px;
-  background-color: rgba(var(--gris), 0.15);
-  border: none;
-  border-radius: 20px;
-  color: var(--blanco);
-  font-weight: 600;
-  font-size: 1rem;
-  cursor: pointer;
-  box-shadow: none;
-  transition: background-color 0.3s ease, color 0.3s ease, text-shadow 0.3s ease;
-  user-select: none;
-  white-space: nowrap;
-
-}
-
-.profile-button:hover {
-  background-color: rgba(var(--primario), 0.3);
-}
-
-.profile-svg-icon {
-  stroke: var(--blanco);
-  width: 20px;
-  height: 20px;
-  transition: transform 0.8s linear infinite;
-}
-
-.profile-button:hover .profile-svg-icon {
-  animation: spin 2s linear infinite;
-}
-
-@keyframes spin {
-  0% {
-    transform: rotate(0deg);
-  }
-
-  100% {
-    transform: rotate(360deg);
-  }
+/* label tabs */
+.profile-label {
+  line-height: 20px;
+  font-size: 17px;
+  color: var(--negro);
+  font-family: sans-serif;
+  letter-spacing: 1px;
 }
 
 .profile-label-s {
@@ -162,34 +220,7 @@
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
 }
 
-.profile-button:hover .profile-label-s {
-  color: var(--blanco);
-  text-shadow: 0 0 5px rgba(255, 255, 255, 0.7);
-}
-
-.profile-label {
-  line-height: 20px;
-  font-size: 17px;
-  color: var(--negro);
-  font-family: sans-serif;
-  letter-spacing: 1px;
-}
-
-.profile-button:hover .profile-svg-icon {
-  animation: spin 2s linear infinite;
-}
-
-@keyframes spin {
-  0% {
-    transform: rotate(0deg);
-  }
-
-  100% {
-    transform: rotate(360deg);
-  }
-}
-
-/* ==== REVIEWS CAROUSEL ==== */
+/* carousel de reviews */
 .reviews-carousel {
   display: flex;
   gap: 1rem;
@@ -218,7 +249,14 @@
   max-width: 350px;
 }
 
-/* ==== REVIEW CARDS (task) ==== */
+@media (max-width: 600px) {
+  .reviews-carousel .task {
+    min-width: 180px;
+    max-width: 200px;
+  }
+}
+
+/* review card */
 .task {
   position: relative;
   color: var(--negro);
@@ -237,7 +275,7 @@
   border-color: rgba(var(--primario), 0.3);
 }
 
-/* ==== HEADER DE CARD ==== */
+/* card header */
 .tags {
   display: flex;
   align-items: center;
@@ -270,7 +308,7 @@
   fill: var(--primario);
 }
 
-/* ==== TEXTO DE REVIEW ==== */
+/* review text */
 .comment {
   margin-top: 0.5rem;
 }
@@ -288,7 +326,7 @@
   color: var(--gris);
 }
 
-/* ==== TABS ==== */
+/* tabs */
 .tabs {
   position: relative;
   width: 100%;
@@ -300,7 +338,7 @@
   display: none;
 }
 
-/* Lista de pestañas */
+/* lista de pesta�as */
 .tabs ul {
   display: flex;
   justify-content: space-around;
@@ -321,7 +359,7 @@
   padding: 14px 0;
   display: block;
   font-weight: 500;
-  color: var(--gris);
+  color: var(--negro);
   transition: color 0.3s, font-weight 0.3s;
 }
 
@@ -329,7 +367,7 @@
   color: var(--primario);
 }
 
-/* Estado activo */
+/* estado activo */
 #tab-recientes:checked~ul li:nth-child(1) label,
 #tab-reviews:checked~ul li:nth-child(2) label,
 #tab-favorites:checked~ul li:nth-child(3) label {
@@ -337,7 +375,7 @@
   font-weight: bold;
 }
 
-/* Contenido de las secciones */
+/* contenido de secciones */
 .tabs .content section {
   display: none;
   padding: 2rem 0;
@@ -349,7 +387,7 @@
   display: block;
 }
 
-/* Indicador */
+/* indicador de tabs */
 .slider {
   position: relative;
   height: 3px;
@@ -364,7 +402,7 @@
   transition: transform 0.3s ease;
 }
 
-/* Movimiento del indicador */
+/* movimiento del indicador */
 #tab-recientes:checked~.slider .indicator {
   transform: translateX(0%);
 }
@@ -377,7 +415,7 @@
   transform: translateX(200%);
 }
 
-/* Responsive */
+/* responsive */
 @media (max-width: 600px) {
   .tabs ul li label {
     font-size: 14px;
@@ -385,28 +423,71 @@
   }
 }
 
+@media (max-width: 1200px) {
+  #tab-only-favorites {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
 
-/* ==== CONTENEDOR DE FAVORITOS ==== */
+@media (max-width: 900px) {
+  #tab-only-favorites {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (max-width: 600px) {
+  #tab-only-favorites {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 400px) {
+  #tab-only-favorites {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* contenedor de favoritos */
 #tab-only-favorites {
   display: grid;
   grid-template-columns: repeat(5, 1fr);
-  /* 5 columnas */
   gap: 10px;
-  /* espacio entre cards */
   padding: 10px 0;
   justify-items: center;
-  /* centra cada card */
 }
 
-/* ==== REVIEWS COMUNES ==== */
+/* responsive favoritos */
+@media (max-width: 1200px) {
+  #tab-only-favorites {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+@media (max-width: 900px) {
+  #tab-only-favorites {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+@media (max-width: 600px) {
+  #tab-only-favorites {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+@media (max-width: 400px) {
+  #tab-only-favorites {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* review cards comunes */
 .review-card {
+  display: flex;
   background-color: var(--blanco);
   border-radius: 12px;
   box-shadow: rgba(99, 99, 99, 0.1) 0px 2px 8px;
   overflow: hidden;
   border: 2px solid transparent;
-  transition: all 0.2s ease-in-out;
-  color: var(--negro);
+  transition: all 0.3s ease;
+  word-break: break-word;
 }
 
 .review-card:hover {
@@ -414,23 +495,15 @@
   box-shadow: rgba(99, 99, 99, 0.2) 0px 4px 12px;
 }
 
-/* Cards dentro del carousel → HORIZONTALES */
+/* cards horizontales (carousel) */
 .review-card.carousel {
-  display: flex;
-  flex-direction: row;
-  /* horizontal */
-  align-items: flex-start;
   width: 350px;
-  min-width: 350px;
-  cursor: grab;
-  scroll-snap-align: start;
-  gap: 15px;
-  padding: 10px;
+  height: auto;
+  flex-direction: row;
 }
 
 .review-card.carousel .review-left {
   flex: 0 0 15rem;
-  /* ancho fijo poster */
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -446,6 +519,7 @@
   display: flex;
   flex-direction: column;
   gap: 5px;
+  margin-left: 20px;
 }
 
 .review-card.carousel .review-title {
@@ -454,18 +528,25 @@
   color: var(--primario);
 }
 
-.review-card.carousel .review-text {
-  font-size: 13px;
-  color: var(--negro);
-  line-height: 1.4;
-  max-height: 60px;
-  /* limitar altura */
-  overflow: hidden;
-  text-overflow: ellipsis;
-  /* cortar con "..." */
+.review-text {
+  white-space: normal;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  line-height: 1.4em;
+  margin-top: 10px;
+  margin-left: 5px;
+  margin-right: 70px;
 }
 
-/* ==== SOLO RESEÑAS (VERTICAL) ==== */
+.review-card.carousel .review-text {
+  display: -webkit-box;
+  -webkit-line-clamp: 4;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* cards verticales (solo rese�as) */
 .review-card.page {
   display: flex;
   flex-direction: row;
@@ -476,11 +557,9 @@
 
 .review-card.page .review-left {
   display: flex;
-  margin-top: 20px;
-  flex: 0.3;
-  flex-direction: column;
+  padding: 1rem;
   align-items: center;
-  gap: 20px;
+  gap: 2rem;
 }
 
 .review-card.page .review-left img {
@@ -500,6 +579,8 @@
   display: flex;
   flex-direction: column;
   gap: 5px;
+  max-height: 30rem;
+  overflow-y: hidden;
 }
 
 .review-card.page .review-title {
@@ -509,13 +590,7 @@
   color: var(--primario);
 }
 
-.review-card.page .review-text {
-  font-size: 16px;
-  line-height: 1.4;
-  color: var(--negro);
-}
-
-/* ==== ESTRELLAS ==== */
+/* estrellas */
 .review-card .average-stars {
   display: flex;
   gap: 2px;
@@ -530,7 +605,7 @@
   color: var(--primario);
 }
 
-/* ==== PAGINACIÓN ==== */
+/* paginaci�n */
 .pagination {
   display: flex;
   justify-content: center;
@@ -560,40 +635,10 @@
   font-weight: bold;
 }
 
-/* ==== EMPTY STATE ==== */
+/* empty state */
 .empty-state {
   text-align: center;
   font-size: 16px;
   color: var(--gris);
   padding: 30px 0;
-}
-
-/* ==== RESPONSIVE ==== */
-@media (max-width: 900px) {
-  .review-card.page {
-    flex-direction: column;
-    width: 95%;
-  }
-
-  .review-card.page .review-left {
-    flex: 1;
-    width: 100%;
-    align-items: center;
-  }
-
-  .review-card.page .review-right {
-    width: 100%;
-  }
-
-  .review-card.carousel {
-    flex-direction: column;
-    /* en pantallas chicas vuelven a vertical */
-    min-width: 180px;
-    width: 180px;
-  }
-
-  .review-card.carousel .review-left {
-    flex: unset;
-    width: 100%;
-  }
 }

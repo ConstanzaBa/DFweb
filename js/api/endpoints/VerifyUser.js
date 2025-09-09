@@ -22,7 +22,7 @@ document.getElementById('loginForm').addEventListener('submit', function (event)
         localStorage.setItem('token', data.access_token);
         localStorage.setItem('username', data.username || username);
         if (data.avatar) localStorage.setItem('avatar', data.avatar);
-        window.location.href = "user.html";
+       window.location.href = "https://dragonfilms.space/user.html";
       } else {
         showError('Usuario o contraseña incorrectos');
       }

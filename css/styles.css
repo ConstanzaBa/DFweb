@@ -55,6 +55,8 @@
 
 
   --gris: #e1e1e1;
+  
+  --gris2: #808080;
 
 
 
@@ -161,11 +163,7 @@ body {
 
 a {
 
-
-
-  text-decoration: none;
-
-
+text-decoration: none;
 
 }
 
@@ -290,3 +288,4 @@ p {
   margin-bottom: 0;
   font-size: var(--fuenteparrafossize);
 }
+

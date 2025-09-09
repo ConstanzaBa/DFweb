@@ -1,17 +1,17 @@
+// favoriteButton.js
 import { addFavorito } from "../../api/endpoints/AddFavorito.js";
 import { checkFavorito } from "../../api/endpoints/CheckFavorito.js";
 import { deleteFavorito } from "../../api/endpoints/DeleteFavorito.js";
-
-const favoriteBtn = document.getElementById("favorite-btn");
-const favoriteCheckbox = favoriteBtn?.querySelector("input");
+import { showError } from "../user/ShowError.js"; 
 
 export async function setupFavoriteButton(movieId, movieData) {
+  const favoriteBtn = document.getElementById("favorite-btn");
+  const favoriteCheckbox = favoriteBtn?.querySelector("input");
   if (!favoriteBtn || !favoriteCheckbox) return;
 
   const token = localStorage.getItem("token");
-
-  // 1️⃣ Solo verificar favorito si hay usuario logueado
   let esFavorito = false;
+
   if (token) {
     try {
       const checkData = await checkFavorito(movieId);
@@ -19,16 +19,15 @@ export async function setupFavoriteButton(movieId, movieData) {
       favoriteCheckbox.checked = esFavorito;
     } catch (error) {
       console.error("Error al verificar favorito:", error);
+      showError("Error al verificar favorito", "error");
     }
   } else {
-    // Si no hay token, deshabilitar el botón o dejar sin marcar
     favoriteCheckbox.checked = false;
   }
 
-  // 2️⃣ Click en el botón
   favoriteBtn.addEventListener("click", async () => {
     if (!token) {
-      alert("Debes iniciar sesión para usar favoritos");
+      showError("Debes iniciar sesi贸n para usar favoritos", "warning");
       return;
     }
 
@@ -51,13 +50,13 @@ export async function setupFavoriteButton(movieId, movieData) {
 
       if (result.success) {
         favoriteCheckbox.checked = !isFavorited;
-        alert(result.message || "Estado actualizado");
+        showError(result.message || "Estado actualizado", "success");
       } else {
-        alert(result.error || "Error al actualizar favorito");
+        showError(result.error || "Error al actualizar favorito", "error");
       }
     } catch (error) {
       console.error("Error en favoritos:", error);
-      alert("Error en el servidor.");
+      showError("Error en el servidor", "error");
     }
   });
 }

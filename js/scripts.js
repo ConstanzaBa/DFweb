@@ -79,27 +79,59 @@ function displayMovies(movies, containerId) {
     return;
   }
 
-  container.innerHTML = movies.map(movie => createMovieCard(movie)).join('');
+  container.innerHTML = '';
+  movies.forEach(movie => {
+    container.appendChild(createMovieCard(movie));
+  });
 }
 
 function createMovieCard(movie) {
   const posterPath = movie.poster_path 
     ? `${TMDB_imgBaseUrl}${movie.poster_path}`
     : "source/img/no-poster.jpg";
+
+  // Crear el contenedor de la card
+  const card = document.createElement('div');
+  card.className = "pelicula__card";
+
+  // Crear enlace
+  const link = document.createElement('a');
+  link.className = "pelicula__card__link";
+  link.href = `entrada.html?id=${movie.id}`;
+  card.appendChild(link);
+
+  // Crear imagen con placeholder y lazy load seguro
+  const img = document.createElement('img');
+  img.src = "source/img/placeholder.jpg"; // Imagen temporal mientras carga
+  img.alt = movie.title;
   
-  return `
-    <div class="pelicula__card">
-      <a class="pelicula__card__link" href="entrada.html?id=${movie.id}">
-        <img src="${posterPath}" alt="${movie.title}" loading="lazy" />
-        <section class="pelicula__card__info">
-          <h1>${movie.title}</h1>
-          <section class="pelicula__card__info__puntaje">
-            <h2><i class="fa-brands fa-imdb"></i> ${movie.vote_average || "N/A"}</h2>
-          </section>
-        </section>
-      </a>
-    </div>
-  `;
+  const actualImage = new Image();
+  actualImage.src = posterPath;
+  actualImage.onload = () => {
+    img.src = posterPath; // Reemplaza placeholder cuando se cargue
+  };
+
+  link.appendChild(img);
+
+  // Info de la película
+  const infoSection = document.createElement('section');
+  infoSection.className = "pelicula__card__info";
+
+  const title = document.createElement('h1');
+  title.textContent = movie.title;
+  infoSection.appendChild(title);
+
+  const scoreSection = document.createElement('section');
+  scoreSection.className = "pelicula__card__info__puntaje";
+
+  const score = document.createElement('h2');
+  score.innerHTML = `<i class="fa-brands fa-imdb"></i> ${movie.vote_average || "N/A"}`;
+  scoreSection.appendChild(score);
+
+  infoSection.appendChild(scoreSection);
+  link.appendChild(infoSection);
+
+  return card;
 }
 
 function displayMovieDetails(movie, containerId) {

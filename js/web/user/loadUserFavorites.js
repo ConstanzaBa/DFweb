@@ -5,28 +5,27 @@ const ITEMS_PER_PAGE = 20;
 let currentPage = 1;
 let favoritos = [];
 
-document.addEventListener("DOMContentLoaded", async () => {
-  await loadUserFavorites();
-});
-
-export async function loadUserFavorites() {
+export async function loadUserFavorites(token) {
   const recientesContainer = document.getElementById("fav-movies");
   const favoritosContainer = document.getElementById("tab-only-favorites");
   const paginationContainer = document.getElementById("favorites-pagination");
+  const favoritesCount = document.getElementById("profile-favorites");
+
+  if (favoritesCount) favoritesCount.textContent = '…';
 
   try {
-
     const response = await fetchConToken("/Favoritos/GetFavoritoByUser.php", {
       method: "GET",
-      headers: { "Content-Type": "application/json" },
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": `Bearer ${token}`
+      },
     });
 
     if (!response.ok) throw new Error("Error al obtener favoritos");
-
     const data = await response.json();
     favoritos = data.favorites || [];
 
-    const favoritesCount = document.getElementById("profile-favorites");
     if (favoritesCount) favoritesCount.textContent = favoritos.length;
 
     if (recientesContainer) {
@@ -39,20 +38,12 @@ export async function loadUserFavorites() {
       }
     }
 
-    if (favoritosContainer) {
-      renderFavoritesPage(favoritosContainer, paginationContainer);
-    }
+    if (favoritosContainer) renderFavoritesPage(favoritosContainer, paginationContainer);
+
   } catch (error) {
     console.error("Error cargando favoritos:", error);
-
-    if (recientesContainer) {
-      recientesContainer.innerHTML = `
-        <div class="error-state">
-          <p>Error al cargar tus favoritos</p>
-          <p>Por favor, intenta de nuevo más tarde</p>
-        </div>
-      `;
-    }
+    if (favoritesCount) favoritesCount.textContent = 0;
+    if (recientesContainer) recientesContainer.innerHTML = `<div class="error-state"><p>Error al cargar tus favoritos</p></div>`;
   }
 }
 
@@ -70,7 +61,6 @@ function renderFavoritesPage(favoritosContainer, paginationContainer) {
   favoritosContainer.innerHTML = paginatedItems.map(createFavoriteCard).join("");
   attachCardClicks(favoritosContainer);
 
-  
   const totalPages = Math.ceil(favoritos.length / ITEMS_PER_PAGE);
   if (paginationContainer) {
     paginationContainer.innerHTML = createPagination(totalPages);
@@ -102,25 +92,19 @@ function createFavoriteCard(movie) {
   `;
 }
 
-
 function attachCardClicks(container) {
   container.querySelectorAll('.pelicula__card').forEach(card => {
     card.addEventListener('click', () => {
       const id = card.dataset.id;
-      window.open(`https://dragonfilms.space/web/entrada.html?id=${id}`, '_blank');
+      window.open(`https://dragonfilms.space/entrada.html?id=${id}`, '_blank');
     });
   });
 }
 
-
 function createPagination(totalPages) {
   let buttons = "";
   for (let i = 1; i <= totalPages; i++) {
-    buttons += `
-      <button class="page-btn ${i === currentPage ? "active" : ""}" data-page="${i}">
-        ${i}
-      </button>
-    `;
+    buttons += `<button class="page-btn ${i === currentPage ? "active" : ""}" data-page="${i}">${i}</button>`;
   }
   return buttons;
 }

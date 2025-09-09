@@ -127,10 +127,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const result = await registerUser({ username, password, email, genero });
 
-    console.log('Respuesta registerUser:', result);
 
     if (result.success) {
-      window.location.href = 'login.html';
+       window.location.href = "https://dragonfilms.space/login.html";
     } else {
       showError(result.error || 'Ocurrió un error inesperado');
     }

@@ -40,7 +40,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
       if (response.ok) {
         alert(result.message || "Usuario actualizado correctamente");
-        window.location.href = "user.html";
+        window.location.href = "https://dragonfilms.space/user.html";
       } else {
         alert(result.error || "Error al actualizar usuario");
       }

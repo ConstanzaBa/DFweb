@@ -22,7 +22,7 @@ document.addEventListener("DOMContentLoaded", () => {
         if (response.ok) {
           alert("Cuenta eliminada");
           localStorage.removeItem('token');
-          window.location.href = "login.html";
+          window.location.href = "https://dragonfilms.space/login.html";
         } else {
           alert(data.error || "Error al eliminar cuenta");
         }

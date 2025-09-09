@@ -49,7 +49,7 @@ if (!avatarUrl.startsWith('http')) {
     localStorage.removeItem('avatar');
 
     setTimeout(() => {
-      window.location.href = "login.html";
+      window.location.href = "https://dragonfilms.space/login.html";
     }, 2000);
   }
 });

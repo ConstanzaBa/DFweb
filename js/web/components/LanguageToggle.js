@@ -10,7 +10,6 @@ function getCurrentLanguage() {
 function changeLanguage(lang) {
   currentLanguage = lang;
   localStorage.setItem("language", lang);
-  // Dispatch event for other components to react to language change
   document.dispatchEvent(new CustomEvent('languageChanged', {
     detail: { language: lang }
   }));

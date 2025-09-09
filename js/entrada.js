@@ -66,7 +66,6 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   // --------------------- Renderizar reseñas dinámicamente ---------------------
-  // Usamos window.onload para asegurar carga completa del DOM de reseñas
   renderReviews(movieId);
   setupReviewForm(movieId);
 });
@@ -74,7 +73,19 @@ document.addEventListener("DOMContentLoaded", () => {
 // --------------------- FUNCIONES DE DISPLAY ---------------------
 
 function displayMovieDetails(movie) {
-  document.querySelector(".entrada__info__poster").src = `${TMDB_imgBaseUrl}${movie.poster_path}`;
+  const poster = document.querySelector(".entrada__info__poster");
+  if (!poster) return;
+
+  const placeholder = "source/img/placeholder.jpg";
+  poster.src = placeholder;
+  poster.alt = movie.title;
+
+  const actualPoster = new Image();
+  actualPoster.src = `${TMDB_imgBaseUrl}${movie.poster_path}`;
+  actualPoster.onload = () => {
+    poster.src = actualPoster.src;
+  };
+
   document.querySelector(".entrada__info__facts__release").innerText = new Date(movie.release_date).toLocaleDateString();
   document.querySelector(".entrada__info__facts__time").innerText = `${Math.floor(movie.runtime / 60)}h${movie.runtime % 60}m`;
   document.querySelector(".entrada__info__title").textContent = movie.title;
@@ -107,9 +118,18 @@ function displayMovieCast(castData) {
 
     const actorImage = document.createElement("img");
     actorImage.className = "actor-image";
-    actorImage.src = actor.profile_path ? `${TMDB_imgBaseUrl}${actor.profile_path}` : "";
     actorImage.alt = actor.name;
-    actorImage.loading = "lazy";
+
+    const placeholder = "source/img/placeholder.jpg";
+    actorImage.src = placeholder;
+
+    if (actor.profile_path) {
+      const actualImage = new Image();
+      actualImage.src = `${TMDB_imgBaseUrl}${actor.profile_path}`;
+      actualImage.onload = () => {
+        actorImage.src = actualImage.src;
+      };
+    }
 
     const actorName = document.createElement("p");
     actorName.className = "actor-name";
@@ -201,9 +221,16 @@ function createListItem(src, text, index) {
 
   const img = document.createElement("img");
   img.className = "imagen-lista";
-  img.src = src;
   img.alt = text;
-  img.loading = "lazy";
+
+  const placeholder = "source/img/placeholder.jpg";
+  img.src = placeholder;
+
+  const actualImage = new Image();
+  actualImage.src = src;
+  actualImage.onload = () => {
+    img.src = actualImage.src;
+  };
 
   const textH3 = document.createElement("h3");
   textH3.className = "video-lista-texto";
@@ -228,9 +255,18 @@ function updateMainContent(type, data) {
     mainContainer.appendChild(iframe);
   } else {
     const mainImage = document.createElement("img");
-    mainImage.src = `${TMDB_imgBaseUrl}${data.file_path}`;
-    mainImage.alt = "Imagen principal";
     mainImage.className = "imagen-principal";
+    mainImage.alt = "Imagen principal";
+
+    const placeholder = "source/img/placeholder.jpg";
+    mainImage.src = placeholder;
+
+    const actualImage = new Image();
+    actualImage.src = `${TMDB_imgBaseUrl}${data.file_path}`;
+    actualImage.onload = () => {
+      mainImage.src = actualImage.src;
+    };
+
     mainContainer.appendChild(mainImage);
   }
 
