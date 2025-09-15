@@ -1,0 +1,305 @@
+/* ===== GLOBAL PROFILE CARD STYLES ===== */
+.profile-card {
+  position: relative;
+  max-width: 900px;
+  margin: 50px auto;
+  background: var(--blanco);
+  border-radius: 2rem;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+  text-align: center;
+  padding-top: 100px;
+  padding-bottom: 30px;
+  border-top: 6px solid var(--primario);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* Avatar centrado y redondo */
+.profile-card__img {
+  position: absolute;
+  top: -70px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.profile-avatar-container {
+  width: 140px;
+  height: 140px;
+  border: 6px solid var(--primario);
+  border-radius: 50%;
+  overflow: hidden;
+  background: var(--blanco);
+}
+
+.profile-avatar {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* Botón de editar avatar */
+.profile-editBtn {
+  position: absolute;
+  top: 100px;
+  right: 0;
+  width: 3.5rem;
+  height: 3.5rem;
+  border-radius: 50%;
+  border: none;
+  background:  var(--primario);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 300;
+  opacity: 0;
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.profile-card__img:hover .profile-editBtn {
+  opacity: 1;
+  transform: scale(1.1);
+}
+
+.profile-editBtn svg {
+  fill: white;
+  width: 1.5rem;
+  height: 1.5rem;
+}
+
+/* Nombre del usuario */
+.profile-username {
+  margin-top: 0;
+  font-size: 2rem;
+  font-weight: bold;
+  color: var(--negro);
+  font-family: var(--fuenteheading);
+}
+
+.profile-email {
+  margin-top: 0.3rem;
+  font-size: 1.4rem;
+  color: var(--gris2);
+  font-family: var(--fuenteparrafos);
+  text-align: center;
+}
+
+
+/* ===== PROFILE FORM STYLES ===== */
+.profile-card-form {
+  width: 100%;
+  max-width: 800px;
+  text-align: left;
+  padding: 2rem;
+  display: flex;
+  gap: 1.5rem;
+  align-items: stretch;
+  flex-direction: column;
+}
+
+/* Columnas */
+.form-columns {
+  display: flex;
+  gap: 5rem;
+  flex-wrap: wrap;
+  margin-top: 1rem;
+}
+
+.form-column {
+  flex: 1;
+  margin-bottom: 1rem;
+  min-width: 250px;
+}
+
+/* Inputs unificados estilo register */
+.profile-card-form input[type="text"],
+.profile-card-form input[type="password"],
+.profile-card-form input[type="file"],
+.profile-card-form select {
+  width: 100%;
+  padding: 1.4rem;
+  border-radius: 12px;
+  border: 2px solid var(--gris);
+  font-size: 1.5rem;
+  transition: all 0.3s ease;
+  font-family: var(--fuenteparrafos);
+  box-sizing: border-box;
+  background-color: transparent;
+  color: var(--negro);
+  margin-top: 0.5rem;
+  margin-bottom: 2.5rem;
+}
+
+.profile-card-form input:focus,
+.profile-card-form select:focus {
+  border-color: var(--primario);
+  box-shadow: 0 0 0 3px rgba(255, 68, 0, 0.1);
+  outline: none;
+}
+
+/* Labels */
+.profile-card-form label {
+  font-size: var(--fuenteparrafossize);
+  font-weight: 500;
+  margin-bottom: 0.5rem;
+  color: var(--primario);
+}
+
+/* Gender radio options */
+.gender-options {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+  padding: 0.4rem;
+  background-color: rgba(255,68,0,0.05);
+  border-radius: 12px;
+  border: 1px solid rgba(255,68,0,0.1);
+  align-items: center;
+  justify-content: space-evenly;
+  margin-top: 0.5rem;
+}
+
+.gender-options input[type="radio"] {
+  accent-color: var(--primario);
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+}
+
+.gender-options label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--negro);
+  cursor: pointer;
+  font-family: var(--fuenteparrafos);
+  transition: color 0.3s ease;
+}
+
+input.i_female:checked + .female,
+input.i_male:checked + .male {
+  color: var(--primario);
+  font-weight: bold;
+}
+
+/* Botones */
+.profile-card-ctr {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 2rem;
+}
+
+.profile-card__button {
+  padding: 12px 20px;
+  border-radius: 3rem;
+  border: none;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+  background:  var(--primario);
+  color: var(--blanco);
+  box-shadow: 0 4px 15px rgba(255,68,0,0.3);
+}
+
+.profile-card__button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(255,68,0,0.4);
+}
+
+/* ===== TOOLTIP STYLES ===== */
+.tooltip-info {
+  position: absolute;
+  top: 55%;
+  right: -40px;
+  transform: translateY(-50%);
+  z-index: 200;
+}
+
+.tooltip-info button {
+  background: var(--primario);
+  border: none;
+  border-radius: 50%;
+  width: 2.6rem;
+  height: 2.6rem;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.tooltip-info button svg {
+  fill: white;
+  width: 1.4rem;
+  height: 1.4rem;
+}
+
+.tooltip-info button:hover {
+  transform: scale(1.1);
+  box-shadow: 0 4px 10px rgba(0,0,0,0.25);
+}
+
+.tooltip-info .tooltip-box {
+  position: absolute;
+  top: 50%;
+  left: 120%;
+  transform: translateY(-50%);
+  background: var(--blanco);
+  color: var(--negro);
+  padding: 12px 16px;
+  border-radius: 12px;
+  border-left: 4px solid var(--primario);
+  width: 220px;
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.3s ease;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+  font-size: 0.85rem;
+}
+
+.tooltip-info:hover .tooltip-box {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(-50%) translateX(0);
+}
+
+.tooltip-info .tooltip-box ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.tooltip-info .tooltip-box ul li {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+
+.tooltip-info .tooltip-box ul li:last-child {
+  margin-bottom: 0;
+}
+
+.tooltip-info .tooltip-box ul li svg {
+  width: 14px;
+  height: 14px;
+  fill: var(--primario);
+}
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 768px) {
+  .profile-card {
+    max-width: 95%;
+    padding-top: 160px;
+  }
+  .form-columns {
+    flex-direction: column;
+  }
+  .form-column {
+    min-width: 100%;
+  }
+}

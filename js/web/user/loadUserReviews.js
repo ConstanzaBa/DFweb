@@ -1,14 +1,14 @@
 import { API_BASE_URL } from '../../utils/config.js';
 import { fetchFromApi } from '../../api/components/FetchFromApi.js';
+import { deleteReview } from '../../api/endpoints/DeleteReview.js';
+import { showError } from './ShowError.js';
 
 const MAX_RECENTES = 10;
 const MAX_RESEÑAS_SOLO = 10;
 
 document.addEventListener("DOMContentLoaded", async () => {
   const token = localStorage.getItem("token");
-  if (!token) {
-  return;
-  }
+  if (!token) return;
   await loadUserReviews(token);
 });
 
@@ -23,9 +23,9 @@ export async function loadUserReviews(token) {
   try {
     const response = await fetch(`${API_BASE_URL}/Review/GetReviewsByUser.php`, {
       method: "GET",
-      headers: {
+      headers: { 
         "Content-Type": "application/json",
-        "Authorization": `Bearer ${token}`
+        "Authorization": `Bearer ${token}` 
       },
       credentials: "include"
     });
@@ -62,7 +62,9 @@ export async function loadUserReviews(token) {
     }
 
     // Página reseñas verticales
-    if (containerOnly) renderPaginatedReviewsVertical(containerOnly, reviews, MAX_RESEÑAS_SOLO);
+    if (containerOnly) {
+      renderPaginatedReviewsVertical(containerOnly, reviews, MAX_RESEÑAS_SOLO);
+    }
 
   } catch (error) {
     console.error("Error cargando reseñas:", error);
@@ -88,8 +90,18 @@ function createReviewCard(review, size = 'page') {
       ? `https://image.tmdb.org/t/p/w200${review.poster_path}` 
       : 'source/img/no-poster.jpg';
 
+  const actionsMenu = size === 'page' ? `
+    <div class="review-actions">
+      <span class="material-symbols-outlined actions-icon">more_vert</span>
+      <div class="actions-dropdown">
+        <button class="edit-review-btn">Editar</button>
+        <button class="delete-review-btn">Eliminar</button>
+      </div>
+    </div>
+  ` : '';
+
   return `
-    <div class="review-card ${size}">
+    <div class="review-card ${size}" data-movie-id="${movieId}">
       <div class="review-left">
         <a href="https://dragonfilms.space/entrada.html?id=${movieId}" target="_blank">
           <img src="${posterUrl}" alt="${review.titulo || 'poster'}" />
@@ -101,6 +113,7 @@ function createReviewCard(review, size = 'page') {
         <div class="average-stars">${stars}</div>
         <p class="review-text">${review.review || ''}</p>
       </div>
+      ${actionsMenu}
     </div>
   `;
 }
@@ -114,6 +127,7 @@ function renderPaginatedReviewsVertical(container, reviews, perPage) {
     const start = (page - 1) * perPage;
     const end = start + perPage;
     container.innerHTML = reviews.slice(start, end).map(r => createReviewCard(r, 'page')).join("");
+    attachReviewActions(container);
     renderPaginationControls();
   }
 
@@ -135,4 +149,41 @@ function renderPaginatedReviewsVertical(container, reviews, perPage) {
   }
 
   showPage(1);
+}
+
+// ====================== ACCIONES EDITAR / ELIMINAR ======================
+
+function attachReviewActions(container) {
+  container.querySelectorAll('.review-card').forEach(card => {
+    const actions = card.querySelector('.review-actions');
+    if (!actions) return;
+
+    const icon = actions.querySelector('.actions-icon');
+    const deleteBtn = actions.querySelector('.delete-review-btn');
+    const editBtn = actions.querySelector('.edit-review-btn');
+
+    icon.addEventListener('click', () => {
+      actions.classList.toggle('show');
+    });
+
+    deleteBtn.addEventListener('click', async () => {
+      const movieId = card.dataset.movieId;
+      const res = await deleteReview(movieId);
+      if (res.success) {
+        card.remove();
+        showError('Reseña eliminada correctamente', 'success');
+      } else {
+        showError('Error al eliminar la reseña: ' + (res.message || res.error), 'error');
+      }
+    });
+
+    editBtn.addEventListener('click', () => {
+      const movieId = card.dataset.movieId;
+      // Abre la página en una nueva ventana o pestaña
+      window.open(
+        `https://dragonfilms.space/entrada.html?id=${movieId}&editReview=1`,
+        '_blank'
+      );
+    });
+  });
 }

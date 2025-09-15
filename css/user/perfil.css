@@ -52,43 +52,12 @@
   box-sizing: border-box;
 }
 
-.profile-editBtn {
-  position: absolute;
-  bottom: 0;
-  right: 0;
-  width: 4rem;
-  height: 4rem;
-  border-radius: 50%;
-  border: none;
-  background-color: var(--primario);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  z-index: 10;
-  opacity: 0;
-  pointer-events: none;
-  transition: opacity 0.3s ease;
-}
-
-.profile-avatar-container:hover .profile-editBtn {
-  opacity: 1;
-  pointer-events: auto;
-}
-
-.profile-editBtn svg {
-  fill: white;
-}
-
 @media (max-width: 768px) {
   .profile-avatar-container {
     width: 12rem;
     height: 12rem;
   }
-  .profile-editBtn {
-    width: 3.5rem;
-    height: 3.5rem;
-  }
+
 }
 
 @media (max-width: 480px) {
@@ -96,10 +65,7 @@
     width: 10rem;
     height: 10rem;
   }
-  .profile-editBtn {
-    width: 3rem;
-    height: 3rem;
-  }
+
 }
 
 /* estad�sticas del usuario */
@@ -641,4 +607,72 @@
   font-size: 16px;
   color: var(--gris);
   padding: 30px 0;
+}
+
+
+
+/* Contenedor de acciones */
+.review-actions {
+  position: relative;
+  display: inline-block;
+  cursor: pointer;
+  margin-left: auto;
+}
+
+/* Icono de tres puntos */
+.actions-icon {
+  font-size: 24px;
+  color: #555;
+  user-select: none;
+  transition: color 0.2s;
+  margin-top: 1rem;
+  margin-right: 1rem;
+}
+
+.actions-icon:hover {
+  color: #ff6600; /* Cambia color al pasar el mouse */
+}
+
+/* Dropdown oculto por defecto */
+.actions-dropdown {
+  display: none;
+  position: absolute;
+  right: 0;
+  top: 28px;
+  background-color: #fff;
+  min-width: 100px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+  border-radius: 8px;
+  z-index: 10;
+  overflow: hidden;
+}
+
+/* Mostrar dropdown cuando se activa */
+.review-actions.show .actions-dropdown {
+  display: block;
+}
+
+/* Botones dentro del dropdown */
+.actions-dropdown button {
+  width: 100%;
+  padding: 8px 12px;
+  background: none;
+  border: none;
+  text-align: left;
+  font-size: 14px;
+  color: #333;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.actions-dropdown button:hover {
+  background-color: #f5f5f5;
+}
+
+/* Ajustes para que se vea bien en mobile */
+@media (max-width: 768px) {
+  .actions-dropdown {
+    right: -10px;
+    top: 30px;
+  }
 }

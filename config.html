@@ -1,43 +1,166 @@
-<html>
-  <head>
-    <title>Configuraci��n</title>
-    <script src="js/web/user/Cookies.js"></script>
-    <!-- Script para actualizar usuario -->
-    <script src="js/api/endpoints/UpdateUser.js" defer></script>
-    <!-- Script para eliminar usuario -->
-    <script src="js/api/endpoints/DeleteUser.js" defer></script>
-  </head>
-  <body>
-    <h1>Modificar usuario</h1>
-    <form id="updateForm">
-  <input
-    type="text"
-    name="username"
-    id="username"
-    placeholder="Nuevo nombre de usuario"
-    required
-  />
-  <input
-    type="password"
-    name="password"
-    id="password"
-    placeholder="Nueva contraseña"
-    required
-  />
-  <label>Género:</label>
-  <input type="radio" name="gender" value="M" id="genderM" required /><label for="genderM">Masculino</label>
-  <input type="radio" name="gender" value="F" id="genderF" required /><label for="genderF">Femenino</label>
-  <input
-    type="text"
-    name="avatar"
-    id="avatar"
-    placeholder="URL o ruta de avatar"
-    required
-  />
-  <button type="submit">Actualizar</button>
-</form>
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Configuración de Usuario</title>
+
+  <!-- Normalize -->
+  <link rel="stylesheet" href="css/normalize.css" />
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet"
+    href="https://fonts.googleapis.com/css2?family=Open+Sans:ital@0;1&family=PT+Sans:wght@400;700&display=swap"
+    crossorigin="anonymous" />
+
+  <!-- Iconos -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+    crossorigin="anonymous" />
+
+  <!-- Estilos globales -->
+  <link rel="preload" href="css/styles.css" as="style" >
+<link rel="preload" href="css/index.css" as="style" >
+<link rel="preload" href="css/components/Header.css" as="style"  >
+<link rel="preload" href="css/components/Footer.css" as="style"  >
+<link rel="preload" href="css/components/LanguageToggle.css" as="style" >
+<link rel="preload" href="css/user/configuracion.css" as="style" >
+<link rel="preload" href="css/user/showError.css" as="style" >
 
 
-    <button id="deleteAccount">Eliminar cuenta</button>
-  </body>
+  <link rel="stylesheet" href="css/styles.css" />
+  <link rel="stylesheet" href="css/index.css" />
+  <link rel="stylesheet" href="css/components/Header.css" />
+  <link rel="stylesheet" href="css/components/Footer.css" />
+  <link rel="stylesheet" href="css/components/LanguageToggle.css" />
+  <link rel="stylesheet" href="css/user/configuracion.css" />
+  <link rel="stylesheet" href="css/user/showError.css">
+
+  <!-- Scripts -->
+  <script src="js/modernizr.js"></script>
+  <script type="module" src="js/web/components/LanguageToggle.js" defer></script>
+  <script type="module" src="js/scripts.js" defer></script>
+  <script type="module" src="js/web/components/Header.js" defer></script>
+  <script type="module" src="js/web/components/Footer.js" defer></script>
+  <script type="module" src="js/web/user/configuracion.js" defer></script>
+</head>
+
+<body>
+  <div id="header" class="header__entrada relative"></div>
+  <div id="error-container"></div>
+
+  <main class="config-container">
+    <div class="profile-card">
+      <!-- Avatar y botón editar -->
+      <div class="profile-card__img">
+        <div class="profile-avatar-container">
+          <img alt="Avatar del usuario" id="avatarPreview" class="profile-avatar" />
+        </div>
+
+        <!-- Botón de editar avatar -->
+        <button type="button" class="profile-editBtn" id="editAvatarBtn">
+          <svg height="1em" viewBox="0 0 512 512">
+            <path
+              d="M410.3 231l11.3-11.3-33.9-33.9-62.1-62.1L291.7 89.8l-11.3 11.3-22.6 22.6L58.6 322.9c-10.4 10.4-18 23.3-22.2 37.4L1 480.7c-2.5 8.4-.2 17.5 6.1 23.7s15.3 8.5 23.7 6.1l120.3-35.4c14.1-4.2 27-11.8 37.4-22.2L387.7 253.7 410.3 231zM160 399.4l-9.1 22.7c-4 3.1-8.5 5.4-13.3 6.9L59.4 452l23-78.1c1.4-4.9 3.8-9.4 6.9-13.3l22.7-9.1v32c0 8.8 7.2 16 16 16h32zM362.7 18.7L348.3 33.2 325.7 55.8 314.3 67.1l33.9 33.9 62.1 62.1 33.9 33.9 11.3-11.3 22.6-22.6 14.5-14.5c25-25 25-65.5 0-90.5L453.3 18.7c-25-25-65.5-25-90.5 0zm-47.4 168l-144 144c-6.2 6.2-16.4 6.2-22.6 0s-6.2-16.4 0-22.6l144-144c6.2-6.2 16.4-6.2 22.6 0s6.2 16.4 0 22.6z">
+            </path>
+          </svg>
+        </button>
+
+        <!-- Input oculto -->
+        <input type="file" id="file" style="display:none;" accept="image/*">
+
+        <!-- Nombre del archivo seleccionado -->
+        <span id="file-name" style="display:none;">Ningún archivo seleccionado</span>
+      </div>
+
+      <!-- Nombre del usuario -->
+      <div class="profile-username" id="profile-username">username</div>
+      
+      <div class="profile-email" id="profile-email">usuario@gmail.com</div>
+
+      <!-- Formulario -->
+      <form id="updateForm" class="profile-card-form">
+        <div class="form-columns">
+          <div class="form-column">
+            <div class="form-group">
+              <label for="username">Nombre de usuario</label>
+              <input type="text" id="username" name="username" required>
+              <span id="msgUsuario" class="validation-msg"></span>
+            </div>
+            <div class="form-group">
+              <label>Género</label>
+              <div class="gender-options">
+                <label><input type="radio" name="gender" value="Masculino"> Masculino</label>
+                <label><input type="radio" name="gender" value="Femenino"> Femenino</label>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-column">
+            <!-- Nueva contraseña con tooltip -->
+            <div class="form-group password-group" style="position: relative;">
+              <label for="newPassword">Nueva contraseña</label>
+              <input type="password" id="newPassword" name="newPassword">
+
+              <div class="tooltip-info">
+                <button type="button" aria-label="Reglas para la contraseña">
+                  <svg viewBox="0 0 20 20" fill="currentColor" width="20" height="20">
+                    <path fill-rule="evenodd"
+                      d="M10 18a8 8 0 100-16 8 8 0 000 16zm.75-11.75a.75.75 0 11-1.5 0 .75.75 0 011.5 0zm-1.5 2.75a.75.75 0 000 1.5h.25v4h-.25a.75.75 0 000 1.5h2a.75.75 0 000-1.5h-.25v-5a.75.75 0 00-.75-.75h-1.25z"
+                      clip-rule="evenodd" />
+                  </svg>
+                </button>
+
+                <div class="tooltip-box" role="tooltip">
+                  <ul class="tooltip-list">
+                    <li>
+                      <svg viewBox="0 0 20 20" width="16" height="16" fill="currentColor">
+                        <path
+                          d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z">
+                        </path>
+                      </svg>
+                      Mínimo 8 caracteres
+                    </li>
+                    <li>
+                      <svg viewBox="0 0 20 20" width="16" height="16" fill="currentColor">
+                        <path
+                          d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z">
+                        </path>
+                      </svg>
+                      Al menos una mayúscula
+                    </li>
+                    <li>
+                      <svg viewBox="0 0 20 20" width="16" height="16" fill="currentColor">
+                        <path
+                          d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z">
+                        </path>
+                      </svg>
+                      Sin caracteres especiales
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+
+            <!-- Confirmar contraseña -->
+            <div class="form-group">
+              <label for="confirmPassword">Confirmar contraseña</label>
+              <input type="password" id="confirmPassword" name="confirmPassword">
+            </div>
+          </div>
+        </div>
+
+        <!-- Botones -->
+        <div class="profile-card-ctr">
+          <button type="button" class="profile-card__button button--gray" id="cancelBtn">Cancelar</button>
+          <button type="submit" id="submit-btn" class="profile-card__button button--blue">Guardar cambios</button>
+        </div>
+      </form>
+    </div>
+  </main>
+
+  <div id="footer"></div>
+</body>
 </html>

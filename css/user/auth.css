@@ -123,7 +123,7 @@ body {
     place-items: center;
     text-align: center;
     width: 100%;
-    margin: 0;
+    margin-bottom: 1rem;
     gap: 1.5rem;
   }
   
@@ -200,13 +200,15 @@ body {
   /* Radio input styles for gender selection */
   .radio-input {
     display: flex;
-    justify-content: center;
+    justify-content: space-evenly;
     gap: 15px;
     flex-wrap: wrap;
     padding: 1rem;
     background-color: rgba(255, 68, 0, 0.05);
     border-radius: 12px;
     border: 1px solid rgba(255, 68, 0, 0.1);
+    align-content: flex-start;
+    align-items: center;
   }
   
   .radio-input input[type="radio"] {
@@ -386,7 +388,8 @@ body {
     height: 200px;
     border: 3px dashed var(--primario);
     border-radius: 16px;
-    padding: 20px;
+    margin-top:1rem;
+    padding: 30px;
     background-color: rgba(255, 68, 0, 0.02);
     transition: all 0.3s ease;
     display: flex;
@@ -434,8 +437,8 @@ body {
   
   .upload-container {
     width: 100%;
-    height: 50px;
-    padding: 0 15px;
+    height: 250px;
+    padding: 0 15px 15px;
     border-radius: 12px;
     display: flex;
     align-items: center;
