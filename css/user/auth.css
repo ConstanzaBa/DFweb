@@ -194,6 +194,25 @@ body {
    color: #666666;
    opacity: 0.7;
  }
+
+ .password-labels {
+  display: grid;
+  justify-content: space-between;
+ }
+
+ .forgot-link {
+  grid-area: 1 / 2;
+  align-content: center;
+  font-family: var(--fuenteparrafos);
+  color: var(--primario);
+  font-size: 1.3rem;
+  text-decoration: none;
+  transition: color 0.3s ease;
+ }
+
+ .forgot-link:hover {
+  color: var(--secundario);
+ }
   
   /* ===== RADIO INPUT STYLES ===== */
   
@@ -548,21 +567,6 @@ body {
   
   /* ===== LINK STYLES ===== */
   
-  /* Form links */
-  .login-form a {
-    font-family: var(--fuenteparrafos);
-    color: var(--primario);
-    font-size: 1.6rem;
-    text-align: center;
-    text-decoration: none;
-    margin-bottom: 1rem;
-    transition: color 0.3s ease;
-  }
-  
-  .login-form a:hover {
-    color: var(--secundario);
-  }
-  
   /* Register and login link styles */
   .register-link,
   .login-link {
@@ -571,7 +575,6 @@ body {
     font-family: var(--fuenteparrafos);
     text-align: center;
     padding: 0.5rem;
-    margin-top: 1rem;
   }
   
   .register-link a,
@@ -579,7 +582,7 @@ body {
     color: var(--primario);
     text-decoration: none;
     font-weight: bold;
-    font-size: var(--fuenteparrafossize);
+    font-size: 1.5rem;
     transition: color 0.3s ease;
   }
   
