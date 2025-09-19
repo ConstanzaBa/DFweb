@@ -88,14 +88,6 @@
   color: var(--gris2);
 }
 
-@media (max-width: 600px) {
-  .profile-stats {
-    flex-direction: column;
-    gap: 0.5rem;
-  }
-}
-
-
 /* username */
 .profile-username {
   font-size: var(--fuenteheadingssize);

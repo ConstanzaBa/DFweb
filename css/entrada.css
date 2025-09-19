@@ -208,8 +208,6 @@
 
 }
 
-
-
 .entrada__info__sinopsis,
 
 .entrada__info__streaming,
@@ -218,17 +216,14 @@
 
 .entrada__reviews__puntaje {
 
-  display: grid;
+display: grid;
 
-  gap: 2rem;
+gap: 3rem;
 
-  margin: 5rem 0;
+margin: 3rem 0;
 
-  grid-area: 2 / 2;
-
+grid-area: 2 / 2;
 }
-
-
 
 .entrada__info__sinopsis h3,
 
@@ -398,7 +393,7 @@
 }
 
 .selector-container::after {
-  content: "▼";
+  content: "â–¼";
   position: absolute;
   right: 16px;
   top: 50%;
@@ -817,9 +812,7 @@
 }
 
 .entrada__reviews__puntaje {
-  display: grid;
   align-items: center;
-  gap: 2rem;
   border-radius: 5px;
 }
 
@@ -908,7 +901,7 @@
   color: var(--negro);
 }
 
-/* Título comentarios */
+/* TÃ­tulo comentarios */
 .title {
   height: 5rem;
   display: flex;
@@ -933,9 +926,9 @@
   flex-direction: column;
   gap: 2rem;
   max-height: 40rem;
-  /* 🔥 limita la altura (aprox. 3 reseñas) */
+  /* ðŸ”¥ limita la altura (aprox. 3 reseÃ±as) */
   overflow-y: auto;
-  /* 🔥 activa scroll si hay más */
+  /* ðŸ”¥ activa scroll si hay mÃ¡s */
   padding-right: 0.8rem;
   /* deja lugar al scrollbar */
 }
@@ -1065,7 +1058,7 @@
   background: var(--primario);
 }
 
-/* Estrellas de puntuación en formulario */
+/* Estrellas de puntuaciÃ³n en formulario */
 .rating-form {
   font-size: 5rem;
   display: flex;
@@ -1088,7 +1081,7 @@
 }
 
 .rating-form label:before {
-  content: "★";
+  content: "â˜…";
 }
 
 .rating-form label:hover,
