@@ -61,12 +61,24 @@ const translations = {
     addedToFavorites: "¡Agregado a favoritos!",
     removedFromFavorites: "Eliminado de favoritos",
     loginToAddFavorites: "Debes iniciar sesión para agregar favoritos",
+    favMovies: "Favoritas",
+    userReviews: "Reseñas",
+    noFavorites: "No tienes películas favoritas",
+    errorLoadingFavorites: "Error al cargar tus favoritos",
+    editReview: "Editar",
+    deleteReview: "Eliminar",
+    reviewDeleted: "Reseña eliminada correctamente",
+    errorDeletingReview: "Error al eliminar la reseña",
+    noReviews: "No has escrito ninguna reseña",
+    errorLoadingReviews: "Error al obtener reseñas",
     
     // Estados y mensajes
     noResults: "No se encontraron resultados",
     loadingMovies: "Cargando películas...",
     errorLoading: "Error al cargar contenido",
     noMoviesFound: "No se encontraron películas",
+    noRecommendations: "No hay recomendaciones disponibles por el momento",
+    errorLoadingRecommendations: "Error al cargar recomendaciones",
     tryAgainLater: "Por favor, intenta de nuevo más tarde",
     
     // Información de película
@@ -116,12 +128,24 @@ const translations = {
     addedToFavorites: "Added to favorites!",
     removedFromFavorites: "Removed from favorites",
     loginToAddFavorites: "You must login to add favorites",
+    favMovies: "Favorites",
+    userReviews: "Reviews",
+    noFavorites: "You don't have any favorite movies",
+    errorLoadingFavorites: "Error loading your favorites",
+    editReview: "Edit",
+    deleteReview: "Delete",
+    reviewDeleted: "Review deleted successfully",
+    errorDeletingReview: "Error deleting review",
+    noReviews: "You haven't written any reviews",
+    errorLoadingReviews: "Error getting reviews",
     
     // States and messages
     noResults: "No results found",
     loadingMovies: "Loading movies...",
     errorLoading: "Error loading content",
     noMoviesFound: "No movies found",
+    noRecommendations: "No recommendations available at the moment",
+    errorLoadingRecommendations: "Error loading recommendations",
     tryAgainLater: "Please try again later",
     
     // Movie information

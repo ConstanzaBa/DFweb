@@ -1,5 +1,5 @@
 import { TMDB_apiKey, TMDB_apiUrl } from "../../utils/consts.js";
-import { getCurrentLanguage } from "../../web/components/LanguageToggle.js";
+import { getCurrentLanguage } from "../../utils/i18n.js";
 
 
 async function fetchFromApi(endpoint, params = {}) {

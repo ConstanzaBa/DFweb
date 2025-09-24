@@ -1,5 +1,5 @@
 import { TMDB_imgBaseUrl } from "./utils/consts.js";
-import { getCurrentLanguage, setupLanguageToggle, changeLanguage } from "./web/components/LanguageToggle.js";
+import { getCurrentLanguage, changeLanguage, updateTranslations } from "./utils/i18n.js";
 import { getMovieId } from "./movies.js";
 import { initializeCarousel, resetCarouselRotation } from "./web/components/MediaDisplay.js";
 import { fetchFromApi } from "./api/components/FetchFromApi.js";
@@ -9,7 +9,6 @@ import { getRecommendationsByUser } from "./web/user/Recommendations.js"; // sol
 let language = getCurrentLanguage();
 
 document.addEventListener("DOMContentLoaded", async () => {
-  setupLanguageToggle();
   setupSearchHandlers();
 
   initializeCarousel();
@@ -20,6 +19,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
 document.addEventListener('languageChanged', (event) => {
   language = event.detail.language;
+  updateTranslations();
 
   refreshContent();
   resetCarouselRotation();
@@ -62,10 +62,11 @@ async function fetchMovies(endpoint, containerId) {
     console.error(`Error al obtener películas de ${endpoint}:`, error);
     container.innerHTML = `
       <div class="error-state">
-        <p>Error al cargar el contenido</p>
-        <p>Por favor, intenta de nuevo más tarde</p>
+        <p data-translate="errorLoading">Error al cargar el contenido</p>
+        <p data-translate="tryAgainLater">Por favor, intenta de nuevo más tarde</p>
       </div>
     `;
+    updateTranslations();
   }
 }
 
@@ -76,9 +77,10 @@ function displayMovies(movies, containerId) {
   if (!movies.length) {
     container.innerHTML = `
       <div class="empty-state">
-        <p>No se encontraron películas</p>
+        <p data-translate="noMoviesFound">No se encontraron películas</p>
       </div>
     `;
+    updateTranslations();
     return;
   }
 
@@ -175,9 +177,10 @@ async function loadUserRecommendations() {
     if (!recommendedMovies.length) {
       container.innerHTML = `
         <div class="empty-state">
-          <p>No hay recomendaciones disponibles por el momento</p>
+          <p data-translate="noRecommendations">No hay recomendaciones disponibles por el momento</p>
         </div>
       `;
+      updateTranslations();
       return;
     }
 
@@ -193,9 +196,10 @@ async function loadUserRecommendations() {
     console.error("Error al cargar recomendaciones del usuario:", error);
     container.innerHTML = `
       <div class="error-state">
-        <p>Error al cargar recomendaciones</p>
-        <p>Por favor, intenta de nuevo más tarde</p>
+        <p data-translate="errorLoadingRecommendations">Error al cargar recomendaciones</p>
+        <p data-translate="tryAgainLater">Por favor, intenta de nuevo más tarde</p>
       </div>
     `;
+    updateTranslations();
   }
 }

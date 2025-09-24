@@ -2,6 +2,7 @@ import { fetchConToken } from '../../utils/AuthFetch.js';
 import { API_BASE_URL } from '../../utils/config.js';
 import { loadUserFavorites } from './loadUserFavorites.js';
 import { loadUserReviews } from './loadUserReviews.js';
+import { updateTranslations } from '../../utils/i18n.js';
 
 document.addEventListener('DOMContentLoaded', async () => {
   const token = localStorage.getItem('token');
@@ -47,6 +48,9 @@ document.addEventListener('DOMContentLoaded', async () => {
       loadUserFavorites(token),
       loadUserReviews(token)
     ]);
+
+    // Update translations after loading user data
+    updateTranslations();
 
   } catch (error) {
     console.error('Error al autenticar usuario:', error);

@@ -1,4 +1,10 @@
 import { API_BASE_URL } from '../../utils/config.js';
+import { updateTranslations, setupLanguageToggle } from '../../utils/i18n.js';
+
+// Listen for language changes to update user menu translations
+document.addEventListener('languageChanged', () => {
+  updateTranslations();
+});
 
 
 
@@ -50,7 +56,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
       headerContainer.appendChild(header);
 
-
+      // Update translations after header is loaded
+      updateTranslations();
+      
+      // Setup language toggle after header is loaded
+      setupLanguageToggle();
 
       inicializarHeader();
 
@@ -178,6 +188,9 @@ if (!avatarUrl.startsWith('http')) {
         userDropdown.classList.remove('active');
 
       });
+
+      // Update translations for the user menu
+      updateTranslations();
 
     })
 

@@ -1,5 +1,5 @@
 import { TMDB_imgBaseUrl, MAX_BACKDROPS_TO_SHOW, providerUrls } from "./utils/consts.js";
-import { getCurrentLanguage, toggleLanguage, changeLanguage } from "./web/components/LanguageToggle.js";
+import { getCurrentLanguage, toggleLanguage, changeLanguage, updateTranslations } from "./utils/i18n.js";
 import { getMovieId, setMovieId } from "./movies.js";
 import { fetchFromApi } from "./api/components/FetchFromApi.js";
 import { setupFavoriteButton } from "./web/components/FavoriteButton.js";
@@ -9,6 +9,7 @@ let language = getCurrentLanguage();
 
 document.addEventListener("DOMContentLoaded", () => {
   changeLanguage(language);
+  updateTranslations();
 
   const movieId = getMovieId();
   if (!movieId) {
@@ -39,31 +40,29 @@ document.addEventListener("DOMContentLoaded", () => {
     })
     .catch(error => console.error("Error loading providers:", error));
 
-  // --------------------- Toggle de idioma ---------------------
-  const languageToggle = document.getElementById("languageToggle");
-  if (languageToggle) {
-    languageToggle.addEventListener("click", event => {
-      event.stopPropagation();
-      language = toggleLanguage();
+  // --------------------- Language change event listener ---------------------
+  document.addEventListener('languageChanged', (event) => {
+    language = event.detail.language;
+    updateTranslations();
 
-      fetchFromApi.movieDetails(movieId)
-        .then(async movieData => {
-          displayMovieDetails(movieData);
-          if (movieData.credits) displayMovieCast(movieData.credits);
-          if (movieData.images) displayMovieMultimedia(movieData.images, movieData);
+    // Reload movie details with new language
+    fetchFromApi.movieDetails(movieId)
+      .then(async movieData => {
+        displayMovieDetails(movieData);
+        if (movieData.credits) displayMovieCast(movieData.credits);
+        if (movieData.images) displayMovieMultimedia(movieData.images, movieData);
 
-          await setupFavoriteButton(movieId, movieData);
-        })
-        .catch(error => console.error("Error reloading movie details:", error));
+        await setupFavoriteButton(movieId, movieData);
+      })
+      .catch(error => console.error("Error reloading movie details:", error));
 
-      fetchFromApi.movieProviders(movieId)
-        .then(providers => {
-          const region = language.split("-")[1] || "US";
-          displayMovieProviders(providers, region);
-        })
-        .catch(error => console.error("Error reloading providers:", error));
-    });
-  }
+    fetchFromApi.movieProviders(movieId)
+      .then(providers => {
+        const region = language.split("-")[1] || "US";
+        displayMovieProviders(providers, region);
+      })
+      .catch(error => console.error("Error reloading providers:", error));
+  });
 
   // --------------------- Renderizar reseñas dinámicamente ---------------------
   renderReviews(movieId);

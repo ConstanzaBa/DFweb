@@ -1,9 +1,15 @@
 import { TMDB_imgBaseUrl } from "../../utils/consts.js";
 import { fetchConToken } from "../../utils/AuthFetch.js";
+import { translate, updateTranslations } from "../../utils/i18n.js";
 
 const ITEMS_PER_PAGE = 20;
 let currentPage = 1;
 let favoritos = [];
+
+// Listen for language changes to update translations
+document.addEventListener('languageChanged', () => {
+  updateTranslations();
+});
 
 export async function loadUserFavorites(token) {
   const recientesContainer = document.getElementById("fav-movies");
@@ -30,7 +36,8 @@ export async function loadUserFavorites(token) {
 
     if (recientesContainer) {
       if (!favoritos.length) {
-        recientesContainer.innerHTML = `<div class="empty-state"><p>No tienes películas favoritas</p></div>`;
+        recientesContainer.innerHTML = `<div class="empty-state"><p data-translate="noFavorites">No tienes películas favoritas</p></div>`;
+        updateTranslations();
       } else {
         const recientes = favoritos.slice(0, 10);
         recientesContainer.innerHTML = recientes.map(createFavoriteCard).join("");
@@ -43,13 +50,17 @@ export async function loadUserFavorites(token) {
   } catch (error) {
     console.error("Error cargando favoritos:", error);
     if (favoritesCount) favoritesCount.textContent = 0;
-    if (recientesContainer) recientesContainer.innerHTML = `<div class="error-state"><p>Error al cargar tus favoritos</p></div>`;
+    if (recientesContainer) {
+      recientesContainer.innerHTML = `<div class="error-state"><p data-translate="errorLoadingFavorites">Error al cargar tus favoritos</p></div>`;
+      updateTranslations();
+    }
   }
 }
 
 function renderFavoritesPage(favoritosContainer, paginationContainer) {
   if (!favoritos.length) {
-    favoritosContainer.innerHTML = `<div class="empty-state"><p>No tienes películas favoritas</p></div>`;
+    favoritosContainer.innerHTML = `<div class="empty-state"><p data-translate="noFavorites">No tienes películas favoritas</p></div>`;
+    updateTranslations();
     if (paginationContainer) paginationContainer.innerHTML = "";
     return;
   }

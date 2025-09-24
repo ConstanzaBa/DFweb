@@ -2,9 +2,15 @@ import { API_BASE_URL } from '../../utils/config.js';
 import { fetchFromApi } from '../../api/components/FetchFromApi.js';
 import { deleteReview } from '../../api/endpoints/DeleteReview.js';
 import { showError } from './ShowError.js';
+import { translate, updateTranslations } from '../../utils/i18n.js';
 
 const MAX_RECENTES = 10;
 const MAX_RESEÑAS_SOLO = 10;
+
+// Listen for language changes to update translations
+document.addEventListener('languageChanged', () => {
+  updateTranslations();
+});
 
 document.addEventListener("DOMContentLoaded", async () => {
   const token = localStorage.getItem("token");
@@ -30,16 +36,17 @@ export async function loadUserReviews(token) {
       credentials: "include"
     });
 
-    if (!response.ok) throw new Error("Error al obtener reseñas");
+    if (!response.ok) throw new Error(translate("errorLoadingReviews"));
     const data = await response.json();
     let reviews = data.reviews || [];
 
     if (reviewsCount) reviewsCount.textContent = reviews.length;
 
     if (!reviews.length) {
-      const emptyHtml = `<div class="empty-state"><p>No has escrito ninguna reseña</p></div>`;
+      const emptyHtml = `<div class="empty-state"><p data-translate="noReviews">No has escrito ninguna reseña</p></div>`;
       if (containerRecientes) containerRecientes.innerHTML = emptyHtml;
       if (containerOnly) containerOnly.innerHTML = emptyHtml;
+      updateTranslations();
       return;
     }
 
@@ -59,6 +66,7 @@ export async function loadUserReviews(token) {
     if (containerRecientes) {
       const recientes = reviews.slice(0, MAX_RECENTES);
       containerRecientes.innerHTML = recientes.map(r => createReviewCard(r, 'carousel')).join("");
+      updateTranslations();
     }
 
     // Página reseñas verticales
@@ -94,8 +102,8 @@ function createReviewCard(review, size = 'page') {
     <div class="review-actions">
       <span class="material-symbols-outlined actions-icon">more_vert</span>
       <div class="actions-dropdown">
-        <button class="edit-review-btn">Editar</button>
-        <button class="delete-review-btn">Eliminar</button>
+        <button class="edit-review-btn" data-translate="editReview">Editar</button>
+        <button class="delete-review-btn" data-translate="deleteReview">Eliminar</button>
       </div>
     </div>
   ` : '';
@@ -127,6 +135,7 @@ function renderPaginatedReviewsVertical(container, reviews, perPage) {
     const start = (page - 1) * perPage;
     const end = start + perPage;
     container.innerHTML = reviews.slice(start, end).map(r => createReviewCard(r, 'page')).join("");
+    updateTranslations();
     attachReviewActions(container);
     renderPaginationControls();
   }
@@ -171,9 +180,9 @@ function attachReviewActions(container) {
       const res = await deleteReview(movieId);
       if (res.success) {
         card.remove();
-        showError('Reseña eliminada correctamente', 'success');
+        showError(translate('reviewDeleted'), 'success');
       } else {
-        showError('Error al eliminar la reseña: ' + (res.message || res.error), 'error');
+        showError(translate('errorDeletingReview') + ': ' + (res.message || res.error), 'error');
       }
     });
 
