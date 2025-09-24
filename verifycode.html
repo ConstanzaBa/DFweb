@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Verificar código</title>
+
+  <link rel="stylesheet" href="css/normalize.css">
+  <link rel="stylesheet" href="css/styles.css">
+  <link rel="stylesheet" href="css/user/auth.css">
+  <link rel="stylesheet" href="css/user/showError.css">
+  <link rel="stylesheet" href="css/user/verifycode.css">
+  <link rel="stylesheet" href="css/components/Footer.css">
+
+  <!-- Scripts: cargamos primero Resend, luego VerifyResetCode, luego verifycode.js -->
+  <script type="module" src="js/api/endpoints/ResendPasswordReset.js"></script>
+  <script type="module" src="js/api/endpoints/VerifyResetCode.js"></script>
+
+  <script src="js/web/components/Footer.js" defer></script>
+</head>
+<body>
+  <div class="wrapper">
+    <div class="card otp-card">
+      <div class="logo-container">
+        <img class="logo__pic" src="source/img/logo_dragonfilms.png" alt="Dragon Films Logo" />
+      </div>
+
+      <form id="verifyCodeForm" class="otp-Form">
+        <div id="error-container"></div>
+
+        <span class="mainHeading">Ingresa el código</span>
+        <p class="otpSubheading">Hemos enviado un código a tu correo</p>
+
+        <div class="inputContainer otpInputs">
+          <input required maxlength="1" type="text" class="otp-input" id="otp-input1">
+          <input required maxlength="1" type="text" class="otp-input" id="otp-input2">
+          <input required maxlength="1" type="text" class="otp-input" id="otp-input3">
+          <input required maxlength="1" type="text" class="otp-input" id="otp-input4">
+          <input required maxlength="1" type="text" class="otp-input" id="otp-input5">
+          <input required maxlength="1" type="text" class="otp-input" id="otp-input6">
+        </div>
+
+        <div class="timerContainer">
+          <span class="otpSubheading">Expira en</span>
+          <span id="timer" class="otpSubheading timerText">--:--</span>
+        </div>
+
+        <button type="submit" class="verifyButton">Verificar</button>
+        <p class="resendNote">
+          ¿No recibiste el código?<br>
+          <button type="button" class="resendBtn">Reenviar</button>
+        </p>
+      </form>
+    </div>
+  </div>
+    <div id="footer"></div>
+</body>
+</html>

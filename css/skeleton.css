@@ -1,0 +1,258 @@
+.skeleton-container {
+    display: flex;
+    gap: 2rem;
+    padding: 1rem;
+  }
+  
+.skeleton-poster {
+  width: 300px;
+  height: 450px;
+  background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+  border-radius: 8px;
+}
+  
+.skeleton-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+  
+.skeleton-title {
+    width: 80%;
+    height: 2.5rem;
+    background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+    background-size: 200% 100%;
+    animation: shimmer 1.5s infinite;
+    border-radius: 4px;
+}
+  
+.skeleton-facts {
+    display: flex;
+    gap: 1rem;
+}
+  
+.skeleton-fact {
+    width: 100px;
+    height: 1.5rem;
+    background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+    background-size: 200% 100%;
+    animation: shimmer 1.5s infinite;
+    border-radius: 4px;
+ }
+  
+  .skeleton-overview {
+    width: 100%;
+    height: 150px;
+    background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+    background-size: 200% 100%;
+    animation: shimmer 1.5s infinite;
+    border-radius: 4px;
+  }
+  
+  .skeleton-streaming {
+    margin-top: 1rem;
+  }
+  
+  .skeleton-streaming-title {
+    width: 200px;
+    height: 1.5rem;
+    background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+    background-size: 200% 100%;
+    animation: shimmer 1.5s infinite;
+    border-radius: 4px;
+    margin-bottom: 1rem;
+  }
+  
+  .skeleton-streaming-icons {
+    display: flex;
+    gap: 1rem;
+  }
+  
+  .skeleton-streaming-icons::before {
+    content: '';
+    width: 50px;
+    height: 50px;
+    background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+    background-size: 200% 100%;
+    animation: shimmer 1.5s infinite;
+    border-radius: 50%;
+  }
+  
+  /* Cast Skeleton */
+  .skeleton-actor-image {
+    width: 100%;
+    height: 200px;
+    background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+    background-size: 200% 100%;
+    animation: shimmer 1.5s infinite;
+    border-radius: 8px;
+  }
+  
+  .skeleton-actor-name {
+    width: 80%;
+    height: 1.2rem;
+    background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+    background-size: 200% 100%;
+    animation: shimmer 1.5s infinite;
+    border-radius: 4px;
+    margin: 0.5rem 0;
+  }
+  
+  .skeleton-actor-character {
+    width: 60%;
+    height: 1rem;
+    background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+    background-size: 200% 100%;
+    animation: shimmer 1.5s infinite;
+    border-radius: 4px;
+  }
+  
+  /* Multimedia Skeleton */
+  .skeleton-image {
+    width: 100%;
+    height: 150px;
+    background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+    background-size: 200% 100%;
+    animation: shimmer 1.5s infinite;
+    border-radius: 8px;
+  }
+  
+  .skeleton-text {
+    width: 60%;
+    height: 1rem;
+    background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+    background-size: 200% 100%;
+    animation: shimmer 1.5s infinite;
+    border-radius: 4px;
+    margin: 0.5rem 0;
+  }
+  
+  .skeleton-main-image {
+    width: 100%;
+    height: 400px;
+    background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+    background-size: 200% 100%;
+    animation: shimmer 1.5s infinite;
+    border-radius: 8px;
+  }
+  
+  .skeleton-main-text {
+    width: 100px;
+    height: 1.5rem;
+    background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+    background-size: 200% 100%;
+    animation: shimmer 1.5s infinite;
+    border-radius: 4px;
+    margin: 1rem 0;
+  }
+  
+  @keyframes shimmer {
+    0% {
+      background-position: -200% 0;
+    }
+    100% {
+      background-position: 200% 0;
+    }
+  } 
+
+/* Skeleton Loading Styles */
+.skeleton {
+  position: relative;
+  overflow: hidden;
+}
+
+.skeleton::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  transform: translateX(-100%);
+  background-image: linear-gradient(
+    90deg,
+    rgba(255, 255, 255, 0) 0,
+    rgba(255, 255, 255, 0.2) 20%,
+    rgba(255, 255, 255, 0.5) 60%,
+    rgba(255, 255, 255, 0)
+  );
+  animation: shimmer 2s infinite;
+}
+
+@keyframes shimmer {
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+.pelicula__card.skeleton {
+  background: #f0f0f0;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.pelicula__card.skeleton .skeleton-poster {
+  width: 100%;
+  height: 300px;
+  background: #e0e0e0;
+}
+
+.pelicula__card.skeleton .skeleton-title {
+  width: 80%;
+  height: 24px;
+  background: #e0e0e0;
+  margin: 16px;
+  border-radius: 4px;
+}
+
+.pelicula__card.skeleton .skeleton-fact {
+  width: 60px;
+  height: 20px;
+  background: #e0e0e0;
+  margin: 8px 16px;
+  border-radius: 4px;
+}
+
+.pelicula__detalle.skeleton {
+  background: #f0f0f0;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.pelicula__detalle.skeleton .skeleton-poster {
+  width: 100%;
+  height: 400px;
+  background: #e0e0e0;
+}
+
+.pelicula__detalle.skeleton .skeleton-title {
+  width: 60%;
+  height: 32px;
+  background: #e0e0e0;
+  margin: 24px 16px;
+  border-radius: 4px;
+}
+
+.pelicula__detalle.skeleton .skeleton-facts {
+  display: flex;
+  gap: 16px;
+  margin: 16px;
+}
+
+.pelicula__detalle.skeleton .skeleton-fact {
+  width: 100px;
+  height: 24px;
+  background: #e0e0e0;
+  border-radius: 4px;
+}
+
+.pelicula__detalle.skeleton .skeleton-overview {
+  width: 90%;
+  height: 120px;
+  background: #e0e0e0;
+  margin: 24px 16px;
+  border-radius: 4px;
+}

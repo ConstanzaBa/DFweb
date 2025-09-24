@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Olvidé mi contraseña</title>
+
+  <!-- Estilos compartidos con login -->
+  <link rel="stylesheet" href="css/normalize.css">
+  <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital@0;1&family=PT+Sans:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/styles.css">
+  <link rel="stylesheet" href="css/user/auth.css">
+  <link rel="stylesheet" href="css/components/Footer.css">
+  <link rel="stylesheet" href="css/user/showError.css">
+
+  <!-- Scripts -->
+  <script type="module" src="js/api/endpoints/RequestPasswordReset.js" defer></script>
+  <script src="js/web/components/Footer.js" defer></script>
+</head>
+<body>
+  <div class="wrapper">
+    <div class="card">
+      <div class="logo-container">
+        <img class="logo__pic" src="source/img/logo_dragonfilms.png" alt="Dragon Films Logo" />
+      </div>
+
+      <form id="forgotForm" class="login-form">
+        <div id="error-container"></div>
+
+        <div class="inputGroup">
+          <label for="usuario">Usuario</label>
+          <input type="text" required name="usuario" id="usuario" autocomplete="off" />
+        </div>
+
+        <button type="submit" class="btn-submit">Enviar</button>
+
+        <div class="register-link">
+          <a href="login.html">Volver al login</a>
+        </div>
+      </form>
+    </div>
+  </div>
+  <div id="footer"></div>
+</body>
+</html>

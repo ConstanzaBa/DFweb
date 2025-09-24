@@ -1,0 +1,654 @@
+<!DOCTYPE html>
+
+
+
+<html lang="en">
+
+
+
+
+
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DragonFilms</title>
+
+    <!-- Normalize -->
+    <link rel="preload" href="css/normalize.css" as="style" />
+    <link rel="stylesheet" href="css/normalize.css" />
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="preload"
+        href="https://fonts.googleapis.com/css2?family=Open+Sans:ital@0;1&family=PT+Sans:wght@400;700&display=swap"
+        as="style" crossorigin="anonymous" />
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Open+Sans:ital@0;1&family=PT+Sans:wght@400;700&display=swap"
+        crossorigin="anonymous" />
+
+    <!-- Material Symbols -->
+    <link rel="preload"
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0"
+        as="style" crossorigin="anonymous" />
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0"
+        crossorigin="anonymous" />
+
+    <!-- Remix Icon -->
+    <link rel="preload" href="https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css" as="style"
+        crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css"
+        crossorigin="anonymous" />
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+        crossorigin="anonymous" />
+
+    <!-- Line Icons -->
+    <link rel="stylesheet" href="https://cdn.lineicons.com/5.0/lineicons.css" crossorigin="anonymous" />
+
+    <!-- CSS locales -->
+    <link rel="preload" href="css/normalize.css" as="style">
+    <link rel="stylesheet" href="css/normalize.css">
+
+    <link rel="preload" href="css/styles.css" as="style">
+    <link rel="stylesheet" href="css/styles.css">
+
+    <link rel="preload" href="css/entrada.css" as="style">
+    <link rel="stylesheet" href="css/entrada.css">
+
+
+    <link rel="preload" href="css/components/Header.css" as="style">
+    <link rel="stylesheet" href="css/components/Header.css">
+
+    <link rel="preload" href="css/components/Footer.css" as="style">
+    <link rel="stylesheet" href="css/components/Footer.css">
+
+    <link rel="preload" href="css/components/LanguageToggle.css" as="style">
+    <link rel="stylesheet" href="css/components/LanguageToggle.css">
+
+    <link rel="preload" href="css/user/showError.css" as="style">
+    <link rel="stylesheet" href="css/user/showError.css">
+
+    <!-- Scripts -->
+    <script src="js/modernizr.js"></script>
+    <script type="module" src="js/scripts.js"></script>
+    <script type="module" src="js/entrada.js"></script>
+    <script type="module" src="js/web/components/LanguageToggle.js"></script>
+    <script type="module" src="js/web/components/Chatbot.js"></script>
+    <script type="module" src="js/web/components/FavoriteButton.js"></script>
+    <script type="module" src="js/web/components/Header.js"></script>
+    <script type="module" src="js/web/components/Footer.js"></script>
+</head>
+
+
+<body>
+
+
+
+
+    <div id="header" class="header__entrada relative"></div>
+
+
+
+    <main class="contenedor">
+
+        <div id="error-container"></div>
+
+        <div class="entrada">
+
+
+
+            <div class="entrada__info">
+
+
+
+                <h2 class="entrada__info__title"></h2>
+
+
+
+                <img class="entrada__info__poster no-margin" loading="lazy" alt="imagen del blog">
+
+
+
+
+
+
+
+                <section class="entrada__info__facts">
+
+
+
+                    <button id="favorite-btn" class="entrada__info__facts__favoritos no-margin">
+                        <input type="checkbox" id="favorite-checkbox">
+                        <div class="checkmark">
+                            <svg viewBox="0 0 256 256">
+                                <rect fill="none" height="256" width="256"></rect>
+                                <path
+                                    d="M224.6,51.9a59.5,59.5,0,0,0-43-19.9,60.5,60.5,0,0,0-44,17.6L128,59.1l-7.5-7.4C97.2,28.3,59.2,26.3,35.9,47.4a59.9,59.9,0,0,0-2.3,87l83.1,83.1a15.9,15.9,0,0,0,22.6,0l81-81C243.7,113.2,245.6,75.2,224.6,51.9Z"
+                                    stroke-width="20px" stroke="#000" fill="none"></path>
+                            </svg>
+                        </div>
+                    </button>
+
+
+
+                    <span class="entrada__info__facts__release"></span>
+
+
+
+                    <span class="entrada__info__facts__time"></span>
+
+
+
+                    <span class="entrada__info__facts__average"></span>
+
+
+
+                </section>
+
+
+
+
+
+
+
+                <section class="entrada__info__sinopsis">
+
+
+
+                    <h3 class="entrada__info__heading" data-translate="sinopsis"></h3>
+
+
+
+                    <p class="entrada__info__texto"></p>
+
+
+
+                </section>
+
+                <section class="entrada__reviews__puntaje" data-selected="true" data-label-id="0">
+
+                    <div class="entrada__reviews__puntaje__contenedor">
+                        <div class="entrada__reviews__puntaje__contador">
+                            <span class="average-number">0.0</span>
+                            <div class="average-stars">☆☆☆☆☆</div>
+                            <span class="total-reviews">0 calificaciones</span>
+                        </div>
+
+                        <div class="entrada__reviews__puntaje__barras">
+                            <div class="rating-row" data-star="5">
+                                <span class="star-label">5 ★</span>
+                                <div class="bar-container">
+                                    <div class="bar"></div>
+                                </div>
+                                <span class="count">0</span>
+                            </div>
+                            <div class="rating-row" data-star="4">
+                                <span class="star-label">4 ★</span>
+                                <div class="bar-container">
+                                    <div class="bar"></div>
+                                </div>
+                                <span class="count">0</span>
+                            </div>
+                            <div class="rating-row" data-star="3">
+                                <span class="star-label">3 ★</span>
+                                <div class="bar-container">
+                                    <div class="bar"></div>
+                                </div>
+                                <span class="count">0</span>
+                            </div>
+                            <div class="rating-row" data-star="2">
+                                <span class="star-label">2 ★</span>
+                                <div class="bar-container">
+                                    <div class="bar"></div>
+                                </div>
+                                <span class="count">0</span>
+                            </div>
+                            <div class="rating-row" data-star="1">
+                                <span class="star-label">1 ★</span>
+                                <div class="bar-container">
+                                    <div class="bar"></div>
+                                </div>
+                                <span class="count">0</span>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="entrada__info__streaming">
+
+
+
+                    <h3 data-translate="streaming"></h3>
+
+
+
+                    <div class="entrada__info__streaming__menu">
+
+
+
+                        <ul></ul>
+
+
+
+                    </div>
+
+
+
+                </section>
+
+                <section class="entrada__info__cinemas">
+
+
+
+                    <h3 data-translate="cinemas"></h3>
+
+
+
+                    <div class="location-info"></div>
+
+                    <div class="day-selector">
+                        <div class="selector-container">
+                            <select class="day-select" id="daySelector">
+                                <option value="lunes">Lunes</option>
+                                <option value="martes">Martes</option>
+                                <option value="miercoles">Miércoles</option>
+                                <option value="jueves">Jueves</option>
+                                <option value="viernes">Viernes</option>
+                                <option value="sabado">Sábado</option>
+                                <option value="domingo">Domingo</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="entrada__info__cinemas__menu">
+                        <ul>
+                            <li class="cinema-item">
+                                <div class="cinema-header">
+                                    <div class="cinema-info">
+                                        <h4>SHOWCASE [Showcase Villa Allende]</h4>
+                                        <div class="cinema-address">5,2 km Río de Janeiro No. 1725 esquina Mendoza,
+                                            VILLA ALLENDE, CB</div>
+                                    </div>
+                                    <div class="cinema-arrow">›</div>
+                                </div>
+                                <div class="showtimes">
+                                    <div class="time-slots">
+                                        <span class="time-slot">3:20P. M.</span>
+                                        <span class="time-slot">5:25P. M.</span>
+                                        <span class="time-slot">7:35P. M.</span>
+                                        <span class="time-slot">10:25P. M.</span>
+                                    </div>
+                                </div>
+                            </li>
+
+                            <li class="cinema-item">
+                                <div class="cinema-header">
+                                    <div class="cinema-info">
+                                        <h4>Cinemacenter</h4>
+                                        <div class="cinema-address">8,0 km Villa Rivera Indarte, Ricardo Rojas 9200
+                                            Esquina Bodereau - Paseo Rivera Indarte, X5018 Córdoba, CB</div>
+                                    </div>
+                                    <div class="cinema-arrow">›</div>
+                                </div>
+                                <div class="showtimes">
+                                    <div class="time-slots">
+                                        <span class="time-slot">4:00P. M.</span>
+                                        <span class="time-slot">6:10P. M.</span>
+                                        <span class="time-slot">8:20P. M.</span>
+                                        <span class="time-slot">10:30P. M.</span>
+                                    </div>
+                                </div>
+                            </li>
+
+                            <li class="cinema-item">
+                                <div class="cinema-header">
+                                    <div class="cinema-info">
+                                        <h4>Cines Dino Alto Verde</h4>
+                                        <div class="cinema-address">14,4 km Alto Verde, Rodriguez del Busto 4086,
+                                            Córdoba, CB</div>
+                                    </div>
+                                    <div class="cinema-arrow">›</div>
+                                </div>
+                                <div class="showtimes">
+                                    <div class="time-slots">
+                                        <span class="time-slot">2:40P. M.</span>
+                                        <span class="time-slot">3:10P. M.</span>
+                                        <span class="time-slot">5:00P. M.</span>
+                                        <span class="time-slot">5:40P. M.</span>
+                                        <span class="time-slot">7:10P. M.</span>
+                                        <span class="time-slot">8:00P. M.</span>
+                                        <span class="time-slot">9:40P. M.</span>
+                                        <span class="time-slot">10:20P. M.</span>
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </section>
+
+                <script>
+                    // Funcionalidad para expandir/colapsar los cines
+                    document.querySelectorAll('.cinema-header').forEach(header => {
+                        header.addEventListener('click', function () {
+                            const cinemaItem = this.parentElement;
+                            cinemaItem.classList.toggle('expanded');
+                        });
+                    });
+
+                    const daySelector = document.getElementById('daySelector');
+
+                    // Establecer el día actual como seleccionado por defecto
+                    const today = new Date();
+                    const dayNames = ['domingo', 'lunes', 'martes', 'miercoles', 'jueves', 'viernes', 'sabado'];
+                    const currentDay = dayNames[today.getDay()];
+                    daySelector.value = currentDay;
+
+                    // Manejar cambio de día
+                    daySelector.addEventListener('change', function () {
+                        const selectedDay = this.value;
+                        console.log('Día seleccionado:', selectedDay);
+
+                        // Aquí puedes agregar la lógica para cargar los horarios del día seleccionado
+                        // Por ejemplo, hacer una llamada AJAX o filtrar datos existentes
+                        loadSchedulesForDay(selectedDay);
+                    });
+
+
+                    // Funcionalidad para seleccionar horarios
+                    document.querySelectorAll('.time-slot').forEach(slot => {
+                        slot.addEventListener('click', function () {
+                            console.log('Horario seleccionado:', this.textContent);
+                            // Aquí puedes agregar la lógica para manejar la selección de horario
+                        });
+                    });
+                </script>
+
+
+                </section>
+            </div>
+
+            <div class="entrada__multimedia" data-measuring="true">
+
+
+
+                <div class="entrada__multimedia__principal">
+
+
+
+                    <video src="" loop="" controls="" class="video-principal"></video>
+
+
+
+                    <h3 class="video-principal-texto" data-translate="trailer"></h3>
+
+
+
+                </div>
+
+
+
+                <div class="entrada__multimedia__lista">
+
+
+
+                    <div class="lista">
+
+
+
+                        <img class="imagen-lista">
+
+
+
+                        <h3 class="video-lista-texto" data-translate="trailer"></h3>
+
+
+
+                    </div>
+
+
+
+
+
+
+
+                    <div class="lista">
+
+
+
+                        <img class="imagen-lista">
+
+
+
+                        <h3 class="video-lista-texto" data-translate="captura"></h3>
+
+
+
+                    </div>
+
+
+
+
+
+
+
+                    <div class="lista">
+
+
+
+                        <img class="imagen-lista">
+
+
+
+                        <h3 class="video-lista-texto" data-translate="captura"></h3>
+
+
+
+                    </div>
+
+
+
+
+
+
+
+                    <div class="lista">
+
+
+
+                        <img class="imagen-lista">
+
+
+
+                        <h3 class="video-lista-texto" data-translate="captura"></h3>
+
+
+
+                    </div>
+
+
+
+
+
+
+
+                    <div class="lista">
+
+
+
+                        <img class="imagen-lista">
+
+
+
+                        <h3 class="video-lista-texto" data-translate="captura"></h3>
+
+
+
+                    </div>
+
+
+
+
+
+
+
+                    <div class="lista">
+
+
+
+                        <img class="imagen-lista">
+
+
+
+                        <h3 class="video-lista-texto" data-translate="captura"></h3>
+
+
+
+                    </div>
+
+
+
+
+
+
+
+                    <div class="lista">
+
+
+
+                        <img class="imagen-lista">
+
+
+
+                        <h3 class="video-lista-texto" data-translate="captura"></h3>
+
+
+
+                    </div>
+
+
+
+
+
+
+
+                    <div class="lista">
+
+
+
+                        <img class="imagen-lista">
+
+
+
+                        <h3 class="video-lista-texto" data-translate="captura"></h3>
+
+
+
+                    </div>
+
+
+
+                </div>
+
+
+
+
+
+
+
+                <section class="entrada__info__elenco">
+
+
+
+                    <div class="entrada__info__elenco__lista">
+
+
+
+                        <ul>
+
+
+
+                            <li></li>
+
+
+
+                            <li></li>
+
+
+
+                            <li></li>
+
+
+
+                            <li></li>
+
+
+
+                            <li></li>
+
+
+
+                        </ul>
+
+
+
+                    </div>
+
+
+
+                </section>
+
+                <h3 data-translate="reviews"></h3>
+
+                <section class="entrada__reviews" id="comments-section">
+                    <div class="comments-wrapper" data-measuring="true">
+                        <div class="comments" id="comments-container">
+                            <!-- Aquí se inyectan las reseñas desde JS -->
+                        </div>
+
+                        <div class="text-box">
+                            <div class="box-container">
+                                <div class="input-wrapper">
+                                    <input type="text" id="review-title" placeholder="Título (opcional)">
+                                    <textarea id="review-text" placeholder="Escribe un comentario..."></textarea>
+
+                                    <p class="raiting-title">Puntuación</p>
+                                    <!-- ⭐ Cambié la clase "rating" por "rating-form" -->
+                                    <div class="rating-form">
+                                        <input type="radio" name="rating" id="star5" value="5"><label
+                                            for="star5"></label>
+                                        <input type="radio" name="rating" id="star4" value="4"><label
+                                            for="star4"></label>
+                                        <input type="radio" name="rating" id="star3" value="3"><label
+                                            for="star3"></label>
+                                        <input type="radio" name="rating" id="star2" value="2"><label
+                                            for="star2"></label>
+                                        <input type="radio" name="rating" id="star1" value="1"><label
+                                            for="star1"></label>
+                                    </div>
+
+                                    <button id="send-review" class="send" title="Enviar">
+                                        <svg width="30" height="30" viewBox="0 0 25 25" fill="none" stroke="#fff"
+                                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                            <path d="M22 2L11 13"></path>
+                                            <path d="M22 2L15 22L11 13L2 9L22 2Z"></path>
+                                        </svg>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </div>
+    </main>
+
+    <div id="footer"></div>
+
+
+</body>
+
+</html>

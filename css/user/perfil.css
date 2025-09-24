@@ -1,0 +1,666 @@
+/* contenedor principal */
+.profile-container {
+  flex: 1;
+  position: relative;
+  max-width: 1300px;
+  min-width: 1300px;
+  margin: 30px auto 20px auto;
+  background: var(--blanco);
+  border-radius: 12px;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.05);
+  padding: 0 4rem;
+}
+
+@media (max-width: 1300px) {
+  .profile-container {
+    max-width: 100%;
+    min-width: unset;
+    padding: 0 2rem;
+  }
+}
+
+@media (max-width: 600px) {
+  .profile-container {
+    padding: 0 1rem;
+    margin: 20px 0;
+  }
+}
+
+/* header */
+.profile-header {
+  display: flex;
+  align-items: center;
+  gap: 3rem;
+  padding: 4rem 0;
+}
+
+/* avatar usuario */
+.profile-avatar-container {
+  position: relative;
+  width: 15rem;
+  height: 15rem;
+  border-radius: 50%;
+}
+
+.profile-avatar {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid var(--primario);
+  display: block;
+  box-sizing: border-box;
+}
+
+@media (max-width: 768px) {
+  .profile-avatar-container {
+    width: 12rem;
+    height: 12rem;
+  }
+
+}
+
+@media (max-width: 480px) {
+  .profile-avatar-container {
+    width: 10rem;
+    height: 10rem;
+  }
+
+}
+
+/* estadísticas del usuario */
+.profile-stats {
+  display: flex;
+  gap: 1rem;
+}
+
+.profile-stat {
+  text-align: center;
+}
+
+.profile-stat div {
+  font-size: 18px;
+  font-weight: bold;
+  color: var(--negro);
+}
+
+.profile-stat small {
+  color: var(--gris2);
+}
+
+/* username */
+.profile-username {
+  font-size: var(--fuenteheadingssize);
+  font-family: var(--fuenteheading);
+  place-content: center;
+  font-weight: bold;
+  color: var(--negro);
+  place-content: center;
+}
+
+/* tabs sección */
+.profile-tab-section {
+  margin-top: 40px;
+}
+
+.profile-tab-section h2 {
+  text-align: center;
+  margin-bottom: 20px;
+  color: var(--negro);
+}
+
+.profile-tab-container {
+  display: flex;
+  justify-content: center;
+  position: relative;
+  background-color: var(--primario);
+  border-radius: 9px;
+  padding: 2px;
+  margin: 0 auto;
+  width: fit-content;
+}
+
+.profile-tab {
+  display: none;
+}
+
+.profile-tab_label {
+  width: 130px;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.75rem;
+  opacity: 0.6;
+  cursor: pointer;
+  z-index: 1;
+  color: var(--negro);
+}
+
+@media (max-width: 480px) {
+  .profile-tab_label {
+    width: 80px;
+    font-size: 0.65rem;
+  }
+  .profile-indicator {
+    width: 80px;
+    height: 25px;
+  }
+}
+
+.profile-indicator {
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  width: 130px;
+  height: 28px;
+  background: var(--blanco);
+  border-radius: 7px;
+  box-shadow: 0px 3px 8px rgba(0, 0, 0, 0.12), 0px 3px 1px rgba(0, 0, 0, 0.04);
+  transition: all 0.2s ease-out;
+  z-index: 0;
+}
+
+/* label tabs */
+.profile-label {
+  line-height: 20px;
+  font-size: 17px;
+  color: var(--negro);
+  font-family: sans-serif;
+  letter-spacing: 1px;
+}
+
+.profile-label-s {
+  color: var(--negro);
+  line-height: 20px;
+  font-size: 16px;
+  letter-spacing: 2px;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* carousel de reviews */
+.reviews-carousel {
+  display: flex;
+  gap: 1rem;
+  padding-top: 1rem;
+  padding-bottom: 3rem;
+  overflow-x: scroll;
+}
+
+.reviews-carousel::-webkit-scrollbar {
+  height: 0.8rem;
+}
+
+.reviews-carousel::-webkit-scrollbar-thumb {
+  background: var(--primario);
+  border-radius: 0.25rem;
+}
+
+.reviews-carousel::-webkit-scrollbar-thumb:hover {
+  background: var(--secundario);
+}
+
+.reviews-carousel .task {
+  flex: 0 0 auto;
+  scroll-snap-align: start;
+  min-width: 280px;
+  max-width: 350px;
+}
+
+@media (max-width: 600px) {
+  .reviews-carousel .task {
+    min-width: 180px;
+    max-width: 200px;
+  }
+}
+
+/* review card */
+.task {
+  position: relative;
+  color: var(--negro);
+  cursor: grab;
+  background-color: var(--blanco);
+  padding: 1rem;
+  border-radius: 12px;
+  box-shadow: rgba(99, 99, 99, 0.1) 0px 2px 8px;
+  margin-bottom: 1rem;
+  border: 2px solid transparent;
+  transition: all 0.2s ease-in-out;
+}
+
+.task:hover {
+  box-shadow: rgba(99, 99, 99, 0.2) 0px 4px 12px;
+  border-color: rgba(var(--primario), 0.3);
+}
+
+/* card header */
+.tags {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.tag {
+  border-radius: 100px;
+  padding: 4px 13px;
+  font-size: 12px;
+  color: var(--blanco);
+  background-color: var(--primario);
+  white-space: nowrap;
+}
+
+.options {
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+.options svg {
+  fill: var(--gris);
+  width: 20px;
+  height: 20px;
+  transition: fill 0.2s ease-in-out;
+}
+
+.options:hover svg {
+  fill: var(--primario);
+}
+
+/* review text */
+.comment {
+  margin-top: 0.5rem;
+}
+
+.comment-title {
+  font-weight: 700;
+  font-size: 14px;
+  color: var(--negro);
+  margin-bottom: 4px;
+}
+
+.comment-text {
+  font-size: 13px;
+  line-height: 1.5;
+  color: var(--gris);
+}
+
+/* tabs */
+.tabs {
+  position: relative;
+  width: 100%;
+  max-width: 1200px;
+  margin-top: 60px;
+}
+
+.tabs input[type="radio"] {
+  display: none;
+}
+
+/* lista de pestañas */
+.tabs ul {
+  display: flex;
+  justify-content: space-around;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  border-bottom: 1px solid var(--gris);
+}
+
+.tabs ul li {
+  flex: 1;
+  text-align: center;
+  position: relative;
+}
+
+.tabs ul li label {
+  cursor: pointer;
+  padding: 14px 0;
+  display: block;
+  font-weight: 500;
+  color: var(--negro);
+  transition: color 0.3s, font-weight 0.3s;
+}
+
+.tabs ul li label:hover {
+  color: var(--primario);
+}
+
+/* estado activo */
+#tab-recientes:checked~ul li:nth-child(1) label,
+#tab-reviews:checked~ul li:nth-child(2) label,
+#tab-favorites:checked~ul li:nth-child(3) label {
+  color: var(--negro);
+  font-weight: bold;
+}
+
+/* contenido de secciones */
+.tabs .content section {
+  display: none;
+  padding: 2rem 0;
+}
+
+#tab-recientes:checked~.content section:nth-child(1),
+#tab-reviews:checked~.content section:nth-child(2),
+#tab-favorites:checked~.content section:nth-child(3) {
+  display: block;
+}
+
+/* indicador de tabs */
+.slider {
+  position: relative;
+  height: 3px;
+  background: var(--gris);
+}
+
+.indicator {
+  position: absolute;
+  height: 3px;
+  width: 33.33%;
+  background: var(--primario);
+  transition: transform 0.3s ease;
+}
+
+/* movimiento del indicador */
+#tab-recientes:checked~.slider .indicator {
+  transform: translateX(0%);
+}
+
+#tab-reviews:checked~.slider .indicator {
+  transform: translateX(100%);
+}
+
+#tab-favorites:checked~.slider .indicator {
+  transform: translateX(200%);
+}
+
+/* responsive */
+@media (max-width: 600px) {
+  .tabs ul li label {
+    font-size: 14px;
+    padding: 10px 0;
+  }
+}
+
+@media (max-width: 1200px) {
+  #tab-only-favorites {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+@media (max-width: 900px) {
+  #tab-only-favorites {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (max-width: 600px) {
+  #tab-only-favorites {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 400px) {
+  #tab-only-favorites {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* contenedor de favoritos */
+#tab-only-favorites {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 10px;
+  padding: 10px 0;
+  justify-items: center;
+}
+
+/* responsive favoritos */
+@media (max-width: 1200px) {
+  #tab-only-favorites {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+@media (max-width: 900px) {
+  #tab-only-favorites {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+@media (max-width: 600px) {
+  #tab-only-favorites {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+@media (max-width: 400px) {
+  #tab-only-favorites {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* review cards comunes */
+.review-card {
+  display: flex;
+  background-color: var(--blanco);
+  border-radius: 12px;
+  box-shadow: rgba(99, 99, 99, 0.1) 0px 2px 8px;
+  overflow: hidden;
+  border: 2px solid transparent;
+  transition: all 0.3s ease;
+  word-break: break-word;
+}
+
+.review-card:hover {
+  border-color: rgba(var(--primario), 0.3);
+}
+
+/* cards horizontales (carousel) */
+.review-card.carousel {
+  height: auto;
+  flex-direction: row;
+}
+
+.review-card.carousel .review-left {
+  flex: 0 0 15rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.review-card.carousel .review-left img {
+  width: 100%;
+  border-radius: 8px;
+}
+
+.review-card.carousel .review-right {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  margin-left: 20px;
+}
+
+.review-card.carousel .review-title {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--primario);
+}
+
+.review-text {
+  white-space: normal;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  line-height: 1.4em;
+  margin-top: 10px;
+  margin-left: 5px;
+  margin-right: 70px;
+}
+
+.review-card.carousel .review-text {
+  display: -webkit-box;
+  -webkit-line-clamp: 4;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* cards verticales (solo reseñas) */
+.review-card.page {
+  width: 90%;
+  margin: 10px auto;
+  gap: 20px;
+}
+
+.review-card.page .review-left {
+  display: flex;
+  padding: 1rem;
+  align-items: center;
+  gap: 2rem;
+}
+
+.review-card.page .review-left img {
+  width: 100%;
+  border-radius: 8px;
+}
+
+.review-card.page .review-left .review-movie-title {
+  font-size: 16px;
+  font-weight: bold;
+  text-align: center;
+  margin-top: 5px;
+}
+
+.review-card.page .review-right {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  max-height: 30rem;
+  overflow-y: hidden;
+}
+
+.review-card.page .review-title {
+  margin-top: 20px;
+  font-size: 20px;
+  font-weight: 600;
+  color: var(--primario);
+}
+
+/* estrellas */
+.review-card .average-stars {
+  display: flex;
+  gap: 2px;
+  font-size: 20px;
+}
+
+.review-card .star {
+  color: var(--gris);
+}
+
+.review-card .star.filled {
+  color: var(--primario);
+}
+
+/* paginación */
+.pagination {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin: 20px 0;
+}
+
+.pagination button {
+  padding: 6px 12px;
+  border: 1px solid var(--gris);
+  border-radius: 6px;
+  cursor: pointer;
+  background-color: var(--blanco);
+  transition: all 0.2s;
+}
+
+.pagination button:hover {
+  background-color: var(--primario);
+  color: var(--blanco);
+  border-color: var(--primario);
+}
+
+.pagination button.active {
+  background-color: var(--primario);
+  color: var(--blanco);
+  border-color: var(--primario);
+  font-weight: bold;
+}
+
+/* empty state */
+.empty-state {
+  text-align: center;
+  font-size: 16px;
+  color: var(--gris);
+  padding: 30px 0;
+}
+
+
+
+/* Contenedor de acciones */
+.review-actions {
+  position: relative;
+  display: inline-block;
+  cursor: pointer;
+  margin-left: auto;
+}
+
+/* Icono de tres puntos */
+.actions-icon {
+  font-size: 24px;
+  color: #555;
+  user-select: none;
+  transition: color 0.2s;
+  margin-top: 1rem;
+  margin-right: 1rem;
+}
+
+.actions-icon:hover {
+  color: #ff6600; /* Cambia color al pasar el mouse */
+}
+
+/* Dropdown oculto por defecto */
+.actions-dropdown {
+  display: none;
+  position: absolute;
+  right: 0;
+  top: 28px;
+  background-color: #fff;
+  min-width: 100px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+  border-radius: 8px;
+  z-index: 10;
+  overflow: hidden;
+}
+
+/* Mostrar dropdown cuando se activa */
+.review-actions.show .actions-dropdown {
+  display: block;
+}
+
+/* Botones dentro del dropdown */
+.actions-dropdown button {
+  width: 100%;
+  padding: 8px 12px;
+  background: none;
+  border: none;
+  text-align: left;
+  font-size: 14px;
+  color: #333;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.actions-dropdown button:hover {
+  background-color: #f5f5f5;
+}
+
+/* Ajustes para que se vea bien en mobile */
+@media (max-width: 768px) {
+  .actions-dropdown {
+    right: -10px;
+    top: 30px;
+  }
+}

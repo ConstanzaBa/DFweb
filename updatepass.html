@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Nueva contraseña</title>
+
+  <link rel="stylesheet" href="css/normalize.css">
+  <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital@0;1&family=PT+Sans:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/styles.css">
+  <link rel="stylesheet" href="css/user/auth.css">
+  <link rel="stylesheet" href="css/user/showError.css">
+<link rel="stylesheet" href="css/user/updatepass.css" as="style"> 
+
+  <script type="module" src="js/api/endpoints/UpdatePassword.js" defer></script>
+</head>
+<body>
+  <div class="wrapper">
+    <div class="card">
+      <div class="logo-container">
+        <img class="logo__pic" src="source/img/logo_dragonfilms.png" alt="Dragon Films Logo" />
+      </div>
+
+      <form id="updateForm" class="update-form">
+        <div id="error-container"></div>
+
+        <!-- Inputs ocultos -->
+        <input type="hidden" name="usuario_id">
+        <input type="hidden" name="reset_id">
+
+        <!-- Grupo de nueva contraseña con tooltip -->
+       <div class="inputGroup" style="position: relative;">
+  <label for="password">Nueva Contraseña</label>
+  <input type="password" required name="password" id="password" autocomplete="off" />
+
+  <!-- Tooltip dentro del mismo inputGroup -->
+  <div class="tooltip-info">
+    <button type="button" aria-label="Reglas para la contraseña">
+      <svg viewBox="0 0 20 20" fill="currentColor" width="20" height="20">
+        <path fill-rule="evenodd"
+          d="M10 18a8 8 0 100-16 8 8 0 000 16zm.75-11.75a.75.75 0 11-1.5 0 .75.75 0 011.5 0zm-1.5 2.75a.75.75 0 000 1.5h.25v4h-.25a.75.75 0 000 1.5h2a.75.75 0 000-1.5h-.25v-5a.75.75 0 00-.75-.75h-1.25z"
+          clip-rule="evenodd" />
+      </svg>
+    </button>
+
+    <div class="tooltip-box" role="tooltip">
+      <ul class="tooltip-list">
+        <li>✔ Mínimo 8 caracteres</li>
+        <li>✔ Al menos una mayúscula</li>
+        <li>✔ Sin caracteres especiales</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+        <!-- Confirmar contraseña -->
+        <div class="inputGroup">
+          <label for="confirmPassword">Confirmar Contraseña</label>
+          <input type="password" required name="confirmPassword" id="confirmPassword" autocomplete="off" />
+        </div>
+
+        <button type="submit" class="btn-submit">Actualizar</button>
+        <div class="register-link">
+          <a href="login.html">Volver al login</a>
+        </div>
+      </form>
+    </div>
+  </div>
+</body>
+</html>

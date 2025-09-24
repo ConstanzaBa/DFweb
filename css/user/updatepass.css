@@ -1,0 +1,346 @@
+
+/* ===== AUTHENTICATION FORMS STYLING ===== */
+
+/* Base body styles */
+body {
+    margin: 0;
+    font-family: var(--fuenteparrafos);
+    min-height: 100vh;
+    background-color: #000; 
+    background-image: radial-gradient(
+      circle at center,
+      rgba(255, 68, 0, 0.292) 0%,     
+      rgba(255, 68, 0, 0.236) 30%,
+      rgba(0, 0, 0, 0.85) 80%,     
+      rgba(0, 0, 0, 1) 100%
+    );
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-attachment: fixed;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  /* Main wrapper container */
+  .wrapper {
+    flex: 1;
+    padding: 5rem;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    place-content: center;
+    place-items: center;
+  }
+  
+  /* Card container for forms */
+  .card {
+    position: relative;
+    place-items: center;
+    max-width: 50rem;
+    width: fit-content;
+    padding: 3rem 3rem 2rem 3rem; 
+    border-radius: 2rem;
+    background-color: var(--blanco);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+  }
+  
+  /* Card typography */
+  .card h1, 
+  .card h2 {
+    color: var(--negro);
+    font-family: var(--fuenteheading);
+    line-height: 1.2;
+    text-align: center;
+  }
+  
+  .card h1 {
+    font-size: 2rem;
+  }
+  
+  .card h2 {
+    font-size: var(--fuenteheadingssize);
+  }
+  
+  .card p {
+    font-size: 14px;
+    text-align: center;
+    color: #858585;
+    margin: 0;
+  }
+  
+  /* Logo container */
+  .logo-container {
+    text-align: center;
+    text-decoration: none;
+    color: inherit;
+    margin-bottom: 1.6rem;
+  }
+  
+  .logo__pic {
+    width: 30%;
+    height: auto;
+    transition: transform 0.3s ease;
+  }
+  
+  .logo__pic:hover {
+    transform: scale(1.05);
+  }
+  
+
+  /* ===== FORM STYLES ===== */
+  
+  /* Step form visibility control */
+  .step-form {
+    display: none;
+  }
+  
+  .step-form.active-form {
+    display: grid;
+    place-content: center;
+    place-items: center;
+    text-align: center;
+    width: 100%;
+    margin-bottom: 1rem;
+    gap: 1.5rem;
+  }
+  
+ /* Input group container - unified for both update and register */
+ .inputGroup,
+ .update-form > div {
+   width: 100%;
+   position: relative;
+   display: flex;
+   flex-direction: column;
+   align-items: stretch;
+ }
+ 
+ /* ===== UNIFIED LABEL STYLING - FIXED POSITION ===== */
+ .inputGroup label,
+ .update-form label,
+ .step-form label {
+   font-size: var(--fuenteparrafossize);
+   color: var(--primario);
+   font-weight: 500;
+   font-family: var(--fuenteparrafos);
+   text-align: left;
+   display: block;
+   position: static;
+   background-color: transparent;
+   padding: 0;
+   transform: none;
+   transition: color 0.3s ease;
+   pointer-events: auto;
+ }
+
+ .inputGroup label:hover,
+ .update-form label:hover,
+ .step-form label:hover {
+   color: var(--secundario);
+ }
+ 
+
+ .inputGroup input,
+ .update-form input,
+ .step-form input {
+   font-size: var(--fuenteparrafossize);
+   padding: 12px;
+   outline: none;
+   border: 2px solid var(--gris);
+   background-color: transparent;
+   border-radius: 12px;
+   width: 100%;
+   transition: border-color 0.3s ease, box-shadow 0.3s ease;
+   color: var(--negro);
+   font-family: var(--fuenteparrafos);
+   box-sizing: border-box;
+ }
+ 
+ /* UNIFIED INPUT FOCUS STATES - applies to both update-formregister inputs */
+ .inputGroup input:focus,
+ .update-form input:focus,
+ .step-form input:focus {
+   border-color: var(--primario);
+   background-color: transparent;
+   box-shadow: 0 0 0 3px rgba(255, 68, 0, 0.1);
+ }
+ 
+ /* UNIFIED INPUT PLACEHOLDER - applies to both update and register inputs */
+ .inputGroup input::placeholder,
+ .update-form input::placeholder,
+ .step-form input::placeholder {
+   color: #666666;
+   opacity: 0.7;
+ }
+
+.update-form,
+.step-form {  
+ display: grid;    
+ place-items: center;   
+ text-align: center; 
+ width: 85%;  
+ margin: 0; 
+ gap: 1.5rem;
+ }
+
+/* ===== TOOLTIP STYLES ===== */
+.tooltip-info {
+  position: absolute;
+  top: 65%;
+  right: -40px;
+  transform: translateY(-50%);
+  z-index: 200;
+}
+
+.tooltip-info button {
+  background: var(--primario);
+  border: none;
+  border-radius: 50%;
+  width: 2.6rem;
+  height: 2.6rem;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.tooltip-info button svg {
+  fill: white;
+  width: 1.4rem;
+  height: 1.4rem;
+}
+
+.tooltip-info button:hover {
+  transform: scale(1.1);
+  box-shadow: 0 4px 10px rgba(0,0,0,0.25);
+}
+
+.tooltip-info .tooltip-box {
+  position: absolute;
+  top: 50%;
+  left: 120%;
+  transform: translateY(-50%);
+  background: var(--blanco);
+  color: var(--negro);
+  padding: 12px 16px;
+  border-radius: 12px;
+  border-left: 4px solid var(--primario);
+  width: 150px;
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.3s ease;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+  font-size: 0.85rem;
+}
+
+.tooltip-info:hover .tooltip-box {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(-50%) translateX(0);
+}
+
+.tooltip-info .tooltip-box ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.tooltip-info .tooltip-box ul li {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+
+.tooltip-info .tooltip-box ul li:last-child {
+  margin-bottom: 0;
+}
+
+  /* ===== BUTTON STYLES ===== */
+  
+  /* Submit button styling */
+  .btn-submit,
+  .btn-gradient {
+    cursor: pointer;
+    width: 15rem;
+    height: 5.6rem;
+    border-radius: 3rem;
+    border: none;
+    font-family: inherit;
+    font-size: var(--fuenteparrafossize);
+    font-weight: bold;
+    color: white;
+    background: linear-gradient(to right, var(--primario));
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(255, 68, 0, 0.3);
+  }
+  
+  /* Button hover effects */
+  .btn-submit:hover,
+  .btn-gradient:hover {
+    transform: translateY(-2px);
+    background: linear-gradient(to right, var(--secundario));
+    box-shadow: 0 6px 20px rgba(255, 68, 0, 0.4);
+  }
+  
+  /* Disabled button state */
+  #submit-btn:disabled {
+    background: #ccc;         
+    color: #666;             
+    cursor: not-allowed;      
+    opacity: 0.6;             
+    box-shadow: none;         
+    transform: none;
+  }
+  
+  /* Enabled button state */
+  #submit-btn:not(:disabled) {
+    cursor: pointer;          
+    box-shadow: 0 4px 15px rgba(255, 68, 0, 0.3); 
+  }
+  
+  /* Button container */
+  .btn-box {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+  
+  /* Choose later button container */
+  #choose-later-container {
+    margin-top: 1.5rem;
+    text-align: center;
+  }
+  
+  #choose-later-container .btn-gradient {
+    background: linear-gradient(to right, var(--secundario));
+    transition: all 0.3s ease;
+  }
+  
+  #choose-later-container .btn-gradient:hover {
+    background: linear-gradient(to right, var(--primario));
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(255, 68, 0, 0.4);
+  }
+  
+  /* ===== LINK STYLES ===== */
+
+
+  .register-link {
+    font-size: var(--fuenteparrafossize);
+    color: var(--secundario);
+    font-family: var(--fuenteparrafos);
+    text-align: center;
+    padding: 0.5rem;
+    margin-top: 1rem;
+  }
+  
+  .register-link a{
+    color: var(--primario);
+    text-decoration: none;
+    font-weight: bold;
+    font-size: var(--fuenteparrafossize);
+    transition: color 0.3s ease;
+  }
+  
+ 

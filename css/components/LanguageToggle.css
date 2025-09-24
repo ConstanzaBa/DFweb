@@ -1,0 +1,28 @@
+.language-toggle {
+
+  background: none;
+
+  border-radius: 20%;
+
+  border: 0.02rem solid rgba(255, 255, 255, 0.2);
+
+}
+
+.language-toggle button {
+
+    padding: 10px;
+    font-size: 1.5rem;
+    place-items: center;
+    border: none;
+    background-color: transparent;
+    color: var(--blanco);
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+
+.language-toggle button:hover {
+
+  color: var(--primario);
+
+}

@@ -1,0 +1,290 @@
+:root {
+
+
+
+  --fuenteheading: "PT Sans", sans-serif;
+
+
+
+  --fuenteparrafos: "Open Sans", sans-serif;
+
+
+
+  --fuenteparrafossize: 1.6rem;
+
+
+
+  --fuenteheadingssize: 2.5rem;
+
+
+
+
+
+
+
+  --secundario: #822213;
+
+
+
+  --primario: #ca4f15;
+
+
+
+
+
+
+
+  --media-display-background: linear-gradient(0deg,
+
+
+
+      rgba(202, 79, 21, 0.5) 0%,
+
+
+
+      rgba(202, 79, 21, 0.5) 50%,
+
+
+
+      rgba(202, 79, 21, 0.5) 100%);
+
+
+
+
+
+
+
+  --gris: #e1e1e1;
+  
+  --gris2: #808080;
+
+
+
+  --blanco: #ffffff;
+
+
+
+  --negro: #000000;
+
+
+
+  --amarillo: #ffff00;
+
+
+
+}
+
+
+
+
+
+
+
+html {
+
+
+
+  box-sizing: border-box;
+
+
+
+  font-size: 62.5%;
+
+
+
+}
+
+
+
+
+
+
+
+*,
+
+
+
+*::before,
+
+
+
+*::after {
+
+
+
+  box-sizing: inherit;
+
+
+
+}
+
+
+
+
+
+
+
+body {
+  font-family: var(--fuenteparrafos);
+  font-size: 1.6rem;
+  line-height: 2;
+  margin: 0;
+}
+
+
+
+
+
+
+
+/* Globales */
+
+
+
+.contenedor {
+
+
+
+  max-width: 120rem;
+
+
+
+  margin: 0 auto;
+
+
+
+}
+
+
+
+
+
+
+
+a {
+
+text-decoration: none;
+
+}
+
+
+
+
+
+
+
+h1,
+h2,
+h3,
+h4 {
+
+
+
+  font-family: var(--fuenteheading);
+
+
+
+  line-height: 1.2;
+
+
+
+}
+
+
+
+
+
+
+
+h1 {
+  font-size: 4.8rem;
+}
+
+
+
+h2 {
+  font-size: 4rem;
+}
+
+
+
+h3 {
+  font-size: 3rem;
+}
+
+
+
+h4 {
+  font-size: 2.8rem;
+}
+
+
+
+
+
+
+
+img {
+
+
+
+  width: 100%;
+
+
+
+}
+
+
+
+
+
+
+
+.no-margin {
+  margin: 0;
+}
+
+
+
+.no-padding {
+  padding: 0;
+}
+
+
+
+.centrar-texto {
+  text-align: center;
+}
+
+
+
+
+
+
+
+.relative {
+  position: relative;
+}
+
+
+
+.absolute {
+  position: absolute;
+}
+
+
+
+
+
+
+
+h2 {
+  margin-top: 0;
+}
+
+
+
+p {
+  font-size: var(--fuenteparrafossize);
+}
+

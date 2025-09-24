@@ -1,0 +1,501 @@
+/* ===== GLOBAL PROFILE CARD STYLES ===== */
+.profile-card {
+  position: relative;
+  max-width: 900px;
+  margin: 50px auto;
+  background: var(--blanco);
+  border-radius: 2rem;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+  text-align: center;
+  padding-top: 100px;
+  padding-bottom: 30px;
+  border-top: 6px solid var(--primario);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* Avatar centrado y redondo */
+.profile-card__img {
+  position: absolute;
+  top: -70px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.profile-avatar-container {
+  width: 140px;
+  height: 140px;
+  border: 6px solid var(--primario);
+  border-radius: 50%;
+  overflow: hidden;
+  background: var(--blanco);
+}
+
+.profile-avatar {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* Bot��n de editar avatar */
+.profile-editBtn {
+  position: absolute;
+  top: 100px;
+  right: 0;
+  width: 3.5rem;
+  height: 3.5rem;
+  border-radius: 50%;
+  border: none;
+  background:  var(--primario);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 300;
+  opacity: 0;
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.profile-card__img:hover .profile-editBtn {
+  opacity: 1;
+  transform: scale(1.1);
+}
+
+.profile-editBtn svg {
+  fill: white;
+  width: 1.5rem;
+  height: 1.5rem;
+}
+
+/* Nombre del usuario */
+.profile-username {
+  font-size: 2rem;
+  font-weight: bold;
+  color: var(--negro);
+  font-family: var(--fuenteheading);
+}
+
+.profile-email {
+  font-size: 1.4rem;
+  color: var(--gris2);
+  font-family: var(--fuenteparrafos);
+  text-align: center;
+}
+
+
+/* ===== PROFILE FORM STYLES ===== */
+.profile-card-form {
+  width: 100%;
+  text-align: left;
+  padding: 4rem;
+  display: flex;
+  gap: 5rem;
+  flex-direction: column;
+}
+
+/* Columnas */
+.form-columns {
+  display: flex;
+  gap: 5rem;
+  flex-wrap: wrap;
+}
+
+.form-column {
+  flex: 1;
+  min-width: 250px;
+}
+
+.form-group {
+  display: grid;
+  gap: 2rem;
+  margin: 1.5rem 0rem;
+}
+
+/* Inputs unificados estilo register */
+.profile-card-form input[type="text"],
+.profile-card-form input[type="password"],
+.profile-card-form input[type="file"],
+.profile-card-form select {
+  width: 100%;
+  padding: 1.4rem;
+  border-radius: 12px;
+  border: 2px solid var(--gris);
+  font-size: 1.5rem;
+  transition: all 0.3s ease;
+  font-family: var(--fuenteparrafos);
+  box-sizing: border-box;
+  background-color: transparent;
+  color: var(--negro);
+}
+
+.profile-card-form input:focus,
+.profile-card-form select:focus {
+  border-color: var(--primario);
+  box-shadow: 0 0 0 3px rgba(255, 68, 0, 0.1);
+  outline: none;
+}
+
+/* Labels */
+.profile-card-form label {
+  font-size: var(--fuenteparrafossize);
+  font-weight: 500;
+  color: var(--primario);
+}
+
+/* Gender radio options */
+.gender-options {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+  padding: 1.2rem;
+  background-color: rgba(255,68,0,0.05);
+  border-radius: 12px;
+  border: 1px solid rgba(255,68,0,0.1);
+  align-items: center;
+  justify-content: space-evenly;
+}
+
+.gender-options input[type="radio"] {
+  accent-color: var(--primario);
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+}
+
+.gender-options label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--negro);
+  cursor: pointer;
+  font-family: var(--fuenteparrafos);
+  transition: color 0.3s ease;
+}
+
+input.i_female:checked + .female,
+input.i_male:checked + .male {
+  color: var(--primario);
+  font-weight: bold;
+}
+
+/* Botones */
+.profile-card-ctr {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+}
+
+.profile-card__button {
+  padding: 12px 20px;
+  border-radius: 3rem;
+  border: none;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+  background:  var(--primario);
+  color: var(--blanco);
+  box-shadow: 0 4px 15px rgba(255,68,0,0.3);
+}
+
+.profile-card__button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(255,68,0,0.4);
+}
+
+/* Bot��n eliminar cuenta */
+#deleteAccountBtn {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background-color: var(--primario);
+  border: none;
+  font-weight: 600;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.164);
+  cursor: pointer;
+  transition-duration: 0.3s;
+  overflow: hidden;
+  position: relative;
+  gap: 2px;
+  margin-right: auto;
+}
+
+#deleteAccountBtn .svgIcon {
+  width: 12px;
+  transition-duration: 0.3s;
+}
+
+#deleteAccountBtn .svgIcon path {
+  fill: white;
+}
+
+#deleteAccountBtn:hover {
+  transition-duration: 0.3s;
+  background-color: var(--secundario);
+  align-items: center;
+  gap: 0;
+}
+
+#deleteAccountBtn .bin-top {
+  transform-origin: bottom right;
+}
+
+#deleteAccountBtn:hover .bin-top {
+  transition-duration: 0.5s;
+  transform: rotate(160deg);
+}
+ 
+/* ===== MODAL AJUSTADO ===== */
+
+/* Modal overlay */
+.modal {
+  display: none; 
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgb(10 3 0 / 44%);
+  justify-content: center;
+  align-items: center;
+  z-index: 500;
+  padding: 20px; 
+}
+
+/* Mostrar modal */
+.modal.show {
+  display: flex;
+  animation: fadeIn 0.3s ease;
+}
+
+/* Card dentro del modal */
+.modal-card {
+  position: relative;
+  width: 100%;
+  max-width: 700px; 
+  background-color: var(--blanco);
+  border-radius: 2rem; 
+  box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+  text-align: center;
+  padding: 3rem 2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+/* Icono rojo */
+.modal-card .image {
+  display: flex;
+  margin: 0 auto;
+  background-color: rgba(255,68,0,0.13);
+  justify-content: center;
+  align-items: center;
+  width: 50px; 
+  height: 50px;
+  border-radius: 50%;
+}
+
+.modal-card .image svg {
+  width: 2rem;
+  height: 2rem;
+  color: var(--primario);
+}
+
+/* Contenido del modal */
+.modal-card .content {
+  text-align: center;
+  max-width: 600px;
+  margin-top: 2rem;
+}
+
+.modal-card .title {
+  color: var(--negro);
+  font-size: 1.5rem; 
+  font-weight: 700;
+}
+
+.modal-card .message {
+  margin-top: 2rem;
+  margin-bottom: 4rem;
+  color: var(--gris2);
+  font-size: 1.3rem; 
+  line-height: 3rem;
+}
+
+/* Botones del modal */
+.modal-card .actions {
+  display: flex;
+  justify-content: center;
+  gap: 5rem; 
+  margin-top: 2rem;
+}
+
+.modal-card .desactivate {
+  padding: 0.8rem 2rem;
+  background-color: var(--primario);
+  color: var(--blanco);
+  font-size: 1.2rem;
+  border-radius: 2rem;
+  border: none;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.modal-card .desactivate:hover {
+  background-color: var(--secundario);
+}
+
+.modal-card .cancel {
+  padding: 0.8rem 2rem;
+  background-color: var(--blanco);
+  color: var(--negro);
+  font-size: 1.2rem;
+  border-radius: 2rem;
+  border: 1px solid var(--gris);
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.modal-card .cancel:hover {
+  background-color: var(--gris2);
+  color: var(--blanco);
+}
+
+@media (max-width: 768px) {
+  .modal-card {
+    width: 100%;
+    padding: 2rem 1rem;
+    gap: 1rem;
+  }
+
+  .modal-card .image {
+    width: 45px;
+    height: 45px;
+  }
+
+  .modal-card .title {
+    font-size: 2rem;
+  }
+
+  .modal-card .message {
+    font-size: 1.5rem;
+    line-height: 2rem;
+  }
+
+  .modal-card .actions {
+    flex-direction: column; 
+    gap: 1rem;
+  }
+
+  .modal-card .desactivate,
+  .modal-card .cancel {
+    width: 100%;
+  }
+}
+
+
+
+/* ===== TOOLTIP STYLES ===== */
+.tooltip-info {
+  display: grid;
+  align-items: center;
+  justify-content: left;
+}
+
+.tooltip-info:hover .tooltip-box {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(-50%) translateX(0);
+}
+
+.tooltip-info button {
+  grid-area: 1/2;
+  margin-left: 1rem;
+  background: var(--primario);
+  border: none;
+  border-radius: 50%;
+  width: 2.6rem;
+  height: 2.6rem;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.tooltip-info button svg {
+  fill: white;
+  width: 1.4rem;
+  height: 1.4rem;
+}
+
+.tooltip-info button:hover {
+  transform: scale(1.1);
+  box-shadow: 0 4px 10px rgba(0,0,0,0.25);
+}
+
+.tooltip-info .tooltip-box {
+  position: absolute;
+  width: fit-content;
+  top: 50%;
+  left: 17rem;
+  transform: translateY(-50%);
+  background: var(--blanco);
+  color: var(--negro);
+  padding: 2rem 3rem;
+  border-radius: 12px;
+  border-left: 4px solid var(--primario);
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.3s ease;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+  font-size: 0.85rem;
+  margin-left: 1rem;
+}
+
+.tooltip-info .tooltip-box ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.tooltip-info .tooltip-box ul li {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+
+.tooltip-info .tooltip-box ul li:last-child {
+  margin-bottom: 0;
+}
+
+.tooltip-info .tooltip-box ul li svg {
+  width: 14px;
+  height: 14px;
+  fill: var(--primario);
+}
+
+
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 768px) {
+  .profile-card {
+    max-width: 95%;
+    padding-top: 160px;
+  }
+  .form-columns {
+    flex-direction: column;
+    gap: 0;
+  }
+  .form-column {
+    min-width: 100%;
+  }
+}

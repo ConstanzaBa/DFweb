@@ -1,0 +1,118 @@
+
+/* ===== FOOTER STYLES ===== */
+
+.footer {
+  background-color: rgb(0, 0, 0);
+  color: white;
+  width: 100%;
+  padding: 2rem 0;
+}
+
+.footer .contenedor {
+  max-width: 120rem;
+  margin: 0 auto;
+  padding: 0 2rem;
+}
+
+.footer .barra-footer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 2rem 0;
+}
+
+/* Footer logo styles */
+.footer .logo {
+  color: white;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.footer .logo:hover {
+  color: var(--primario);
+}
+
+.footer .logo__nombre {
+  color: white;
+  font-family: var(--fuenteheading);
+  font-size: 3.4rem;
+  font-weight: 300;
+  text-align: left;
+  margin: 0;
+}
+
+.footer .logo__bold {
+  font-weight: 900;
+  color: var(--primario);
+}
+
+/* Footer text styles */
+.footer_texto {
+  display: flex;
+  justify-content: center;
+  padding: 2rem 0 0 0;
+  margin: 0;
+}
+
+.footer_texto p {
+  color: rgba(255, 255, 255, 0.4);
+  font-size: 1.4rem;
+  margin: 0;
+  text-align: center;
+}
+
+/* Utility classes for footer */
+.footer .text-white {
+  color: white;
+}
+
+.footer .text-center {
+  text-align: center;
+}
+
+.footer .font-bold {
+  font-weight: bold;
+}
+
+/* ===== RESPONSIVE FOOTER ===== */
+
+@media (max-width: 768px) {
+  .footer .contenedor {
+    padding: 0 1rem;
+  }
+  
+  .footer .barra-footer {
+    padding: 1.5rem 0;
+  }
+  
+  .footer .logo__nombre {
+    font-size: 2rem;
+  }
+  
+  .footer_texto p {
+    font-size: 1.2rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .footer {
+    padding: 1.5rem 0;
+  }
+  
+  .footer .barra-footer {
+    padding: 1rem 0;
+  }
+  
+  .footer .logo__nombre {
+    font-size: 1.8rem;
+  }
+  
+  .footer_texto {
+    padding: 1.5rem 0 0 0;
+  }
+  
+  .footer_texto p {
+    font-size: 1.1rem;
+    padding: 0 1rem;
+  }
+}
