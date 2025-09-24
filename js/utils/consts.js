@@ -41,6 +41,7 @@ const translations = {
     nowPlaying: "En Cartelera",
     topRatedMovies: "Mejor Valoradas",
     upcomingMovies: "Próximos Estrenos",
+    userRecommendations: "Basadas en tus Favoritos",
     
     // Página de película
     sinopsis: "Sinopsis",
@@ -108,6 +109,7 @@ const translations = {
     nowPlaying: "Now Playing",
     topRatedMovies: "Top Rated",
     upcomingMovies: "Upcoming",
+    userRecommendations: "Based on your Favorites",
     
     // Movie page
     sinopsis: "Overview",
