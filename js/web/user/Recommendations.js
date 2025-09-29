@@ -1,20 +1,24 @@
 import { API_BASE_URL } from "../../utils/config.js";
 import { fetchFromApi } from "../../api/components/FetchFromApi.js";
+import { getFavoritosByUser } from "../../api/endpoints/GetFavoritoByUser.js";
 
 /**
- * Obtiene las mejores películas del usuario desde tu API interna
- * y devuelve hasta 10 recomendaciones combinadas desde TMDB.
+ * Obtiene las mejores películas del usuario y devuelve recomendaciones desde TMDB,
+ * filtrando los favoritos y evitando duplicados.
  */
 export async function getRecommendationsByUser() {
     const token = localStorage.getItem("token"); 
-    if (!token) {
-        // No hay usuario loggeado
-        return [];
-    }
+    if (!token) return [];
 
     try {
-        // Llamada a tu endpoint interno que devuelve las mejores películas del usuario
-        const response = await fetch(`${API_BASE_URL}/Recommendations/GetBestRatedMoviesByUser.php`, {
+        // Traer favoritos del usuario
+        const favData = await getFavoritosByUser();
+        const favoriteIds = (favData.success && Array.isArray(favData.favorites))
+            ? favData.favorites.map(m => Number(m.pelicula_id))
+            : [];
+
+        // Obtener películas representativas
+        const resp = await fetch(`${API_BASE_URL}/Recommendations/GetBestRatedMoviesByUser.php`, {
             method: "GET",
             headers: {
                 "Content-Type": "application/json",
@@ -22,38 +26,32 @@ export async function getRecommendationsByUser() {
             },
         });
 
-        if (!response.ok) {
-            const text = await response.text();
-            console.error("Error HTTP en getRecommendationsByUser:", response.status, text);
-            throw new Error(`HTTP ${response.status}: ${text}`);
-        }
+        if (!resp.ok) throw new Error(`HTTP ${resp.status}`);
 
-        const data = await response.json();
+        const data = await resp.json();
+        if (!data.success || !data.movies || data.movies.length === 0) return [];
 
-        if (!data.success || !data.movies || data.movies.length === 0) {
-            return [];
-        }
-
-        // Traer recomendaciones de TMDB por cada película representativa
+        // Obtener recomendaciones desde TMDB por cada película representativa
         const recommendationPromises = data.movies.map(async (movie) => {
             try {
-                return await fetchFromApi.movieRecommendations(movie.pelicula_id, 5);
-            } catch (err) {
-                console.error(`Error obteniendo recomendaciones de TMDB para ${movie.pelicula_id}:`, err);
+                const recs = await fetchFromApi.movieRecommendations(Number(movie.pelicula_id), 10);
+                return recs.map(r => ({ ...r, fromMovie: movie.pelicula_id }));
+            } catch {
                 return [];
             }
         });
 
         const recommendationsArrays = await Promise.all(recommendationPromises);
 
-        // Unir todas las recomendaciones y eliminar duplicados
+        // Combinar todas las recomendaciones, eliminar duplicados y las que ya están en favoritos
         const combined = [];
         const seenIds = new Set();
         for (const recs of recommendationsArrays) {
             for (const movie of recs) {
-                if (!seenIds.has(movie.id)) {
+                const movieId = Number(movie.id);
+                if (!seenIds.has(movieId) && !favoriteIds.includes(movieId)) {
                     combined.push(movie);
-                    seenIds.add(movie.id);
+                    seenIds.add(movieId);
                 }
             }
         }
@@ -61,8 +59,7 @@ export async function getRecommendationsByUser() {
         // Devolver hasta 10 recomendaciones finales
         return combined.slice(0, 10);
 
-    } catch (error) {
-        console.error("Error en getRecommendationsByUser:", error);
+    } catch {
         return [];
     }
-};
+}
