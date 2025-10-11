@@ -7,7 +7,7 @@ const usuario = localStorage.getItem('usuario'); // nombre de usuario, no id
 if (resendBtn) {
   resendBtn.addEventListener('click', async () => {
     if (!usuario) {
-      showError('Usuario no disponible', 'error');
+      showError("userUnavailable", "error");
       return;
     }
 
@@ -22,12 +22,14 @@ if (resendBtn) {
 
       if (data.success) {
         localStorage.setItem('seg_restantes', data.seg_restantes);
-        showError('Nuevo código enviado a tu correo', 'success');
+        showError("newCodeSent", "success");
+
       } else {
-        showError(data.error || 'No se pudo reenviar el código', 'error');
+        showError(translate(data.error) || translate('resendCodeError'), 'error');
+
       }
     } catch (err) {
-      showError('Error de conexión', 'error');
+      showError("connectionError", "error");
     }
   });
 }

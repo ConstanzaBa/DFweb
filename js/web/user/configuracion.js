@@ -1,8 +1,10 @@
+// /js/web/user/configuracion.js
 import { fetchConToken } from '../../utils/AuthFetch.js';
 import { API_BASE_URL } from '../../utils/config.js';
 import { checkRepetido } from './ValidationMSG.js';
 import { showError } from './ShowError.js';
 import { getAvatarSeleccionado } from './Avatar.js';
+import { translate } from '../../utils/i18n.js';
 
 document.addEventListener('DOMContentLoaded', async () => {
   const avatarPreview = document.getElementById("avatarPreview");
@@ -19,7 +21,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
   const genderInputs = document.querySelectorAll('input[name="gender"]');
   const updateForm = document.getElementById("updateForm");
-  const submitBtn = updateForm.querySelector('button[type="submit"]');
+  const submitBtn = updateForm?.querySelector('button[type="submit"]');
 
   const reviewsDiv = document.getElementById('profile-reviews');
   const favoritesDiv = document.getElementById('profile-favorites');
@@ -27,16 +29,16 @@ document.addEventListener('DOMContentLoaded', async () => {
   let initialData = {};
   let isCustomAvatar = false;
 
-  // --- Cargar datos del usuario ---
+  // ================== CARGAR DATOS DEL USUARIO ==================
   try {
     const response = await fetchConToken('/Usuarios/GetUserById.php');
-    if (!response.ok) throw new Error("No se pudo cargar el usuario");
+    if (!response.ok) throw new Error("userLoadError");
     const data = await response.json();
     if (data.error) throw new Error(data.error);
 
     initialData = { ...data };
 
-    // Avatar
+    // --- Avatar ---
     let avatarUrl = data.avatar || 'assets/avatars/default-avatar.png';
     if (!avatarUrl.startsWith("http")) {
       if (!avatarUrl.startsWith("uploads/") && !avatarUrl.startsWith("assets/")) {
@@ -45,30 +47,29 @@ document.addEventListener('DOMContentLoaded', async () => {
       avatarUrl = `${API_BASE_URL}/${avatarUrl}`;
     }
     avatarPreview.src = avatarUrl;
-
     isCustomAvatar = data.avatar?.startsWith("uploads/");
 
-    // Username y género
+    // --- Datos de perfil ---
     usernameInput.value = data.usuario || "";
     profileUsernameDiv.textContent = data.usuario || "";
-    profileEmailDiv.textContent = data.email || "No registrado";
+    profileEmailDiv.textContent = data.email || translate("noEmailAvailable");
 
     const genderRadio = document.querySelector(`input[name="gender"][value="${data.genero}"]`);
     if (genderRadio) genderRadio.checked = true;
 
-    // Reviews y favoritos
     if (reviewsDiv) reviewsDiv.textContent = data.reviews || '0';
     if (favoritesDiv) favoritesDiv.textContent = data.favorites || '0';
   } catch (err) {
     console.error("Error cargando usuario:", err);
-    alert("Error al cargar datos. Redirigiendo al login...");
+    showError("userLoadError", "error");
     setTimeout(() => window.location.href = "login.html", 2000);
+    return;
   }
 
-  // --- Avatar ---
-  editAvatarBtn.addEventListener("click", () => avatarInput.click());
+  // ================== AVATAR ==================
+  editAvatarBtn?.addEventListener("click", () => avatarInput.click());
 
-  avatarInput.addEventListener("change", () => {
+  avatarInput?.addEventListener("change", () => {
     if (avatarInput.files[0]) {
       avatarPreview.src = URL.createObjectURL(avatarInput.files[0]);
       isCustomAvatar = true;
@@ -92,7 +93,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     checkChanges();
   }));
 
-  // --- Debounce username ---
+  // ================== USERNAME DEBOUNCE ==================
   function debounce(fn, delay) {
     let timer;
     return (...args) => {
@@ -107,7 +108,9 @@ document.addEventListener('DOMContentLoaded', async () => {
       msgUsuario.textContent = "";
     } else {
       const disponible = await checkRepetido("usuario", nuevoUsuario);
-      msgUsuario.textContent = disponible ? "Nombre de usuario disponible" : "Nombre de usuario no disponible";
+      msgUsuario.textContent = disponible
+        ? translate("usernameAvailable")
+        : translate("usernameNotAvailable");
       msgUsuario.style.color = disponible ? "green" : "red";
     }
     checkChanges();
@@ -115,7 +118,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
   usernameInput.addEventListener("input", checkUsernameInput);
 
-  // --- Activar/desactivar botón submit ---
+  // ================== VERIFICAR CAMBIOS ==================
   function checkChanges() {
     const usernameChanged = usernameInput.value.trim() !== initialData.usuario;
     const genderChanged = Array.from(genderInputs).find(i => i.checked)?.value !== initialData.genero;
@@ -128,94 +131,91 @@ document.addEventListener('DOMContentLoaded', async () => {
   genderInputs.forEach(i => i.addEventListener("change", checkChanges));
   checkChanges();
 
-  // --- Actualizar usuario ---
-  updateForm.addEventListener("submit", async (e) => {
-    e.preventDefault();
+// ================== ACTUALIZAR USUARIO ==================
+updateForm.addEventListener("submit", async (e) => {
+  e.preventDefault();
 
-    const username = usernameInput.value.trim();
-    const password = newPasswordInput.value.trim();
-    const confirmPassword = confirmPasswordInput.value.trim();
-    const genero = Array.from(genderInputs).find(i => i.checked)?.value;
-    const avatar = getAvatarSeleccionado();
+  const username = usernameInput.value.trim();
+  const password = newPasswordInput.value.trim();
+  const confirmPassword = confirmPasswordInput.value.trim();
+  const genero = Array.from(genderInputs).find(i => i.checked)?.value;
+  const avatar = getAvatarSeleccionado();
 
-    if (!username) return showError("Nombre de usuario obligatorio");
-    if (password && password !== confirmPassword) return showError("Las contraseñas no coinciden");
-    if (username !== initialData.usuario && !(await checkRepetido("usuario", username))) {
-      return showError("Nombre de usuario ya existe");
+  // Validaciones locales
+  if (!username) return showError("usernameRequired", "error");
+  if (password && password !== confirmPassword) return showError("passwordMismatch", "error");
+  if (username !== initialData.usuario && !(await checkRepetido("usuario", username))) {
+    return showError("usernameExists", "error");
+  }
+
+  const formData = new FormData();
+  if (username !== initialData.usuario) formData.append("username", username);
+  if (genero !== initialData.genero) formData.append("genero", genero);
+  if (password) formData.append("password", password);
+  if (avatar) formData.append("avatar", avatar instanceof File ? avatar : avatar);
+
+  if ([...formData.keys()].length === 0) return showError("noChangesMade", "warning");
+
+  try {
+    const response = await fetchConToken('/Usuarios/UpdateUser.php', {
+      method: "POST",
+      body: formData,
+      credentials: 'include'
+    });
+    
+    const result = await response.json();
+
+    if (response.ok && !result.error) {
+      showError("userUpdated", "success"); 
+      setTimeout(() => window.location.reload(), 1000);
+    } else {
+      // mapear posibles errores del backend a claves
+      const backendErrorMap = {
+        "El nombre de usuario ya est谩 en uso": "usernameExists",
+        "Error al actualizar usuario": "userUpdateError",
+        "No se han realizado cambios": "noChangesMade"
+      };
+      const key = backendErrorMap[result.error] || "userUpdateError";
+      showError(key, "error");
     }
-
-    const formData = new FormData();
-    if (username !== initialData.usuario) formData.append("username", username);
-    if (genero !== initialData.genero) formData.append("genero", genero);
-    if (password) formData.append("password", password);
-    if (avatar) formData.append("avatar", avatar instanceof File ? avatar : avatar);
-
-    if ([...formData.keys()].length === 0) return showError("No se han realizado cambios");
-
-    try {
-      const response = await fetchConToken('/Usuarios/UpdateUser.php', {
-        method: "POST",
-        body: formData,
-        credentials: 'include'
-      });  
-      const result = await response.json();
-      if (response.ok) {
-        showError(result.message || "Usuario actualizado correctamente", "success");
-        setTimeout(() => window.location.reload(), 1000);
-      } else {
-        showError(result.error || "Error al actualizar usuario");
-      }
-    } catch (error) {
-      console.error("Error al actualizar:", error);
-      showError("Error en la solicitud");
-    }
-  });
-
-  // --- Cancelar ---
-  const cancelBtn = document.getElementById("cancelBtn");
-  if (cancelBtn) cancelBtn.addEventListener("click", () => window.location.reload());
+  } catch (error) {
+    console.error("Error al actualizar:", error);
+    showError("requestError", "error");
+  }
+});
 
 
-  // --- MODAL ELIMINAR CUENTA ---
+
+  // ================== CANCELAR ==================
+  document.getElementById("cancelBtn")?.addEventListener("click", () => window.location.reload());
+
+  // ================== ELIMINAR CUENTA ==================
   const deleteBtn = document.getElementById('deleteAccountBtn');
   const modal = document.getElementById('deleteModal');
   const confirmDeleteBtn = document.getElementById('confirmDelete');
   const cancelDeleteBtn = document.getElementById('cancelDelete');
 
-  // Abrir modal
-  deleteBtn.addEventListener('click', () => {
-    modal.classList.add('show');
-  });
+  deleteBtn?.addEventListener('click', () => modal.classList.add('show'));
+  cancelDeleteBtn?.addEventListener('click', () => modal.classList.remove('show'));
+  modal?.addEventListener('click', (e) => { if (e.target === modal) modal.classList.remove('show'); });
 
-  // Cerrar modal al cancelar
-  cancelDeleteBtn.addEventListener('click', () => {
-    modal.classList.remove('show');
-  });
-
-  // Cerrar modal si se hace click fuera de la card
-  modal.addEventListener('click', (e) => {
-    if (e.target === modal) modal.classList.remove('show');
-  });
-
-  // Confirmar eliminación
-  confirmDeleteBtn.addEventListener('click', async () => {
+  confirmDeleteBtn?.addEventListener('click', async () => {
     try {
       const response = await fetchConToken('/Usuarios/DeleteUser.php', {
         method: 'POST',
         credentials: 'include'
       });
-
       const result = await response.json();
 
-      if (response.ok) {
-        alert(result.message || "Cuenta eliminada correctamente");
-        window.location.href = 'login.html';
+      if (response.ok && result.success) {
+        showError("accountDeleted", "success");
+        setTimeout(() => (window.location.href = 'login.html'), 1500);
       } else {
-        alert(result.error || "No se pudo eliminar la cuenta");
+        showError(result.error || "accountDeleteError", "error");
       }
     } catch (err) {
-      console.error("Error al eliminar la cuenta:", err);
-      alert("Error en la solicitud");
+      console.error("Error al eliminar cuenta:", err);
+      showError("requestError", "error");
     } finally {
       modal.classList.remove('show');
     }

@@ -1,8 +1,9 @@
-// favoriteButton.js
+// /web/components/FavoriteButton.js
 import { addFavorito } from "../../api/endpoints/AddFavorito.js";
 import { checkFavorito } from "../../api/endpoints/CheckFavorito.js";
 import { deleteFavorito } from "../../api/endpoints/DeleteFavorito.js";
-import { showError } from "../user/ShowError.js"; 
+import { showError } from "../user/ShowError.js";
+import { translate } from "../../utils/i18n.js";
 
 export async function setupFavoriteButton(movieId, movieData) {
   const favoriteBtn = document.getElementById("favorite-btn");
@@ -12,6 +13,7 @@ export async function setupFavoriteButton(movieId, movieData) {
   const token = localStorage.getItem("token");
   let esFavorito = false;
 
+  // ====================== VERIFICAR ESTADO INICIAL ======================
   if (token) {
     try {
       const checkData = await checkFavorito(movieId);
@@ -19,15 +21,16 @@ export async function setupFavoriteButton(movieId, movieData) {
       favoriteCheckbox.checked = esFavorito;
     } catch (error) {
       console.error("Error al verificar favorito:", error);
-      showError("Error al verificar favorito", "error");
+      showError("favoriteCheckError", "error");
     }
   } else {
     favoriteCheckbox.checked = false;
   }
 
+  // ====================== CLICK FAVORITO ======================
   favoriteBtn.addEventListener("click", async () => {
     if (!token) {
-      showError("Debes iniciar sesión para usar favoritos", "warning");
+      showError("loginToAddFavorites", "error");
       return;
     }
 
@@ -36,8 +39,10 @@ export async function setupFavoriteButton(movieId, movieData) {
     try {
       let result;
       if (isFavorited) {
+        // Eliminar de favoritos
         result = await deleteFavorito(movieId);
       } else {
+        // Agregar a favoritos
         result = await addFavorito({
           pelicula_id: movieId,
           titulo: movieData.title,
@@ -50,13 +55,22 @@ export async function setupFavoriteButton(movieId, movieData) {
 
       if (result.success) {
         favoriteCheckbox.checked = !isFavorited;
-        showError(result.message || "Estado actualizado", "success");
+
+        // Mensaje traducido según acción
+        if (isFavorited) {
+          showError("removedFromFavorites", "success");
+        } else {
+          showError("addedToFavorites", "success");
+        }
+
       } else {
-        showError(result.error || "Error al actualizar favorito", "error");
+        console.warn("Error en la respuesta del servidor:", result);
+        showError("favoriteUpdateError", "error");
       }
+
     } catch (error) {
       console.error("Error en favoritos:", error);
-      showError("Error en el servidor", "error");
+      showError("serverError", "error");
     }
   });
 }

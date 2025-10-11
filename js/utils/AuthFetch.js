@@ -21,7 +21,9 @@ document.addEventListener("DOMContentLoaded", () => {
         if (response.ok) {
           alert("Cuenta eliminada");
           localStorage.removeItem('token');
-            window.location.href = "/login.html";
+          localStorage.removeItem('username');
+          localStorage.removeItem('avatar');
+          window.location.href = "/login.html";
         } else {
           alert(data.error || "Error al eliminar cuenta");
         }
@@ -33,7 +35,6 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 });
 
-
 export async function fetchConToken(url, options = {}) {
   let token = localStorage.getItem('token');
   const headers = options.headers || {};
@@ -44,7 +45,6 @@ export async function fetchConToken(url, options = {}) {
 
   const fullUrl = url.startsWith('http') ? url : API_BASE_URL.replace(/\/$/, '') + '/' + url.replace(/^\//, '');
 
-
   try {
     const response = await fetch(fullUrl, {
       ...options,
@@ -54,9 +54,7 @@ export async function fetchConToken(url, options = {}) {
 
     if (response.status !== 401) return response;
 
-    // Renovar token si 401
     const newToken = await renovarAccessToken();
-
     if (!newToken) throw new Error('No se pudo renovar el token');
 
     localStorage.setItem('token', newToken);
@@ -67,9 +65,10 @@ export async function fetchConToken(url, options = {}) {
       credentials: 'include',
       headers
     });
+
   } catch (error) {
     console.error('Error en fetchConToken:', error);
-   localStorage.removeItem('token');
+    localStorage.removeItem('token');
     localStorage.removeItem('username');
     localStorage.removeItem('avatar');
     window.location.href = "/login.html";
@@ -91,3 +90,60 @@ async function renovarAccessToken() {
     return null;
   }
 }
+
+const AUTO_REFRESH_INTERVAL = 5 * 60 * 1000;
+setInterval(async () => {
+  const token = localStorage.getItem('token');
+  if (!token) return;
+
+  const newToken = await renovarAccessToken();
+  if (newToken) {
+    localStorage.setItem('token', newToken);
+    console.log('Access token renovado automáticamente');
+  } else {
+    console.warn('No se pudo renovar el access token. Cerrando sesión.');
+    localStorage.removeItem('token');
+    localStorage.removeItem('username');
+    localStorage.removeItem('avatar');
+    window.location.href = "/login.html";
+  }
+}, AUTO_REFRESH_INTERVAL);
+
+function getTokenRemainingTime(token) {
+  try {
+    const payload = JSON.parse(atob(token.split('.')[1]));
+    return payload.exp * 1000 - Date.now();
+  } catch {
+    return 0;
+  }
+}
+
+function scheduleTokenRefresh() {
+  const token = localStorage.getItem('token');
+  if (!token) return;
+
+  const remaining = getTokenRemainingTime(token);
+  if (remaining <= 0) return autoRefreshToken();
+
+  setTimeout(async () => {
+    await autoRefreshToken();
+    scheduleTokenRefresh();
+  }, Math.max(0, remaining - 60 * 1000));
+}
+
+async function autoRefreshToken() {
+  const newToken = await renovarAccessToken();
+  if (newToken) {
+    localStorage.setItem('token', newToken);
+    console.log('Access token renovado automáticamente (schedule)');
+  } else {
+    console.warn('No se pudo renovar el access token. Cerrando sesión.');
+    localStorage.removeItem('token');
+    localStorage.removeItem('username');
+    localStorage.removeItem('avatar');
+    window.location.href = "/login.html";
+  }
+}
+
+
+scheduleTokenRefresh();

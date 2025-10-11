@@ -1,4 +1,6 @@
 import { fetchFromApi } from "../../api/components/FetchFromApi.js";
+import { getCurrentLanguage } from "../../utils/i18n.js";
+import { TMDB_imgBaseUrl, getBestPosterForLanguage } from "../../utils/consts.js";
 
 function setupSearchHandlers() {
     const searchForm = document.getElementById('busqueda__barra');
@@ -92,26 +94,37 @@ function displaySearchResults(results) {
             </div>
         `;
     } else {
-        resultsContainer.innerHTML = results.map(movie => `
-            <a href="entrada.html?id=${movie.id}" class="search-result-item">
-                <div class="search-result-content">
-                    <img src="${movie.poster_path ? `https://image.tmdb.org/t/p/w92${movie.poster_path}` : 'source/img/no-poster.jpg'}" 
-                         alt="${movie.title}"
-                         loading="lazy">
-                    <div class="search-result-info">
-                        <h3>${movie.title}</h3>
-                        <p class="movie-year">${movie.release_date?.split('-')[0] || 'N/A'}</p>
-                        <p class="movie-cast">${movie.cast || 'Cast information unavailable'}</p>
+        resultsContainer.innerHTML = results.map(movie => {
+           
+            let posterUrl = 'source/img/no-poster.jpg'; 
+            if (movie.poster_path) {
+                posterUrl = `${TMDB_imgBaseUrl}${movie.poster_path}`;
+            }
+            
+            return `
+                <a href="entrada.html?id=${movie.id}" class="search-result-item">
+                    <div class="search-result-content">
+                        <img src="${posterUrl}" 
+                             alt="${movie.title}"
+                             loading="lazy">
+                        <div class="search-result-info">
+                            <h3>${movie.title}</h3>
+                            <p class="movie-year">${movie.release_date?.split('-')[0] || 'N/A'}</p>
+                            <p class="movie-cast">${movie.cast || 'Cast information unavailable'}</p>
+                        </div>
                     </div>
-                </div>
-            </a>
-        `).join('');
+                </a>
+            `;
+        }).join('');
     }
 
-    // Remove existing results if any
+    // Elimina resultados existentes
     clearSearchResults();
 
-    // Style the results container
+    // Estilo del contenedor
+    const searchContainer = document.querySelector('.busqueda');
+    searchContainer.style.position = 'relative';
+
     resultsContainer.style.position = 'absolute';
     resultsContainer.style.display = 'flex';
     resultsContainer.style.flexDirection = 'column';
@@ -128,11 +141,10 @@ function displaySearchResults(results) {
     resultsContainer.style.zIndex = '1000';
     resultsContainer.style.transition = 'all 0.3s ease';
 
-    // Add new results
-    const searchContainer = document.querySelector('.busqueda');
-    searchContainer.style.position = 'relative';
+    // Añadir resultados al DOM
     searchContainer.appendChild(resultsContainer);
 }
+
 
 function clearSearchResults() {
     const existingResults = document.querySelector('.search-results-dropdown');

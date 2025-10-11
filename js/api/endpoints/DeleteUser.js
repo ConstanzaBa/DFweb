@@ -22,11 +22,11 @@ document.addEventListener("DOMContentLoaded", () => {
         localStorage.removeItem('token');
          window.location.replace("/login.html");
       } else {
-        showError("Error al eliminar cuenta", "warning");
+         showError("accountDeletionError", "warning");
       }
     } catch (err) {
       console.error("Error en la solicitud:", err);
-      showError("Error al eliminar cuenta", "warning");
+       showError("accountDeletionError", "warning");
     }
   });
 });

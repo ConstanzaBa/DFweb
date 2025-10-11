@@ -1,4 +1,4 @@
-import { TMDB_imgBaseUrl } from "./utils/consts.js";
+import { TMDB_imgBaseUrl, getBestPosterForLanguage, getBestBackdropForLanguage } from "./utils/consts.js";
 import { getCurrentLanguage, changeLanguage, updateTranslations } from "./utils/i18n.js";
 import { getMovieId } from "./movies.js";
 import { initializeCarousel, resetCarouselRotation } from "./web/components/MediaDisplay.js";
@@ -91,9 +91,18 @@ function displayMovies(movies, containerId) {
 }
 
 function createMovieCard(movie) {
-  const posterPath = movie.poster_path 
-    ? `${TMDB_imgBaseUrl}${movie.poster_path}`
-    : "source/img/no-poster.jpg";
+  // Get the best poster for current language
+  let posterPath = "source/img/no-poster.jpg";
+  
+  if (movie.images && movie.images.posters && movie.images.posters.length > 0) {
+    const bestPoster = getBestPosterForLanguage(movie.images, language);
+    if (bestPoster) {
+      posterPath = `${TMDB_imgBaseUrl}${bestPoster.file_path}`;
+    }
+  } else if (movie.poster_path) {
+    // Fallback to the basic poster_path if images are not available
+    posterPath = `${TMDB_imgBaseUrl}${movie.poster_path}`;
+  }
 
   const card = document.createElement('div');
   card.className = "pelicula__card";
@@ -136,9 +145,18 @@ function displayMovieDetails(movie, containerId) {
   const container = document.getElementById(containerId);
   if (!container) return;
 
-  const backdropPath = movie.backdrop_path 
-    ? `${TMDB_imgBaseUrl}${movie.backdrop_path}`
-    : "source/img/no-backdrop.jpg";
+  // Get the best backdrop for current language
+  let backdropPath = "source/img/no-backdrop.jpg";
+  
+  if (movie.images && movie.images.backdrops && movie.images.backdrops.length > 0) {
+    const bestBackdrop = getBestBackdropForLanguage(movie.images, language);
+    if (bestBackdrop) {
+      backdropPath = `${TMDB_imgBaseUrl}${bestBackdrop.file_path}`;
+    }
+  } else if (movie.backdrop_path) {
+    // Fallback to the basic backdrop_path if images are not available
+    backdropPath = `${TMDB_imgBaseUrl}${movie.backdrop_path}`;
+  }
 
   container.innerHTML = `
     <div class="pelicula__detalle">

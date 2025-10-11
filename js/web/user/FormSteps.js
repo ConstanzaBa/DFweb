@@ -1,6 +1,7 @@
 import { registerUser } from '../../api/endpoints/AddUser.js';
 import { showError } from './ShowError.js';
 import { checkRepetido } from './ValidationMSG.js';
+import { translate } from '../../utils/i18n.js';
 
 document.addEventListener('DOMContentLoaded', () => {
   const forms = document.querySelectorAll('.step-form');
@@ -84,30 +85,31 @@ document.addEventListener('DOMContentLoaded', () => {
     const errors = [];
     const validarEmail = email => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
 
-    if (!email) errors.push("El email es requerido");
-    else if (!validarEmail(email)) errors.push("El email no es válido");
+    if (!email) errors.push("errorEmailRequired");
+    else if (!validarEmail(email)) errors.push("errorEmailInvalid");
 
-    if (!password) errors.push("Debes ingresar una contraseña");
+    if (!password) errors.push("errorPasswordRequired");
     else {
-      if (password.length < 8) errors.push("La contraseña debe tener al menos 8 caracteres");
-      if (!/[A-Z]/.test(password)) errors.push("La contraseña debe tener al menos una letra mayúscula");
-      if (/[^a-zA-Z0-9]/.test(password)) errors.push("La contraseña no debe contener caracteres especiales");
+      if (password.length < 8) errors.push("errorPasswordShort");
+      if (!/[A-Z]/.test(password)) errors.push("errorPasswordUppercase");
+      if (/[^a-zA-Z0-9]/.test(password)) errors.push("errorPasswordSpecial");
     }
 
-    if (password && password !== confirmPassword) errors.push("Las contraseñas no coinciden");
-    if (!username) errors.push("El nombre de usuario es requerido");
-    if (!gender) errors.push("Selecciona un género");
+    if (password && password !== confirmPassword) errors.push("errorPasswordMismatch");
+    if (!username) errors.push("errorUsernameRequired");
+    if (!gender) errors.push("errorGenderRequired");
 
-    if (username && !(await checkRepetido('usuario', username))) errors.push("Usuario ya existe");
-    if (email && !(await checkRepetido('email', email))) errors.push("Email ya está registrado");
+    if (username && !(await checkRepetido('usuario', username))) errors.push("errorUsernameTaken");
+    if (email && !(await checkRepetido('email', email))) errors.push("errorEmailTaken");
 
     if (errors.length > 0) {
-      errors.forEach(err => showError(err));
+      errors.forEach(err => showError(translate(err), "error"));
       return;
     }
 
     showForm(1);
   });
+
 
   // ------------------------
   // Botón de volver
@@ -119,7 +121,6 @@ document.addEventListener('DOMContentLoaded', () => {
   // ------------------------
   document.getElementById('form2').addEventListener('submit', async (e) => {
     e.preventDefault();
-
     const username = usernameInput.value.trim();
     const password = passwordInput.value;
     const email = emailInput.value.trim();
@@ -127,11 +128,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const result = await registerUser({ username, password, email, genero });
 
-
     if (result.success) {
-       window.location.href = "/login.html";
+      window.location.href = "/login.html";
     } else {
-      showError(result.error || 'Ocurrió un error inesperado');
+      showError("unexpectedError", "error");
     }
   });
 });

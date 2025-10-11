@@ -1,205 +1,126 @@
-// Cache for API responses
-const apiCache = new Map();
-const CACHE_DURATION = 5 * 60 * 1000; // 5 minutes
+import { API_BASE_URL } from "../../utils/config.js";
 
-// Function to get cached data or fetch new data
-async function getCachedData(key, fetchFn) {
-  const cached = apiCache.get(key);
-  if (cached && Date.now() - cached.timestamp < CACHE_DURATION) {
-    return cached.data;
-  }
+let chartAvg = null;
 
-  const data = await fetchFn();
-  apiCache.set(key, { data, timestamp: Date.now() });
-  return data;
-}
-
-// Function to count movies from API
-async function countMoviesOnPage(apiKey) {
+async function loadDashboardStats() {
   try {
-    const data = await getCachedData('movieCount', async () => {
-      const response = await fetch(`https://api.themoviedb.org/3/discover/movie?api_key=${apiKey}`);
-      if (!response.ok) throw new Error(`Error: ${response.status}`);
-      return await response.json();
-    });
+    const response = await fetch(`${API_BASE_URL}/Estadisticas/GetDashboard.php`);
+    const result = await response.json();
+    if (!result.success) throw new Error(result.error || "Error en la API");
+    const stats = result.data;
 
-    return data.total_results
-      .toString()
-      .replace(/\B(?=(\d{3})+(?!\d))/g, ".");
-  } catch (error) {
-    console.error("Error al obtener el conteo de películas:", error);
-    return "0";
-  }
-}
+    // Contadores
+    document.getElementById('usuarios-registrados').textContent = stats.usuarios ?? 0;
+    document.getElementById('cantidad-resenas').textContent = stats.reviews ?? 0;
+    document.getElementById('cantidad-favoritos').textContent = stats.favoritos ?? 0;
+    document.getElementById('peliculas-30-dias').textContent = stats.nuevos_usuarios ?? 0;
 
-// Function to render charts
-async function renderChart(apiKey) {
-  try {
-    const data = await getCachedData('chartData', async () => {
-      const response = await fetch(`https://api.themoviedb.org/3/discover/movie?api_key=${apiKey}&sort_by=vote_average.desc`);
-      if (!response.ok) throw new Error(`Error: ${response.status}`);
-      return await response.json();
-    });
+    // Top 5 favoritos
+    const lista = document.getElementById("lista-top-favoritos");
+    if (lista && Array.isArray(stats.top_favoritos)) {
+      lista.innerHTML = "";
+      const max = stats.top_favoritos[0]?.cantidad || 1;
+      stats.top_favoritos.forEach((pelicula, index) => {
+        const porcentaje = (pelicula.cantidad / max) * 100;
+        const li = document.createElement("li");
+        li.className = "list-group-item d-flex justify-content-between align-items-center flex-column flex-sm-row";
+        li.innerHTML = `
+          <div class="w-100">
+            <strong>${index + 1}. ${pelicula.titulo}</strong>
+            <div class="progress progress-xs mt-2">
+              <div class="progress-bar" style="width: ${porcentaje}%; background-color: var(--progress-color);"></div>
+            </div>
+          </div>
+          <span class="badge mt-2 mt-sm-0">${pelicula.cantidad}</span>
+        `;
+        lista.appendChild(li);
+      });
+    }
 
-    const ctx = document.getElementById('ratingChart').getContext('2d');
-    new Chart(ctx, {
-      type: 'bar',
+    // Promedio de reseñas
+    const promedio = Number(stats.promedio_reviews) || 0;
+    document.getElementById("promedio-reseñas-num").textContent = promedio.toFixed(2) + " / 5";
+
+    const ctxAvg = document.getElementById("promedio-reseñas-chart").getContext("2d");
+    if (chartAvg) chartAvg.destroy();
+    chartAvg = new Chart(ctxAvg, {
+      type: "doughnut",
       data: {
-        labels: data.results.slice(0, 10).map(movie => movie.title),
+        labels: ["Promedio", "Restante"],
         datasets: [{
-          label: 'Calificación',
-          data: data.results.slice(0, 10).map(movie => movie.vote_average),
-          backgroundColor: 'rgba(54, 162, 235, 0.5)',
-          borderColor: 'rgba(54, 162, 235, 1)',
+          data: [promedio, 5 - promedio],
+          backgroundColor: [
+            getComputedStyle(document.documentElement).getPropertyValue('--chart-color').trim(),
+            getComputedStyle(document.documentElement).getPropertyValue('--chart-bg').trim()
+          ],
           borderWidth: 1
         }]
       },
       options: {
-        responsive: true,
-        scales: {
-          y: {
-            beginAtZero: true,
-            max: 10
+        responsive: false,
+        maintainAspectRatio: false,
+        cutout: "70%",
+        plugins: {
+          legend: { display: false },
+          tooltip: {
+            callbacks: {
+              label: (context) => context.label === "Promedio" ? `Promedio: ${promedio.toFixed(2)}/5` : ""
+            }
           }
         }
       }
     });
-  } catch (error) {
-    console.error("Error al renderizar el gráfico:", error);
-    document.getElementById('ratingChart').innerHTML = '<p class="error">Error al cargar el gráfico</p>';
+
+  } catch (err) {
+    console.error("Error cargando estadísticas:", err);
   }
 }
 
-// Function to render genre chart
-async function renderGenreChart(apiKey) {
-  try {
-    const data = await getCachedData('genreData', async () => {
-      const response = await fetch(`https://api.themoviedb.org/3/genre/movie/list?api_key=${apiKey}`);
-      if (!response.ok) throw new Error(`Error: ${response.status}`);
-      return await response.json();
-    });
+window.addEventListener("DOMContentLoaded", () => {
+  loadDashboardStats();
 
-    const ctx = document.getElementById('genreChart').getContext('2d');
-    new Chart(ctx, {
-      type: 'pie',
-      data: {
-        labels: data.genres.map(genre => genre.name),
-        datasets: [{
-          data: data.genres.map(() => Math.floor(Math.random() * 100)), // Example data
-          backgroundColor: [
-            'rgba(255, 99, 132, 0.5)',
-            'rgba(54, 162, 235, 0.5)',
-            'rgba(255, 206, 86, 0.5)',
-            'rgba(75, 192, 192, 0.5)',
-            'rgba(153, 102, 255, 0.5)'
-          ]
-        }]
-      },
-      options: {
-        responsive: true
-      }
-    });
-  } catch (error) {
-    console.error("Error al renderizar el gráfico de géneros:", error);
-    document.getElementById('genreChart').innerHTML = '<p class="error">Error al cargar el gráfico de géneros</p>';
-  }
-}
-
-// Function to render movie count
-async function renderMovieCount(apiKey) {
-  try {
-    const count = await countMoviesOnPage(apiKey);
-    const element = document.getElementById('movieCount');
-    if (element) {
-      element.textContent = count;
-    }
-  } catch (error) {
-    console.error("Error al renderizar el conteo de películas:", error);
-  }
-}
-
-// Function to render user count
-async function renderUserCount() {
-  try {
-    const response = await fetch('php/userdata.php?action=count');
-    if (!response.ok) throw new Error(`Error: ${response.status}`);
-    const data = await response.json();
-    
-    const element = document.getElementById('userCount');
-    if (element) {
-      element.textContent = data.count || '0';
-    }
-  } catch (error) {
-    console.error("Error al renderizar el conteo de usuarios:", error);
-  }
-}
-
-// Function to render review count
-async function renderReviewCount() {
-  try {
-    const response = await fetch('php/reviews.php?action=count');
-    if (!response.ok) throw new Error(`Error: ${response.status}`);
-    const data = await response.json();
-    
-    const element = document.getElementById('reviewCount');
-    if (element) {
-      element.textContent = data.count || '0';
-    }
-  } catch (error) {
-    console.error("Error al renderizar el conteo de reseñas:", error);
-  }
-}
-
-// Function to render favorite count
-async function renderFavoriteCount() {
-  try {
-    const response = await fetch('php/favoritos.php?action=count');
-    if (!response.ok) throw new Error(`Error: ${response.status}`);
-    const data = await response.json();
-    
-    const element = document.getElementById('favoriteCount');
-    if (element) {
-      element.textContent = data.count || '0';
-    }
-  } catch (error) {
-    console.error("Error al renderizar el conteo de favoritos:", error);
-  }
-}
-
-// Initialize everything when the DOM is loaded
-document.addEventListener("DOMContentLoaded", () => {
-  const apiKey = "37e6a3d75952343aefc02018d9108bbf";
-  
-  // Render all statistics
-  Promise.all([
-    renderChart(apiKey),
-    renderGenreChart(apiKey),
-    renderMovieCount(apiKey),
-    renderUserCount(),
-    renderReviewCount(),
-    renderFavoriteCount()
-  ]).catch(error => {
-    console.error("Error al inicializar las estadísticas:", error);
-  });
-});
-
-document.getElementById("theme-toggle").addEventListener("click", function () {
-  // Alternar la clase dark-mode en el body y en el navbar
-  document.body.classList.toggle("dark-mode");
+  const themeBtn = document.getElementById("theme-toggle");
+  const body = document.body;
   const navbar = document.getElementById("navbar");
-  // Cambiar el texto y el icono del botón
-  // const icon = this.querySelector("i");
-  if (document.body.classList.contains("dark-mode")) {
-    this.innerHTML = '<i class="fas fa-sun"></i> Modo Claro';
-    navbar.classList.remove("navbar-light");
-    navbar.classList.remove("bg-white");
-    navbar.classList.add("navbar-dark");
-    navbar.classList.add("bg-dark");
-  } else {
-    this.innerHTML = '<i class="fas fa-moon"></i> Modo Oscuro';
-    navbar.classList.add("navbar-light");
-    navbar.classList.add("bg-white");
-    navbar.classList.remove("navbar-dark");
-    navbar.classList.remove("bg-dark");
+  const footer = document.querySelector(".main-footer");
+
+  function applyTheme(isDark) {
+    if (isDark) {
+      document.documentElement.style.setProperty('--bg-color', '#121212');
+      document.documentElement.style.setProperty('--text-color', '#ffffff');
+      document.documentElement.style.setProperty('--card-bg', '#1e1e1e');
+      document.documentElement.style.setProperty('--list-text-color', '#ffffff');
+      document.documentElement.style.setProperty('--chart-color', '#ff851b');
+      document.documentElement.style.setProperty('--chart-bg', '#ffe5d1');
+      document.documentElement.style.setProperty('--progress-color', '#ff851b');
+      document.documentElement.style.setProperty('--badge-bg', '#0d6efd');
+      navbar.style.borderBottom = "1px solid #555555";
+      footer.style.borderTop = "1px solid #555555";
+    } else {
+      document.documentElement.style.setProperty('--bg-color', '#ffffff');
+      document.documentElement.style.setProperty('--text-color', '#000000');
+      document.documentElement.style.setProperty('--card-bg', '#f8f9fa');
+      document.documentElement.style.setProperty('--list-text-color', '#000000');
+      document.documentElement.style.setProperty('--chart-color', '#ff851b');
+      document.documentElement.style.setProperty('--chart-bg', '#ffe5d1');
+      document.documentElement.style.setProperty('--progress-color', '#ff6f00');
+      document.documentElement.style.setProperty('--badge-bg', '#0d6efd');
+      navbar.style.borderBottom = "1px solid #dee2e6";
+      footer.style.borderTop = "1px solid #dee2e6";
+    }
+    loadDashboardStats(); // actualizar charts y listas
   }
+
+  themeBtn.addEventListener("click", () => {
+    const isDark = body.getAttribute("data-theme") === "dark";
+    if (isDark) {
+      body.removeAttribute("data-theme");
+      themeBtn.innerHTML = '<i class="fas fa-moon"></i> Modo Oscuro';
+      applyTheme(false);
+    } else {
+      body.setAttribute("data-theme", "dark");
+      themeBtn.innerHTML = '<i class="fas fa-sun"></i> Modo Claro';
+      applyTheme(true);
+    }
+  });
 });

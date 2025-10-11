@@ -5,12 +5,23 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>DragonFilms</title>
+  <meta name="description"
+    content="DragonFilms es una comunidad  donde puedes descubrir, calificar y compartir tus películas favoritas. Organiza tus listas y explora estrenos, recomendaciones y mucho más." />
+  <meta name="keywords"
+    content="cine, películas, comunidad, críticas, reseñas, estrenos, DragonFilms, streaming, recomendaciones" />
+  <meta name="author" content="DragonFilms" />
+  <meta name="robots" content="index, follow" />
+  <link rel="canonical" href="https://www.dragonfilms.space/" />
+
+  <!-- Favicon -->
+
+  <link rel="icon" href="/logo_dragonfilms.ico" type="image/x-icon" />
 
   <!-- Normalize -->
   <link rel="preload" href="css/normalize.css" as="style" />
   <link rel="stylesheet" href="css/normalize.css" />
 
-  <!-- Google Fonts (preconnect + preload + stylesheet) -->
+  <!-- Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link rel="preload"
@@ -41,7 +52,7 @@
   <!-- Line Icons -->
   <link rel="stylesheet" href="https://cdn.lineicons.com/5.0/lineicons.css" crossorigin="anonymous" />
 
-  <!-- App CSS (preload + stylesheet) -->
+  <!-- App CSS -->
   <link rel="preload" href="css/styles.css" as="style" />
   <link rel="preload" href="css/index.css" as="style" />
   <link rel="preload" href="css/components/Header.css" as="style" />
@@ -58,6 +69,56 @@
   <link rel="stylesheet" href="css/components/MediaDisplay.css" />
   <link rel="stylesheet" href="css/components/SearchBar.css" />
 
+  <!-- 🔹 Datos estructurados: ORGANIZATION + WEBSITE -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "Organization",
+        "@id": "https://www.dragonfilms.space/#organization",
+        "name": "DragonFilms",
+        "url": "https://www.dragonfilms.space/",
+        "logo": {
+          "@type": "ImageObject",
+          "url": "https://www.dragonfilms.space/logo_dragonfilms.png"
+        },
+        "sameAs": [
+          "https://www.instagram.com/dragonfilms",
+          "https://www.facebook.com/dragonfilms",
+          "https://www.twitter.com/dragonfilms"
+        ],
+        "description": "DragonFilms es una comunidad para cinéfilos que combina red social, recomendaciones personalizadas y gestión de películas.",
+        "founder": "DragonFilms Team"
+      },
+      {
+        "@type": "WebSite",
+        "@id": "https://www.dragonfilms.space/#website",
+        "url": "https://www.dragonfilms.space/",
+        "name": "DragonFilms",
+        "publisher": {
+          "@id": "https://www.dragonfilms.space/#organization"
+        },
+        "potentialAction": {
+          "@type": "SearchAction",
+          "target": "https://www.dragonfilms.space/search?q={search_term_string}",
+          "query-input": "required name=search_term_string"
+        }
+      },
+      {
+        "@type": "WebPage",
+        "@id": "https://www.dragonfilms.space/#webpage",
+        "url": "https://www.dragonfilms.space/",
+        "name": "DragonFilms - Comunidad cinéfila y gestor de películas",
+        "description": "Descubre películas, comparte tus opiniones y conecta con otros usuarios en DragonFilms.",
+        "inLanguage": "es",
+        "isPartOf": { "@id": "https://www.dragonfilms.space/#website" },
+        "about": { "@id": "https://www.dragonfilms.space/#organization" }
+      }
+    ]
+  }
+  </script>
+
   <!-- Scripts -->
   <script src="js/modernizr.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/i18n-js@4.3.2/dist/i18n.min.js"></script>
@@ -68,7 +129,6 @@
   <script type="module" src="js/web/components/MediaDisplay.js"></script>
   <script type="module" src="js/web/components/Chatbot.js"></script>
   <script type="module" src="js/web/user/index.js"></script>
-
 </head>
 
 

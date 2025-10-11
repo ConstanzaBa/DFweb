@@ -1,177 +1,207 @@
 <!DOCTYPE html>
 <html lang="es">
-
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AdminLTE - Dashboard</title>
-    <!-- AdminLTE CSS -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/admin-lte@3.1/dist/css/adminlte.min.css">
-    <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <!-- FontAwesome -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+  <meta charset="UTF-8">
+  <title>Dashboard de Estadísticas</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+    <!-- Favicon -->
+ 
+  <link rel="icon" href="/logo_dragonfilms.ico" type="image/x-icon" />
+
+
+  <!-- AdminLTE y Bootstrap -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/admin-lte@3.2/dist/css/adminlte.min.css">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+
+  <!-- FontAwesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+  <!-- Chart.js -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+  <link rel="icon" type="image/png" href="https://www.dragonfilms.space/source/img/logo_dragonfilms.png">
+
+  <style>
+    :root {
+      --bg-color: #ffffff;
+      --text-color: #000000;
+      --card-bg: #f8f9fa;
+      --small-box-color-1: #ff9f43;
+      --small-box-color-2: #ff851b;
+      --small-box-color-3: #ff6f00;
+      --small-box-color-4: #ff3f00;
+      --progress-color: #ff6f00;
+      --chart-color: #ff851b;
+      --chart-bg: #ffe5d1;
+      --list-text-color: #000000;
+      --badge-bg: #0d6efd;
+    }
+
+    body, .content-wrapper, .card, #lista-top-favoritos .list-group-item, .navbar, .main-footer {
+      transition: all 0.3s ease;
+    }
+
+    body {
+      background-color: var(--bg-color);
+      color: var(--text-color);
+    }
+
+    .content-wrapper {
+      background-color: var(--bg-color);
+    }
+
+    .card, #lista-top-favoritos .list-group-item {
+      background-color: var(--card-bg);
+      color: var(--list-text-color);
+    }
+
+    .navbar, .main-footer {
+      color: var(--text-color);
+      background-color: var(--card-bg);
+    }
+
+    .small-box {
+      min-height: 130px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      color: #fff;
+    }
+
+    .small-box.bg-1 { background-color: var(--small-box-color-1); }
+    .small-box.bg-2 { background-color: var(--small-box-color-2); }
+    .small-box.bg-3 { background-color: var(--small-box-color-3); }
+    .small-box.bg-4 { background-color: var(--small-box-color-4); }
+
+    .progress-bar {
+      background-color: var(--progress-color);
+      transition: width 0.6s ease;
+    }
+
+    #promedio-reseñas-chart {
+      width: 400px;
+      height: 400px;
+      display: block;
+      margin: auto;
+    }
+
+    #promedio-reseñas-num {
+      color: var(--text-color);
+      font-size: 1.5rem;
+      font-weight: bold;
+    }
+
+    .list-group-item .badge {
+      background-color: var(--badge-bg);
+      color: #fff;
+    }
+
+    .card-body.d-flex {
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      min-height: 400px; /* ajusta si querés */
+    }
+
+    #theme-toggle {
+      cursor: pointer;
+    }
+  </style>
 </head>
-
 <body class="hold-transition sidebar-mini">
-    <div class="wrapper">
-        <!-- Navbar -->
-        <nav class="main-header navbar navbar-expand navbar-white navbar-light" id="navbar">
-            <!-- Aquí podrías agregar el contenido del Navbar -->
-            <ul class="navbar-nav ml-auto">
-                <li class="nav-item">
-                    <button id="theme-toggle" class="btn btn-outline-secondary">
-                        <i class="fas fa-moon"></i> Modo Oscuro
-                    </button>
-                </li>
-            </ul>
-        </nav>
+<div class="wrapper">
 
-        <!-- Sidebar -->
-        <aside class="main-sidebar sidebar-dark-primary elevation-4">
-            <a href="#" class="brand-link">
-                <span class="brand-text font-weight-light">DragonFilms</span>
+  <!-- Navbar -->
+  <nav class="main-header navbar navbar-expand" id="navbar">
+    <ul class="navbar-nav ml-auto">
+      <li class="nav-item">
+        <button id="theme-toggle" class="btn btn-outline-secondary">
+          <i class="fas fa-moon"></i> Modo Oscuro
+        </button>
+      </li>
+    </ul>
+  </nav>
+
+  <!-- Sidebar -->
+  <aside class="main-sidebar sidebar-dark-primary elevation-4">
+    <a href="#" class="brand-link">
+      <span class="brand-text font-weight-light">DragonFilms</span>
+    </a>
+    <div class="sidebar">
+      <nav class="mt-2">
+        <ul class="nav nav-pills nav-sidebar flex-column" role="menu">
+          <li class="nav-item">
+            <a href="#" class="nav-link active">
+              <i class="nav-icon fas fa-tachometer-alt"></i>
+              <p>Dashboard</p>
             </a>
+          </li>
+          <li class="nav-item">
+            <a href="https://dragonfilms.space/" target="_blank" class="nav-link">
+              <i class="fa-brands fa-chrome"></i>
+              <p>Ir a DragonFilms</p>
+            </a>
+          </li>
+        </ul>
+      </nav>
+    </div>
+  </aside>
 
-            <div class="sidebar">
-                <!-- Menú lateral (puedes agregar enlaces aquí) -->
-                <nav class="mt-2">
-                    <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu"
-                        data-accordion="false">
-                        <!-- Primer enlace -->
-                        <li class="nav-item">
-                            <a href="#" class="nav-link">
-                                <i class="nav-icon fas fa-tachometer-alt"></i>
-                                <p>Dashboard</p>
-                            </a>
-                        </li>
+  <!-- Contenido principal -->
+  <div class="content-wrapper">
+    <section class="content pt-3">
+      <div class="container-fluid">
 
-                        <!-- Segundo enlace -->
-                        <li class="nav-item">
-                            <a href="https://dragonfilms.space/" target="_blank" class="nav-link">
-                                <i class="fa-brands fa-chrome"></i>
-                                <p>DragonFilms Web</p>
-                            </a>
-                        </li>
-
-                        <li class="nav-item">
-                            <a href="https://dragonfilms.space/perfil_usuario.html" target="_blank"
-                                class="nav-link">
-                                <i class="fa-solid fa-user"></i>
-                                <p>Volver al Perfil</p>
-                            </a>
-                        </li>
-                    </ul>
-                </nav>
-            </div>
-        </aside>
-
-        <!-- Content Wrapper -->
-        <div class="content-wrapper">
-            <section class="content-header">
-                <div class="container-fluid">
-                    <div class="row mb-2">
-                        <div class="col-sm-6">
-                            <h1>Dashboard</h1>
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-            <section class="content">
-                <div class="container-fluid">
-                    <!-- Fila de tarjetas -->
-                    <div class="row">
-
-                        <div class="col-lg-3 col-6">
-                            <div class="info-box mb-3">
-                                <span class="info-box-icon bg-info elevation-1"><i class="fas fa-file"></i></span>
-
-                                <div class="info-box-content">
-                                    <span class="info-box-text">Cantidad de Peliculas</span>
-                                    <span class="info-box-number" id="peliculas-30-dias">0</span>
-                                </div>
-                                <!-- /.info-box-content -->
-                            </div>
-                        </div>
-
-                        <div class="col-lg-3 col-6">
-                            <div class="info-box mb-3">
-                                <span class="info-box-icon bg-success elevation-1"><i class="fas fa-star"></i></span>
-
-                                <div class="info-box-content">
-                                    <span class="info-box-text">Cantidad de Reseñas</span>
-                                    <span class="info-box-number" id="cantidad-resenas">0</span>
-                                </div>
-                                <!-- /.info-box-content -->
-                            </div>
-                        </div>
-                        <!-- Agrega aquí más tarjetas si es necesario -->
-                        <div class="col-lg-3 col-6">
-                            <div class="info-box mb-3">
-                                <span class="info-box-icon bg-success elevation-1"><i class="fas fa-users"></i></span>
-
-                                <div class="info-box-content">
-                                    <span class="info-box-text">Usuarios Registrados</span>
-                                    <span class="info-box-number" id="usuarios-registrados">0</span>
-                                </div>
-                                <!-- /.info-box-content -->
-                            </div>
-                        </div>
-
-                        <div class="col-lg-3 col-6">
-                            <div class="info-box mb-3">
-                                <span class="info-box-icon bg-info elevation-1"><i class="fas fa-clock"></i></span>
-
-                                <div class="info-box-content">
-                                    <span class="info-box-text">Cantidad de Favoritos</span>
-                                    <span class="info-box-number" id="cantidad-favoritos">0</span>
-                                </div>
-                                <!-- /.info-box-content -->
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Fila para el gráfico -->
-                    <div class="row mt-4">
-                        <div class="col-6">
-                            <div class="card">
-                                <div class="card-header">
-                                    <h3 class="card-title">Top 5 Generos con más Peliculas</h3>
-                                </div>
-                                <div class="card-body">
-                                    <canvas id="generos-peliculas-chart"></canvas>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-6">
-                            <div class="card">
-                                <div class="card-header">
-                                    <h3 class="card-title">Top 5 Paises con más Peliculas</h3>
-                                </div>
-                                <div class="card-body">
-                                    <canvas id="peliculas-paises-chart"></canvas>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </section>
+        <!-- Small boxes -->
+        <div class="row">
+          <div class="col-lg-3 col-6"><div class="small-box bg-1"><div class="inner"><h3 id="usuarios-registrados">0</h3><p>Usuarios Registrados</p></div><div class="icon"><i class="fas fa-users"></i></div></div></div>
+          <div class="col-lg-3 col-6"><div class="small-box bg-2"><div class="inner"><h3 id="cantidad-resenas">0</h3><p>Reseñas Totales</p></div><div class="icon"><i class="fas fa-star"></i></div></div></div>
+          <div class="col-lg-3 col-6"><div class="small-box bg-3"><div class="inner"><h3 id="cantidad-favoritos">0</h3><p>Películas Favoritas</p></div><div class="icon"><i class="fas fa-heart"></i></div></div></div>
+          <div class="col-lg-3 col-6"><div class="small-box bg-4"><div class="inner"><h3 id="peliculas-30-dias">0</h3><p>Usuarios nuevos al mes</p></div><div class="icon"><i class="fas fa-user-plus"></i></div></div></div>
         </div>
 
-        <!-- Footer -->
-        <footer class="main-footer">
-            <div class="float-right d-none d-sm-inline">
-
+        <!-- Sección inferior -->
+        <div class="row">
+          <!-- Top 5 Películas Favoritas -->
+          <div class="col-lg-6">
+            <div class="card h-100">
+              <div class="card-header">
+                <h3 class="card-title mb-0">Top 5 Películas Favoritas</h3>
+              </div>
+              <div class="card-body">
+                <ul id="lista-top-favoritos" class="list-group list-group-flush"></ul>
+              </div>
             </div>
-            <strong>Copyright &copy; 2024 <a href="#">TRIVIA.DEV</a>.</strong> Todos los derechos reservados.
-        </footer>
-    </div>
+          </div>
 
-    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/admin-lte@3.1/dist/js/adminlte.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <script src="js/api/components/Estadisticas.js" defer></script>
+          <!-- Promedio de Reseñas -->
+          <div class="col-lg-6">
+            <div class="card h-100">
+              <div class="card-header">
+                <h3 class="card-title mb-0">Promedio de Reseñas</h3>
+              </div>
+              <div class="card-body d-flex">
+                <div id="promedio-reseñas-num">0</div>
+                <canvas id="promedio-reseñas-chart"></canvas>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+  </div>
+
+  <!-- Footer -->
+  <footer class="main-footer text-center">
+    <strong>Copyright &copy; 2025 <a href="#">DragonFilms</a>.</strong> Todos los derechos reservados.
+  </footer>
+</div>
+
+<!-- Scripts -->
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/admin-lte@3.2/dist/js/adminlte.min.js"></script>
+<script type="module" src="./js/api/components/Estadisticas.js"></script>
 </body>
-
 </html>

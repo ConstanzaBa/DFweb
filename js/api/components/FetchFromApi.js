@@ -4,10 +4,18 @@ import { getCurrentLanguage } from "../../utils/i18n.js";
 
 async function fetchFromApi(endpoint, params = {}) {
     const currentLanguage = getCurrentLanguage();
+    const languageCode = currentLanguage.split('-')[0]; // Get language code (e.g., 'es' from 'es-ES')
+    
+    // Add language-specific image parameters for movie endpoints
+    const enhancedParams = { ...params };
+    if (endpoint.includes('movie/') && !endpoint.includes('/images')) {
+      enhancedParams.include_image_language = `${languageCode},en,null`;
+    }
+    
     const queryParams = new URLSearchParams({
       api_key: TMDB_apiKey,
       language: currentLanguage,
-      ...params
+      ...enhancedParams
     }).toString();
     
     try {
@@ -22,8 +30,7 @@ async function fetchFromApi(endpoint, params = {}) {
 fetchFromApi.movieDetails = async (movieId) => {
   try {
     const data = await fetchFromApi(`movie/${movieId}`, {
-      append_to_response: "videos,images,credits",
-      include_image_language: "en,null"
+      append_to_response: "videos,images,credits"
     });
     
     if (data.success === false) {
@@ -69,8 +76,11 @@ fetchFromApi.movieCast = async (movieId) => {
 
 fetchFromApi.movieImages = async (movieId) => {
   try {
+    const currentLanguage = getCurrentLanguage();
+    const languageCode = currentLanguage.split('-')[0]; // Get language code (e.g., 'es' from 'es-ES')
+    
     const data = await fetchFromApi(`movie/${movieId}/images`, {
-      include_image_language: "en,null"
+      include_image_language: `${languageCode},en,null`
     });
     
     if (data.success === false) {

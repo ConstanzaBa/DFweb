@@ -16,7 +16,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const genero = genderInput?.value;
 
     if (!username || !password || !genero || !avatar) {
-      showError("Todos los campos son obligatorios", "warning");
+      showError("allFieldsRequired", "warning");
       return;
     }
 
@@ -38,15 +38,16 @@ document.addEventListener("DOMContentLoaded", () => {
       const result = await response.json();
 
       if (response.ok) {
-        showError(result.message || "Usuario actualizado correctamente", "success");
+        showError(`userUpdated: ${result.message || ""}`, "success");
+
         setTimeout(() => {
           window.location.href = "/user.html";
-        }, 1500); // Pequeè´–o retraso para que se vea la alerta
+        }, 1500);
       } else {
-        showError(result.error || "Error al actualizar usuario", "error");
+        showError(`userUpdateError: ${result.error || ""}`, "error");
       }
     } catch (error) {
-      showError("Error al procesar la solicitud", "error");
+      showError("requestProcessingError", "error");
     }
   });
 });

@@ -6,7 +6,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     const response = await fetchConToken('/Usuarios/GetUserById.php');
 
     if (!response.ok) {
-      throw new Error('Token inv®¢lido o expirado');
+      throw new Error('Token inv√°lido o expirado');
     }
 
     const data = await response.json();
@@ -41,8 +41,6 @@ if (!avatarUrl.startsWith('http')) {
 
   } catch (error) {
     console.error("Error al obtener datos del usuario:", error);
-
-    alert("Sesi®Æn expirada. Redirigiendo a login...");
 
     localStorage.removeItem('token');
     localStorage.removeItem('username');

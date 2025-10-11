@@ -1,3 +1,6 @@
+import { showError } from './ShowError.js';
+import { translate } from '../../utils/i18n.js';
+
 document.addEventListener('DOMContentLoaded', () => {
   const otpInputs = document.querySelectorAll('.otp-input');
   const timerDisplay = document.getElementById('timer'); // Mostrar tiempo restante
@@ -6,17 +9,16 @@ document.addEventListener('DOMContentLoaded', () => {
   const initialTime = parseInt(localStorage.getItem('seg_restantes')) || 900;
   let remainingTime = initialTime;
 
-  // Función para actualizar el contador
   function updateTimer() {
     const minutes = String(Math.floor(remainingTime / 60)).padStart(2, '0');
     const seconds = String(remainingTime % 60).padStart(2, '0');
     timerDisplay.textContent = `${minutes}:${seconds}`;
 
     if (remainingTime <= 0) {
-      clearInterval(timerInterval);
-      alert('El código ha expirado. Serás redirigido al login.');
-      window.location.href = 'login.html';
-    }
+  clearInterval(timerInterval);
+  showError(translate("codeExpired"), "warning");
+  setTimeout(() => window.location.href = "login.html", 3000);
+}
     remainingTime--;
   }
 

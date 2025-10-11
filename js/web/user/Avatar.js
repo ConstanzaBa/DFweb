@@ -4,7 +4,7 @@ let avatarSeleccionado = null;
 function updateSubmitButton() {
   const submitBtn = document.getElementById('submit-btn');
   if (!submitBtn) {
-    console.warn("⚠️ No se encontró el botón submit");
+    console.warn("No se encontró el botón submit");
     return;
   }
   const fileInput = document.getElementById('file');

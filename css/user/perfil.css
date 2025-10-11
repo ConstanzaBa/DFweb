@@ -181,8 +181,11 @@
 /* carousel de reviews */
 .reviews-carousel {
   display: flex;
+  flex-wrap: nowrap;
+  align-items: center;
+  width: 100%;
+  transition: transform 0.5s ease;
   gap: 1rem;
-  padding-top: 1rem;
   padding-bottom: 3rem;
   overflow-x: scroll;
 }
@@ -443,7 +446,6 @@
   border-radius: 12px;
   box-shadow: rgba(99, 99, 99, 0.1) 0px 2px 8px;
   overflow: hidden;
-  border: 2px solid transparent;
   transition: all 0.3s ease;
   word-break: break-word;
 }
@@ -454,8 +456,17 @@
 
 /* cards horizontales (carousel) */
 .review-card.carousel {
-  height: auto;
   flex-direction: row;
+  display: flex;
+  justify-content: space-between;
+  flex: 0 0 auto;
+  border-radius: 1.5rem;
+  background: var(--blanco);
+  transition: 0.4s ease-out;
+  box-shadow: 0 0.7rem 1rem rgba(0, 0, 0, 0.5);
+  overflow: hidden;
+    width:30%;
+  
 }
 
 .review-card.carousel .review-left {
@@ -467,31 +478,31 @@
 
 .review-card.carousel .review-left img {
   width: 100%;
+  height: 100%;
   border-radius: 8px;
 }
 
 .review-card.carousel .review-right {
   flex: 1;
   display: flex;
+  align-items: flex-start;
   flex-direction: column;
-  gap: 5px;
-  margin-left: 20px;
+  gap: 1rem;
+  margin: 0rem 2rem;
 }
 
 .review-card.carousel .review-title {
-  font-size: 14px;
+  font-size: 1.5rem;
   font-weight: 600;
   color: var(--primario);
+  margin-top:1rem;
 }
 
 .review-text {
   white-space: normal;
-  word-wrap: break-word;
   overflow-wrap: break-word;
   line-height: 1.4em;
-  margin-top: 10px;
-  margin-left: 5px;
-  margin-right: 70px;
+  margin: 0rem;
 }
 
 .review-card.carousel .review-text {
@@ -511,13 +522,16 @@
 
 .review-card.page .review-left {
   display: flex;
-  padding: 1rem;
   align-items: center;
-  gap: 2rem;
+}
+
+.review-card.carousel .review-left a,
+.review-card.page .review-left a {
+    display: flex;
 }
 
 .review-card.page .review-left img {
-  width: 100%;
+  width: 25rem;
   border-radius: 8px;
 }
 
@@ -532,13 +546,13 @@
   flex: 1;
   display: flex;
   flex-direction: column;
-  gap: 5px;
+  gap: 1rem;
   max-height: 30rem;
   overflow-y: hidden;
+  padding: 1rem 0rem;
 }
 
 .review-card.page .review-title {
-  margin-top: 20px;
   font-size: 20px;
   font-weight: 600;
   color: var(--primario);

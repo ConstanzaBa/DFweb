@@ -5,7 +5,6 @@ document.addEventListener('DOMContentLoaded', () => {
   const form = document.getElementById('updateForm');
   if (!form) return;
 
-  // Leer usuario_id y reset_id desde localStorage
   const usuario_id = localStorage.getItem('usuario_id');
   const reset_id = localStorage.getItem('reset_id');
 
@@ -14,11 +13,9 @@ document.addEventListener('DOMContentLoaded', () => {
     return;
   }
 
-  // Asignar valores a inputs ocultos
   form.querySelector('[name="usuario_id"]').value = usuario_id;
   form.querySelector('[name="reset_id"]').value = reset_id;
 
-  // Manejar submit
   form.addEventListener('submit', async (event) => {
     event.preventDefault();
 
@@ -27,7 +24,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const confirmPassword = formData.get('confirmPassword');
 
     if (password !== confirmPassword) {
-      showError('Las contraseñas no coinciden');
+      showError("passwordsDoNotMatch", "error");
+
       return;
     }
 
@@ -41,16 +39,17 @@ document.addEventListener('DOMContentLoaded', () => {
       const data = await res.json();
 
       if (data.success) {
-        alert('Contraseña actualizada correctamente');
+        showError("passwordUpdated", "success");
+
         localStorage.removeItem('usuario_id');
         localStorage.removeItem('reset_id');
         window.location.href = 'login.html';
       } else {
-        showError(data.error || 'Error al actualizar la contraseña');
+        showError(translate(data.error) || translate('passwordUpdateError'), 'error');
       }
 
     } catch (err) {
-      showError('Error de conexión');
+      showError(`${translate("connectionError")} ${err.message}`, "error");
       console.error(err);
     }
   });

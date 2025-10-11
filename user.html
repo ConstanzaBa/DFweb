@@ -5,6 +5,10 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Perfil de Usuario</title>
+  
+    <!-- Favicon -->
+ 
+  <link rel="icon" href="/logo_dragonfilms.ico" type="image/x-icon" />
 
   <!-- Normalize -->
   <link rel="preload" href="css/normalize.css" as="style" />
@@ -96,11 +100,11 @@
     <div class="profile-stats">
       <div class="profile-stat">
         <div id="profile-reviews">...</div>
-        <small>Reseñas</small>
+        <small data-translate="profileReviews">Reseñas</small>
       </div>
       <div class="profile-stat">
         <div id="profile-favorites">...</div>
-        <small>Favoritos</small>
+        <small data-translate="profileFavorites">Favoritos</small>
       </div>
     </div>
   </div>
@@ -116,9 +120,9 @@
       <input type="radio" id="tab-favorites" name="tab-control">
 
       <ul>
-        <li title="Recientes"><label for="tab-recientes" role="button"><span>Recientes</span></label></li>
-        <li title="Reseñas"><label for="tab-reviews" role="button"><span>Reseñas</span></label></li>
-        <li title="Favoritos"><label for="tab-favorites" role="button"><span>Favoritos</span></label></li>
+        <li title="Recientes"><label for="tab-recientes" role="button" data-translate="userRecents"><span>Recientes</span></label></li>
+        <li title="Reseñas"><label for="tab-reviews" role="button" data-translate="profileReviews"><span>Reseñas</span></label></li>
+        <li title="Favoritos"><label for="tab-favorites" role="button" data-translate="profileFavorites"><span>Favoritos</span></label></li>
       </ul>
 
       <div class="slider">

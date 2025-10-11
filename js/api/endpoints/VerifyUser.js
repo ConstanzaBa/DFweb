@@ -24,10 +24,10 @@ document.getElementById('loginForm').addEventListener('submit', function (event)
         if (data.avatar) localStorage.setItem('avatar', data.avatar);
        window.location.href = "/user.html";
       } else {
-        showError('Usuario o contraseña incorrectos');
+        showError("loginError", "error");
       }
     })
     .catch(() => {
-      showError('Hubo un problema al iniciar sesión. Intenta de nuevo.');
+        showError("loginProblem", "error");
     });
 });

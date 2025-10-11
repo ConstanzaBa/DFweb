@@ -26,7 +26,7 @@ document.addEventListener('DOMContentLoaded', () => {
       if (remaining <= 0) {
         clearInterval(timerInterval);
         timerEl.textContent = '--:--';
-        showError('El código expiró. Serás redirigido al login.', 'error');
+        showError("codeExpired", "error");
         setTimeout(() => {
           window.location.href = 'login.html';
         }, 1500);
@@ -73,7 +73,7 @@ document.addEventListener('DOMContentLoaded', () => {
       e.preventDefault();
       const codigo = getOTPValue();
       if (codigo.length < inputs.length) {
-        showError('Completa todos los campos', 'warning');
+         showError("completeAllFields", "warning");
         return;
       }
 
@@ -91,10 +91,10 @@ document.addEventListener('DOMContentLoaded', () => {
           startTimer(data.seg_restantes || 900);
           window.location.href = 'updatepass.html';
         } else {
-          showError(data.error || 'Código inválido o expirado', 'error');
+          showError(`invalidOrExpiredCode: ${data.error || ""}`, "error");
         }
       } catch {
-        showError('Error de conexión', 'error');
+        showError("connectionError", "error");
       }
     });
   }
@@ -103,7 +103,7 @@ document.addEventListener('DOMContentLoaded', () => {
   if (resendBtn) {
     resendBtn.addEventListener('click', async () => {
       if (!usuario) {
-        showError('Usuario no disponible', 'error');
+        showError("userUnavailable", "error");
         return;
       }
 
@@ -119,12 +119,12 @@ document.addEventListener('DOMContentLoaded', () => {
           startTimer(data.seg_restantes || 900);
           inputs.forEach(input => input.value = '');
           inputs[0].focus();
-          showError('Nuevo código enviado a tu correo', 'success');
+          showError("newCodeSent", "success");
         } else {
           showError(data.error || 'No se pudo reenviar el código', 'error');
         }
       } catch {
-        showError('Error de conexión', 'error');
+        showError("connectionError", "error");
       }
     });
   }

@@ -205,14 +205,11 @@
   font-weight: 700;
 
 
-
 }
 
 .entrada__info__sinopsis,
 
 .entrada__info__streaming,
-
-.entrada__info__cinemas,
 
 .entrada__reviews__puntaje {
 
@@ -229,8 +226,6 @@ grid-area: 2 / 2;
 
 .entrada__info__streaming h3,
 
-.entrada__info__cinemas h3,
-
 .entrada__reviews__puntaje h3 {
 
   margin: 0;
@@ -239,9 +234,7 @@ grid-area: 2 / 2;
 
 
 
-.entrada__info__streaming__menu,
-
-.entrada__info__cinemas__menu {
+.entrada__info__streaming__menu {
 
   display: flex;
 
@@ -251,9 +244,7 @@ grid-area: 2 / 2;
 
 }
 
-.entrada__info__streaming__menu ul,
-
-.entrada__info__cinemas__menu ul {
+.entrada__info__streaming__menu ul {
 
   gap: 2rem;
 
@@ -266,15 +257,14 @@ grid-area: 2 / 2;
   padding: 0%;
 
 }
-
+/*
 .entrada__info__cinemas__menu ul {
   flex-direction: column;
   margin: 0;
 }
+*/
 
-.entrada__info__streaming__menu ul li,
-
-.entrada__info__cinemas__menu ul li {
+.entrada__info__streaming__menu ul li {
 
   list-style: none;
 
@@ -283,7 +273,7 @@ grid-area: 2 / 2;
   width: 100%;
 
 }
-
+/*
 .entrada__info__cinemas__menu ul li {
 
   background: white;
@@ -291,7 +281,7 @@ grid-area: 2 / 2;
 
 }
 
-
+*/
 
 .entrada__info__streaming__menu ul li img {
 
@@ -352,7 +342,7 @@ grid-area: 2 / 2;
   background-color: #0077b5;
 
 }
-
+/*
 .location-info {
   display: flex;
   align-items: center;
@@ -480,7 +470,7 @@ grid-area: 2 / 2;
 .time-slot:hover {
   background-color: rgba(0, 122, 255, 0.2);
   border-color: rgba(0, 122, 255, 0.5);
-}
+}*/
 
 .entrada .entrada__multimedia {
 
