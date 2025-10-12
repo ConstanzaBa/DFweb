@@ -197,13 +197,11 @@
 }
 
 
-
 .entrada__info__title {
 
   font-size: var(--fuenteheadingssize);
 
   font-weight: 700;
-
 
 }
 
@@ -213,13 +211,13 @@
 
 .entrada__reviews__puntaje {
 
-display: grid;
+  display: grid;
 
-gap: 1.5rem;
+  gap: 1.5rem;
 
-margin: 3rem 0;
+  margin: 3rem 0;
 
-grid-area: 2 / 2;
+  grid-area: 2 / 2;
 }
 
 .entrada__info__sinopsis h3,
@@ -232,7 +230,11 @@ grid-area: 2 / 2;
 
 }
 
+.entrada__info__texto {
 
+  margin: 0;
+
+}
 
 .entrada__info__streaming__menu {
 
@@ -257,6 +259,7 @@ grid-area: 2 / 2;
   padding: 0%;
 
 }
+
 /*
 .entrada__info__cinemas__menu ul {
   flex-direction: column;
@@ -273,6 +276,7 @@ grid-area: 2 / 2;
   width: 100%;
 
 }
+
 /*
 .entrada__info__cinemas__menu ul li {
 
@@ -342,6 +346,7 @@ grid-area: 2 / 2;
   background-color: #0077b5;
 
 }
+
 /*
 .location-info {
   display: flex;
@@ -916,9 +921,7 @@ grid-area: 2 / 2;
   flex-direction: column;
   gap: 2rem;
   max-height: 40rem;
-  /* 🔥 limita la altura (aprox. 3 reseñas) */
   overflow-y: auto;
-  /* 🔥 activa scroll si hay más */
   padding-right: 0.8rem;
   /* deja lugar al scrollbar */
 }
@@ -936,7 +939,7 @@ grid-area: 2 / 2;
 .comment {
   display: flex;
   flex-direction: column;
-  gap: 1rem;
+  gap: 1.5rem;
   width: 100%;
   max-width: 100%;
   border-bottom: 0.1rem solid var(--gris);
@@ -946,9 +949,9 @@ grid-area: 2 / 2;
 
 .comment-header {
   display: flex;
-  justify-content: space-evenly;
+  justify-content: flex-start;
   align-items: center;
-  gap: 3rem;
+  gap: 1rem;
 }
 
 
@@ -971,8 +974,6 @@ grid-area: 2 / 2;
 }
 
 .comment-text {
-  font-size: var(--fuenteparrafossize);
-  line-height: 1.4em;
   color: var(--negro);
   padding-left: 1rem;
   width: 100%;
@@ -980,6 +981,7 @@ grid-area: 2 / 2;
   white-space: normal;
   word-break: break-word;
   overflow-wrap: anywhere;
+  margin: 0;
 }
 
 /* Caja para nuevo comentario */
@@ -1129,7 +1131,7 @@ grid-area: 2 / 2;
 .rating-comment {
   font-size: 2rem;
   color: var(--primario);
-  margin-left: 44rem;
+  margin-left: auto;
 }
 
 .login-warning {
