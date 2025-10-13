@@ -1,4 +1,4 @@
-import { TMDB_apiKey, TMDB_apiUrl } from "../../utils/consts.js";
+import { TMDB_apiKey, TMDB_apiUrl, MOTN_apiKey, MOTN_apiUrl } from "../../utils/consts.js";
 import { getCurrentLanguage } from "../../utils/i18n.js";
 
 
@@ -27,10 +27,11 @@ async function fetchFromApi(endpoint, params = {}) {
     }
 }
 
+// Obtener detalles completos de la película (incluye videos, images y credits)
 fetchFromApi.movieDetails = async (movieId) => {
   try {
     const data = await fetchFromApi(`movie/${movieId}`, {
-      append_to_response: "videos,images,credits"
+      append_to_response: 'videos,images,credits'
     });
     
     if (data.success === false) {
@@ -44,21 +45,68 @@ fetchFromApi.movieDetails = async (movieId) => {
   }
 };
 
-fetchFromApi.movieProviders = async (movieId) => {
+// Obtener proveedores de streaming desde MOTN
+fetchFromApi.getStreamingProviders = async (tmdbId) => {
+  const currentLanguage = getCurrentLanguage();
+  const languageCode = currentLanguage.split('-')[0];
+  
   try {
-    const data = await fetchFromApi(`movie/${movieId}/watch/providers`);
+    // Construir URL con lenguaje correcto
+    const endpoint = `${MOTN_apiUrl}/shows/movie/${tmdbId}?output_language=${languageCode}`;
+    console.log(`Trying MOTN endpoint: ${endpoint}`);
     
-    if (data.success === false) {
-      throw new Error(data.status_message || 'Error fetching providers');
+    const response = await fetch(endpoint, {
+      method: 'GET',
+      headers: {
+        'X-RapidAPI-Key': MOTN_apiKey,
+        'X-RapidAPI-Host': 'streaming-availability.p.rapidapi.com'
+      }
+    });
+
+    if (!response.ok) {
+      console.error(`HTTP error! status: ${response.status}`);
+      return [];
+    }
+
+    const data = await response.json();
+    console.log('MOTN API response:', data);
+    console.log('Current language:', currentLanguage);
+    console.log('Language code:', languageCode);
+    
+    if (data.streamingOptions) {
+      const providers = [];
+      
+      Object.values(data.streamingOptions).forEach(regionArray => {
+        // streamingOptions es un array de proveedores por región
+        if (Array.isArray(regionArray)) {
+          regionArray.forEach(provider => {
+            // Avoid duplicates
+            if (!providers.find(p => p.provider_id === provider.provider_id)) {
+              providers.push({
+                id: provider.id,
+                name: provider.name,
+                imageSet: provider.imageSet,
+                link: provider.link
+              });
+            }
+          });
+        }
+      });
+      
+      console.log('Providers found:', providers);
+      return providers;
     }
     
-    return data.results;
+    console.log('No streamingOptions found in MOTN API response');
+    return [];
+    
   } catch (error) {
-    console.error("Error al obtener proveedores de la película:", error);
-    throw error;
+    console.error("Error al obtener proveedores de streaming desde MOTN:", error);
+    return [];
   }
 };
 
+// Obtener elenco de la película
 fetchFromApi.movieCast = async (movieId) => {
   try {
     const data = await fetchFromApi(`movie/${movieId}/credits`);
@@ -74,10 +122,11 @@ fetchFromApi.movieCast = async (movieId) => {
   }
 };
 
+// Obtener imágenes de la película
 fetchFromApi.movieImages = async (movieId) => {
   try {
     const currentLanguage = getCurrentLanguage();
-    const languageCode = currentLanguage.split('-')[0]; // Get language code (e.g., 'es' from 'es-ES')
+    const languageCode = currentLanguage.split('-')[0];
     
     const data = await fetchFromApi(`movie/${movieId}/images`, {
       include_image_language: `${languageCode},en,null`
@@ -94,6 +143,7 @@ fetchFromApi.movieImages = async (movieId) => {
   }
 };
 
+// Obtener videos de la película
 fetchFromApi.movieVideos = async (movieId) => {
   try {
     const data = await fetchFromApi(`movie/${movieId}/videos`);
@@ -107,15 +157,20 @@ fetchFromApi.movieVideos = async (movieId) => {
     );
   } catch (error) {
     console.error("Error al obtener videos de la película:", error);
-    throw error;
+    throw error;  
   }
 };
 
-
+// Obtener recomendaciones de películas similares
 fetchFromApi.movieRecommendations = async (movieId, limit = 5) => {
+  try {
     const data = await fetchFromApi(`movie/${movieId}/recommendations`);
     if (data.success === false) throw new Error(data.status_message || "Error fetching recommendations");
     return data.results.slice(0, limit);
+  } catch (error) {
+    console.error("Error al obtener recomendaciones:", error);
+    throw error;
+  }
 };
 
 export { fetchFromApi };

@@ -250,9 +250,11 @@
 
   gap: 2rem;
 
-  display: flex;
+  display: grid;
 
-  place-content: flex-start;
+  grid-template-columns: repeat(4, 1fr);
+
+  place-content: center;
 
   align-items: center;
 

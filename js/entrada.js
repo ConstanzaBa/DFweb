@@ -1,4 +1,4 @@
-import { TMDB_imgBaseUrl, MAX_BACKDROPS_TO_SHOW, providerUrls } from "./utils/consts.js";
+import { TMDB_imgBaseUrl, MAX_BACKDROPS_TO_SHOW } from "./utils/consts.js";
 import { getCurrentLanguage, toggleLanguage, changeLanguage, updateTranslations } from "./utils/i18n.js";
 import { getMovieId, setMovieId } from "./movies.js";
 import { fetchFromApi } from "./api/components/FetchFromApi.js";
@@ -33,12 +33,7 @@ document.addEventListener("DOMContentLoaded", () => {
     .catch(error => console.error("Error loading movie details:", error));
 
   // --------------------- Cargar proveedores de streaming ---------------------
-  fetchFromApi.movieProviders(movieId)
-    .then(providers => {
-      const region = language.split("-")[1] || "US";
-      displayMovieProviders(providers, region);
-    })
-    .catch(error => console.error("Error loading providers:", error));
+  loadStreamingProviders(movieId);
 
   // --------------------- Language change event listener ---------------------
   document.addEventListener('languageChanged', (event) => {
@@ -56,17 +51,19 @@ document.addEventListener("DOMContentLoaded", () => {
       })
       .catch(error => console.error("Error reloading movie details:", error));
 
-    fetchFromApi.movieProviders(movieId)
-      .then(providers => {
-        const region = language.split("-")[1] || "US";
-        displayMovieProviders(providers, region);
-      })
-      .catch(error => console.error("Error reloading providers:", error));
+    // Reload streaming providers with new language
+    loadStreamingProviders(movieId);
   });
 
   // --------------------- Renderizar reseñas dinámicamente ---------------------
   renderReviews(movieId);
   setupReviewForm(movieId);
+
+  // --------------------- Test function for debugging ---------------------
+  window.testStreamingProviders = function(testMovieId = movieId) {
+    console.log(`Testing streaming providers for movie ID: ${testMovieId}`);
+    loadStreamingProviders(testMovieId);
+  };
 });
 
 // --------------------- FUNCIONES DE DISPLAY ---------------------
@@ -90,21 +87,6 @@ function displayMovieDetails(movie) {
   document.querySelector(".entrada__info__title").textContent = movie.title;
   document.querySelector(".entrada__info__heading").innerText = language.startsWith("es") ? "Sinopsis" : "Overview";
   document.querySelector(".entrada__info__texto").innerText = movie.overview;
-}
-
-function displayMovieProviders(providers, region) {
-  const streamingList = document.querySelector(".entrada__info__streaming__menu ul");
-  streamingList.innerHTML = "";
-
-  if (providers[region] && providers[region].flatrate) {
-    updateStreamingIcons(providers[region].flatrate);
-  } else {
-    const noProvidersMessage = document.createElement("li");
-    noProvidersMessage.innerText = language.startsWith("es") 
-      ? "No hay proveedores de streaming disponibles para esta región." 
-      : "No streaming providers available for this region.";
-    streamingList.appendChild(noProvidersMessage);
-  }
 }
 
 function displayMovieCast(castData) {
@@ -178,40 +160,77 @@ function displayMovieMultimedia(imageData, movieData) {
 
 // --------------------- FUNCIONES AUXILIARES ---------------------
 
+function loadStreamingProviders(movieId) {
+  console.log('loadStreamingProviders called with movieId:', movieId);
+  
+  fetchFromApi.getStreamingProviders(movieId)
+    .then(streamingProviders => {
+      console.log('Success! streamingProviders received:', streamingProviders);
+      
+      if (streamingProviders && streamingProviders.length > 0) {
+        console.log('Providers found, calling updateStreamingIcons');
+        updateStreamingIcons(streamingProviders);
+        console.log(`Loaded ${streamingProviders.length} streaming providers for movie ${movieId}`);
+      } else {
+        console.log('No providers found');
+        const streamingList = document.querySelector(".entrada__info__streaming__menu ul");
+        if (streamingList) {
+          streamingList.innerHTML = `<li><p>${language.startsWith("es") ? "No hay proveedores de streaming disponibles para esta región" : "No streaming providers available for this region"}</p></li>`;
+        }
+      }
+    })
+    .catch(error => {
+      console.error("Error loading streaming providers:", error);
+      // Show error message
+      const streamingList = document.querySelector(".entrada__info__streaming__menu ul");
+      if (streamingList) {
+        streamingList.innerHTML = `<li><p>${language.startsWith("es") ? "Error al cargar proveedores de streaming" : "Error loading streaming providers"}</p></li>`;
+      }
+    });
+}
+
 function updateStreamingIcons(streamingProviders) {
   const streamingList = document.querySelector(".entrada__info__streaming__menu ul");
+  
+  console.log('streamingList element:', streamingList);
+  console.log('streamingProviders:', streamingProviders);
+  
+  if (!streamingList) {
+    console.error('Streaming list element not found');
+    return;
+  }
+  
   streamingList.innerHTML = "";
 
-  const movieTitle = document.querySelector(".entrada__info__title")?.textContent || "";
-
-  streamingProviders.forEach(provider => {
+  streamingProviders.forEach((provider, index) => {
+    console.log(`Processing provider ${index}:`, provider);
+    
     const li = document.createElement("li");
-    const providerUrl = providerUrls[provider.provider_id];
+    
+    // Use the link from MOTN API directly
+    const link = document.createElement("a");
+    link.href = provider.link;
+    link.target = "_blank";
+    link.rel = "noopener noreferrer";
+    link.title = `Watch on ${provider.provider_name}`;
 
-    if (providerUrl) {
-      const link = document.createElement("a");
-      link.href = `${providerUrl}${encodeURIComponent(movieTitle)}`;
-      link.target = "_blank";
-      link.rel = "noopener noreferrer";
-      link.title = `Watch on ${provider.provider_name}`;
+    const img = document.createElement("img");
+    img.className = "streaming-icon";
+    img.src = provider.logo_path;
+    img.alt = provider.provider_name;
+    img.style.maxWidth = "50px";
+    img.style.height = "auto";
+    
+    console.log(`Image src for ${provider.provider_name}:`, img.src);
 
-      const img = document.createElement("img");
-      img.className = "streaming-icon";
-      img.src = `${TMDB_imgBaseUrl}${provider.logo_path}`;
-      img.alt = provider.provider_name;
-
-      link.appendChild(img);
-      li.appendChild(link);
-    } else {
-      const img = document.createElement("img");
-      img.className = "streaming-icon";
-      img.src = `${TMDB_imgBaseUrl}${provider.logo_path}`;
-      img.alt = provider.provider_name;
-      li.appendChild(img);
-    }
+    link.appendChild(img);
+    li.appendChild(link);
 
     streamingList.appendChild(li);
+    console.log(`Added ${provider.provider_name} to streaming list`);
   });
+  
+  console.log('Final streamingList HTML:', streamingList.innerHTML);
 }
 
 function createListItem(src, text, index) {
