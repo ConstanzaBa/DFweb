@@ -1,86 +1,40 @@
 <!-- header.html -->
 
 <header class="header" id="header">
-
   <div class="barra-header">
-
     <a class="logo" href="index.html">
-
       <h1 class="logo__nombre no-margin centrar-texto" data-translate="logo">
-
         Dragon<span class="logo__bold">Films</span>
-
       </h1>
-
     </a>
 
-
-
     <div class="navegacion">
-
-      <!-- Botón para cambiar idioma -->
-
       <section class="language-toggle">
-
         <button id="languageToggle">
-
           <span id="currentLanguage">ES</span>
-
         </button>
-
       </section>
 
-
-
-      <!-- Sección usuario -->
-
       <section class="navegacion__enlace" id="userSection">
-
-        <!-- Icono por defecto (usuario no logueado) -->
-
         <a href="login.html" id="loginIcon"><i class="fa-solid fa-user"></i></a>
-
-
-
-        <!-- Menú desplegable de usuario -->
-
         <div class="template" id="userMenu" style="display: none;">
-
           <div tabindex="0" class="popup button" id="userDropdown">
-
             <div class="popup-header">
-
               <p id="usernameDisplay">Usuario</p>
-
               <img id="avatarImg" alt="Avatar del usuario" class="avatar" />
-
             </div>
 
             <div class="popup-main" id="dropdownContent">
-
               <ul class="list-box">
-
                 <li class="button item"><a href="user.html" data-translate="profile">Perfil</a></li>
-
                 <li class="button item"><a href="config.html" data-translate="settings">Configuración</a></li>
-
                 <hr />
-
                 <li class="button item quit" id="logoutBtn" data-translate="logout">Cerrar sesión</li>
-
               </ul>
-
             </div>
-
           </div>
-
         </div>
-
       </section>
-
     </div>
-
   </div>
-
 </header>
-

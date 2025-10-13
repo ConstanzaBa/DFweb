@@ -53,7 +53,6 @@ fetchFromApi.streamingProviders = async (tmdbId) => {
   try {
     // Construir URL con lenguaje correcto
     const endpoint = `${MOTN_apiUrl}/shows/movie/${tmdbId}?output_language=${languageCode}`;
-    console.log(`Trying MOTN endpoint: ${endpoint}`);
     
     const response = await fetch(endpoint, {
       method: 'GET',
@@ -69,9 +68,6 @@ fetchFromApi.streamingProviders = async (tmdbId) => {
     }
 
     const data = await response.json();
-    console.log('MOTN API response:', data);
-    console.log('Current language:', currentLanguage);
-    console.log('Language code:', languageCode);
     
     if (data.streamingOptions) {
       const providers = [];
@@ -107,8 +103,6 @@ fetchFromApi.streamingProviders = async (tmdbId) => {
       } catch (error) {
         console.error('Error parsing streamingOptions:', error);
       }
-      
-      console.log('Providers found:', providers);
       return providers;
     }
     

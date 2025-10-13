@@ -160,17 +160,11 @@ function displayMovieMultimedia(imageData, movieData) {
 
 // --------------------- FUNCIONES AUXILIARES ---------------------
 
-function loadStreamingProviders(movieId) {
-  console.log('loadStreamingProviders called with movieId:', movieId);
-  
+function loadStreamingProviders(movieId) {  
   fetchFromApi.streamingProviders(movieId)
-    .then(streamingProviders => {
-      console.log('Success! streamingProviders received:', streamingProviders);
-      
+    .then(streamingProviders => {      
       if (streamingProviders && streamingProviders.length > 0) {
-        console.log('Providers found, calling updateStreamingIcons');
         updateStreamingIcons(streamingProviders);
-        console.log(`Loaded ${streamingProviders.length} streaming providers for movie ${movieId}`);
       } else {
         console.log('No providers found');
         const streamingList = document.querySelector(".entrada__info__streaming__menu ul");
@@ -181,7 +175,6 @@ function loadStreamingProviders(movieId) {
     })
     .catch(error => {
       console.error("Error loading streaming providers:", error);
-      // Show error message
       const streamingList = document.querySelector(".entrada__info__streaming__menu ul");
       if (streamingList) {
         streamingList.innerHTML = `<li><p>${language.startsWith("es") ? "Error al cargar proveedores de streaming" : "Error loading streaming providers"}</p></li>`;
@@ -192,9 +185,6 @@ function loadStreamingProviders(movieId) {
 function updateStreamingIcons(streamingProviders) {
   const streamingList = document.querySelector(".entrada__info__streaming__menu ul");
   
-  console.log('streamingList element:', streamingList);
-  console.log('streamingProviders:', streamingProviders);
-  
   if (!streamingList) {
     console.error('Streaming list element not found');
     return;
@@ -203,11 +193,9 @@ function updateStreamingIcons(streamingProviders) {
   streamingList.innerHTML = "";
 
   streamingProviders.forEach((provider, index) => {
-    console.log(`Processing provider ${index}:`, provider);
     
     const li = document.createElement("li");
     
-    // Use the link from MOTN API directly
     const link = document.createElement("a");
     link.href = provider.link;
     link.target = "_blank";
@@ -223,16 +211,11 @@ function updateStreamingIcons(streamingProviders) {
     img.style.maxWidth = "50px";
     img.style.height = "50px";
     
-    console.log(`Image src for ${provider.name}:`, img.src);
-
     link.appendChild(img);
     li.appendChild(link);
 
     streamingList.appendChild(li);
-    console.log(`Added ${provider.name} to streaming list`);
   });
-  
-  console.log('Final streamingList HTML:', streamingList.innerHTML);
 }
 
 function createListItem(src, text, index) {
