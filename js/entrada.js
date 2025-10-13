@@ -216,6 +216,8 @@ function updateStreamingIcons(streamingProviders) {
 
     const img = document.createElement("img");
     img.className = "streaming-icon";
+    img.style.backgroundColor = 'black';
+    img.style.alignContent = 'center';
     img.src = provider.image;
     img.alt = provider.name;
     img.style.maxWidth = "50px";
