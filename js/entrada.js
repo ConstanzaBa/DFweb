@@ -163,7 +163,7 @@ function displayMovieMultimedia(imageData, movieData) {
 function loadStreamingProviders(movieId) {
   console.log('loadStreamingProviders called with movieId:', movieId);
   
-  fetchFromApi.getStreamingProviders(movieId)
+  fetchFromApi.streamingProviders(movieId)
     .then(streamingProviders => {
       console.log('Success! streamingProviders received:', streamingProviders);
       
@@ -212,22 +212,22 @@ function updateStreamingIcons(streamingProviders) {
     link.href = provider.link;
     link.target = "_blank";
     link.rel = "noopener noreferrer";
-    link.title = `Watch on ${provider.provider_name}`;
+    link.title = `Watch on ${provider.name}`;
 
     const img = document.createElement("img");
     img.className = "streaming-icon";
-    img.src = provider.logo_path;
-    img.alt = provider.provider_name;
+    img.src = provider.image;
+    img.alt = provider.name;
     img.style.maxWidth = "50px";
-    img.style.height = "auto";
+    img.style.height = "50px";
     
-    console.log(`Image src for ${provider.provider_name}:`, img.src);
+    console.log(`Image src for ${provider.name}:`, img.src);
 
     link.appendChild(img);
     li.appendChild(link);
 
     streamingList.appendChild(li);
-    console.log(`Added ${provider.provider_name} to streaming list`);
+    console.log(`Added ${provider.name} to streaming list`);
   });
   
   console.log('Final streamingList HTML:', streamingList.innerHTML);

@@ -46,7 +46,7 @@ fetchFromApi.movieDetails = async (movieId) => {
 };
 
 // Obtener proveedores de streaming desde MOTN
-fetchFromApi.getStreamingProviders = async (tmdbId) => {
+fetchFromApi.streamingProviders = async (tmdbId) => {
   const currentLanguage = getCurrentLanguage();
   const languageCode = currentLanguage.split('-')[0];
   
@@ -76,22 +76,37 @@ fetchFromApi.getStreamingProviders = async (tmdbId) => {
     if (data.streamingOptions) {
       const providers = [];
       
-      Object.values(data.streamingOptions).forEach(regionArray => {
-        // streamingOptions es un array de proveedores por región
-        if (Array.isArray(regionArray)) {
-          regionArray.forEach(provider => {
-            // Avoid duplicates
-            if (!providers.find(p => p.provider_id === provider.provider_id)) {
-              providers.push({
-                id: provider.id,
-                name: provider.name,
-                imageSet: provider.imageSet,
-                link: provider.link
-              });
-            }
-          });
-        }
-      });
+      try {
+        Object.values(data.streamingOptions).forEach(regionArray => {
+          // streamingOptions es un array de proveedores por región
+          if (Array.isArray(regionArray)) {
+            regionArray.forEach(item => {
+              const provider = item?.service;
+              
+              if (provider && provider.id) {
+                if (!providers.find(p => p.id === provider.id)) {
+                  let image = '';
+                  if (provider.imageSet) {
+                    image = provider.imageSet.darkThemeImage || 
+                            provider.imageSet.lightThemeImage || 
+                            provider.imageSet.whiteImage ||
+                            Object.values(provider.imageSet).find(val => typeof val === 'string') || '';
+                  }
+
+                  providers.push({
+                    id: provider.id,
+                    name: provider.name || '',
+                    image: image || '',
+                    link: item.link || ''
+                  });
+                }
+              }
+            });
+          }
+        });
+      } catch (error) {
+        console.error('Error parsing streamingOptions:', error);
+      }
       
       console.log('Providers found:', providers);
       return providers;
