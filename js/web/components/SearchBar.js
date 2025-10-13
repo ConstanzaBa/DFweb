@@ -1,6 +1,21 @@
 import { fetchFromApi } from "../../api/components/FetchFromApi.js";
 import { getCurrentLanguage } from "../../utils/i18n.js";
-import { TMDB_imgBaseUrl, getBestPosterForLanguage } from "../../utils/consts.js";
+import { TMDB_imgBaseUrl } from "../../utils/consts.js";
+
+// ====================== FUNCIONES CORREGIDAS ======================
+
+// TMDB solo usa códigos de 2 letras, no 'es-ES' o 'en-US'
+function getBestPosterForLanguage(images, lang) {
+    if (!images?.posters?.length) return null;
+    const langCode = lang.split('-')[0]; // 'es-ES' => 'es'
+    return images.posters.find(p => p.iso_639_1 === langCode) || images.posters[0];
+}
+  
+function getBestBackdropForLanguage(images, lang) {
+    if (!images?.backdrops?.length) return null;
+    const langCode = lang.split('-')[0];
+    return images.backdrops.find(b => b.iso_639_1 === langCode) || images.backdrops[0];
+}
 
 function setupSearchHandlers() {
     const searchForm = document.getElementById('busqueda__barra');

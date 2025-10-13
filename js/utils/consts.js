@@ -326,22 +326,6 @@ const translations = {
   },
 };
 
-
-// ====================== FUNCIONES CORREGIDAS ======================
-
-// TMDB solo usa códigos de 2 letras, no 'es-ES' o 'en-US'
-function getBestPosterForLanguage(images, lang) {
-  if (!images?.posters?.length) return null;
-  const langCode = lang.split('-')[0]; // 'es-ES' => 'es'
-  return images.posters.find(p => p.iso_639_1 === langCode) || images.posters[0];
-}
-
-function getBestBackdropForLanguage(images, lang) {
-  if (!images?.backdrops?.length) return null;
-  const langCode = lang.split('-')[0];
-  return images.backdrops.find(b => b.iso_639_1 === langCode) || images.backdrops[0];
-}
-
 if (!TMDB_apiKey) {
   console.error("API key is missing. Please check your configuration.");
 }
