@@ -63,9 +63,15 @@ function setupSearchHandlers() {
 
 async function handleSearch(query) {
     try {
-        const data = await fetchFromApi('search/movie', { query });
-        const moviesWithCast = await Promise.all(
-            data.results.slice(0, 5).map(async (movie) => {
+        // Buscar tanto películas como personas (actores) en paralelo
+        const [moviesData, peopleData] = await Promise.all([
+            fetchFromApi('search/movie', { query }),
+            fetchFromApi('search/person', { query })
+        ]);
+
+        // Procesar películas directas
+        const directMovies = await Promise.all(
+            moviesData.results.slice(0, 5).map(async (movie) => {
                 try {
                     const credits = await fetchFromApi(`movie/${movie.id}/credits`);
                     const cast = credits.cast.slice(0, 3).map(actor => actor.name).join(', ');
@@ -76,7 +82,57 @@ async function handleSearch(query) {
                 }
             })
         );
-        displaySearchResults(moviesWithCast);
+
+        // Buscar películas de actores encontrados
+        let actorMovies = [];
+        const actors = peopleData.results.filter(person => person.known_for_department === 'Acting').slice(0, 2);
+        
+        if (actors.length > 0) {
+            const actorMoviesPromises = actors.map(async (actor) => {
+                try {
+                    const credits = await fetchFromApi(`person/${actor.id}/movie_credits`);
+                    // Ordenar por popularidad y tomar las 5 más relevantes
+                    return credits.cast
+                        .sort((a, b) => (b.popularity || 0) - (a.popularity || 0))
+                        .slice(0, 5)
+                        .map(movie => ({
+                            ...movie,
+                            foundViaActor: actor.name // Marcar que fue encontrada por actor
+                        }));
+                } catch (error) {
+                    console.error(`Error fetching movies for actor ${actor.id}:`, error);
+                    return [];
+                }
+            });
+
+            const actorMoviesArrays = await Promise.all(actorMoviesPromises);
+            actorMovies = actorMoviesArrays.flat();
+        }
+
+        // Combinar y eliminar duplicados (priorizar películas directas)
+        const directMovieIds = new Set(directMovies.map(m => m.id));
+        const uniqueActorMovies = actorMovies.filter(m => !directMovieIds.has(m.id));
+
+        // Combinar: primero películas directas, luego películas de actores (máximo 5 total)
+        let allMovies = [...directMovies, ...uniqueActorMovies].slice(0, 5);
+
+        // Agregar información de cast a las películas de actores
+        allMovies = await Promise.all(
+            allMovies.map(async (movie) => {
+                if (movie.foundViaActor && !movie.cast) {
+                    try {
+                        const credits = await fetchFromApi(`movie/${movie.id}/credits`);
+                        const cast = credits.cast.slice(0, 3).map(actor => actor.name).join(', ');
+                        return { ...movie, cast };
+                    } catch (error) {
+                        return { ...movie, cast: movie.foundViaActor };
+                    }
+                }
+                return movie;
+            })
+        );
+
+        displaySearchResults(allMovies);
     } catch (error) {
         console.error('Error performing search:', error);
         showSearchError();
@@ -101,6 +157,11 @@ function displaySearchResults(results) {
                 posterUrl = `${TMDB_imgBaseUrl}${movie.poster_path}`;
             }
             
+            // Mostrar indicador si la película fue encontrada por actor
+            const actorBadge = movie.foundViaActor 
+                ? `<span class="found-via-actor">Vía: ${movie.foundViaActor}</span>` 
+                : '';
+            
             return `
                 <a href="entrada.html?id=${movie.id}" class="search-result-item">
                     <div class="search-result-content">
@@ -110,6 +171,7 @@ function displaySearchResults(results) {
                         <div class="search-result-info">
                             <h3>${movie.title}</h3>
                             <p class="movie-year">${movie.release_date?.split('-')[0] || 'N/A'}</p>
+                            ${actorBadge}
                             <p class="movie-cast">${movie.cast || 'Cast information unavailable'}</p>
                         </div>
                     </div>
@@ -144,7 +206,6 @@ function displaySearchResults(results) {
     // Añadir resultados al DOM
     searchContainer.appendChild(resultsContainer);
 }
-
 
 function clearSearchResults() {
     const existingResults = document.querySelector('.search-results-dropdown');

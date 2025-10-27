@@ -149,12 +149,26 @@
 }
 
 .movie-cast {
-    color: var(--gris);
+    color: var(--gris2);
     font-size: 1.4rem;
     margin: 0;
     line-height: 1.4;
     font-family: var(--fuenteparrafos);
     font-style: italic;
+}
+
+/* Badge para indicar que fue encontrada por actor */
+.found-via-actor {
+    display: inline-block;
+    font-size: 1.2rem;
+    color: var(--primario);
+    background: rgba(202, 79, 21, 0.15);
+    padding: 0.3rem 0.8rem;
+    border-radius: 1rem;
+    margin: 0.2rem 0;
+    font-weight: 500;
+    font-family: var(--fuenteparrafos);
+    border: 1px solid rgba(202, 79, 21, 0.3);
 }
 
 .no-results, .search-error {
