@@ -1,6 +1,4 @@
 
-/* ===== FOOTER STYLES ===== */
-
 .footer {
   background-color: rgb(0, 0, 0);
   color: white;
@@ -14,14 +12,15 @@
   padding: 0 2rem;
 }
 
-.footer .barra-footer {
+.barra-footer {
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
-  padding: 2rem 0;
+  padding: 2rem 0.5rem;
+  gap: 2rem;
 }
 
-/* Footer logo styles */
 .footer .logo {
   color: white;
   text-decoration: none;
@@ -30,6 +29,12 @@
 
 .footer .logo:hover {
   color: var(--primario);
+}
+
+.logo-tmdb {
+    display: flex;
+    width: 10rem;
+    padding: 2rem;
 }
 
 .footer .logo__nombre {
@@ -46,22 +51,21 @@
   color: var(--primario);
 }
 
-/* Footer text styles */
+
+
 .footer_texto {
   display: flex;
+  flex-direction: column;
   justify-content: center;
-  padding: 2rem 0 0 0;
-  margin: 0;
 }
 
 .footer_texto p {
   color: rgba(255, 255, 255, 0.4);
   font-size: 1.4rem;
-  margin: 0;
+  margin: 10px;
   text-align: center;
 }
 
-/* Utility classes for footer */
 .footer .text-white {
   color: white;
 }
@@ -74,21 +78,20 @@
   font-weight: bold;
 }
 
-/* ===== RESPONSIVE FOOTER ===== */
 
 @media (max-width: 768px) {
   .footer .contenedor {
     padding: 0 1rem;
   }
-  
+
   .footer .barra-footer {
     padding: 1.5rem 0;
   }
-  
+
   .footer .logo__nombre {
     font-size: 2rem;
   }
-  
+
   .footer_texto p {
     font-size: 1.2rem;
   }
@@ -98,19 +101,19 @@
   .footer {
     padding: 1.5rem 0;
   }
-  
+
   .footer .barra-footer {
-    padding: 1rem 0;
+    padding: 0.5rem 0;
   }
-  
+
   .footer .logo__nombre {
     font-size: 1.8rem;
   }
-  
+
   .footer_texto {
-    padding: 1.5rem 0 0 0;
+    padding: 1.8rem 0 0 0;
   }
-  
+
   .footer_texto p {
     font-size: 1.1rem;
     padding: 0 1rem;

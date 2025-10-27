@@ -265,7 +265,6 @@
 @media (max-width: 768px) {
   .entrada__info__streaming__menu ul {
     display: flex;
-    justify-content: flex-start;
   }
 }
 

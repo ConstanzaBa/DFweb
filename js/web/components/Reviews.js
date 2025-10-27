@@ -7,30 +7,25 @@ import { fetchConToken } from '../../utils/AuthFetch.js';
 import { showError } from "../user/ShowError.js";
 import { translate, getCurrentLanguage } from '../../utils/i18n.js';
 
-// ===================== CACHE DE TRADUCCIONES =====================
-const translationCache = new Map();
+// ===================== MEMORIA DE RESEÑAS =====================
+let reseñasCache = [];
 
-// ===================== FUNCIONES AUXILIARES =====================
-async function traducirTexto(texto, idiomaDestino) {
+// ===================== FUNCIÓN DE TRADUCCIÓN =====================
+async function traducirTexto(texto, idiomaDestino = "en") {
     if (!texto || texto.trim() === "") return texto;
-
-    const cacheKey = `${texto}|${idiomaDestino}`;
-    if (translationCache.has(cacheKey)) return translationCache.get(cacheKey);
-
     try {
         const response = await fetch(
-            `https://api.mymemory.translated.net/get?q=${encodeURIComponent(texto)}&langpair=${idiomaDestino === 'en' ? 'es|en' : 'en|es'}`
+            `https://api.mymemory.translated.net/get?q=${encodeURIComponent(texto)}&langpair=es|${idiomaDestino}`
         );
         const data = await response.json();
-        const translatedText = data?.responseData?.translatedText || texto;
-        translationCache.set(cacheKey, translatedText);
-        return translatedText;
+        return data?.responseData?.translatedText || texto;
     } catch (err) {
         console.warn("Error al traducir texto:", err);
         return texto;
     }
 }
 
+// ===================== OBTENER DATOS DE USUARIO =====================
 async function obtenerUserData(usuario_id) {
     try {
         const resp = await fetchConToken(`${API_BASE_URL}/Usuarios/GetUserPublic.php?usuario_id=${usuario_id}`);
@@ -49,30 +44,22 @@ async function obtenerUserData(usuario_id) {
     }
 }
 
-// ===================== CREAR HTML DE RESEÑAS =====================
-async function crearComentariosFragment(reviews, lang) {
-    const fragment = document.createDocumentFragment();
-    const usersData = await Promise.all(reviews.map(r => obtenerUserData(r.usuario_id)));
+// ===================== CREAR HTML DE CADA COMENTARIO =====================
+async function crearComentarioHTML(review, lang) {
+    const userData = await obtenerUserData(review.usuario_id);
 
-    await Promise.all(reviews.map(async (review, index) => {
-        let titulo = review.titulo || "";
-        let texto = review.review || "";
+    let titulo = review.titulo || "";
+    let texto = review.review || "";
 
-        // Solo traducir si el idioma actual es diferente del original
-        if (lang.startsWith('en') && !review.language?.startsWith('en')) {
-            titulo = await traducirTexto(titulo, 'en');
-            texto = await traducirTexto(texto, 'en');
-        } else if (lang.startsWith('es') && !review.language?.startsWith('es')) {
-            titulo = await traducirTexto(titulo, 'es');
-            texto = await traducirTexto(texto, 'es');
-        }
+    if (lang.startsWith('en')) {
+        titulo = await traducirTexto(titulo, 'en');
+        texto = await traducirTexto(texto, 'en');
+    }
 
-        const userData = usersData[index];
-        const score = parseInt(review.puntuacion, 10);
+    const score = parseInt(review.puntuacion, 10);
 
-        const div = document.createElement('div');
-        div.className = 'comment';
-        div.innerHTML = `
+    return `
+        <div class="comment">
             <div class="comment-header">
                 <img src="${userData.avatarUrl}" alt="${userData.usuario}" class="comment-avatar" />
                 <strong>${userData.usuario}</strong>
@@ -82,15 +69,12 @@ async function crearComentariosFragment(reviews, lang) {
             </div>
             <div class="comment-title">${titulo}</div>
             <p class="comment-text">${texto}</p>
-        `;
-        fragment.appendChild(div);
-    }));
-
-    return fragment;
+        </div>
+    `;
 }
 
 // ===================== RENDER RESEÑAS =====================
-export async function renderReviews(pelicula_id) {
+export async function renderReviews(pelicula_id, forceReload = true) {
     const commentsContainer = document.getElementById("comments-container");
     const averageNumberSpan = document.querySelector(".average-number");
     const averageStarsDiv = document.querySelector(".average-stars");
@@ -101,7 +85,13 @@ export async function renderReviews(pelicula_id) {
     commentsContainer.innerHTML = `<p>${translate('loadingReviews')}</p>`;
 
     try {
-        const data = await getReviewsByPelicula(pelicula_id);
+        let data;
+        if (forceReload) {
+            data = await getReviewsByPelicula(pelicula_id);
+            if (data.success) reseñasCache = data.reviews;
+        } else {
+            data = { success: true, reviews: reseñasCache };
+        }
 
         if (!data.success || !data.reviews.length) {
             commentsContainer.innerHTML = `<p>${translate('noReviewsYet')}</p>`;
@@ -116,17 +106,16 @@ export async function renderReviews(pelicula_id) {
         }
 
         commentsContainer.innerHTML = "";
-        const fragment = await crearComentariosFragment(data.reviews, lang);
-        commentsContainer.appendChild(fragment);
-
-        // Estadísticas
         let sumRatings = 0;
         const counts = { 5: 0, 4: 0, 3: 0, 2: 0, 1: 0 };
-        data.reviews.forEach(r => {
-            const score = parseInt(r.puntuacion, 10);
+
+        for (const review of data.reviews) {
+            const html = await crearComentarioHTML(review, lang);
+            commentsContainer.insertAdjacentHTML('beforeend', html);
+            const score = parseInt(review.puntuacion, 10);
             sumRatings += score;
             counts[score]++;
-        });
+        }
 
         const avgRating = (sumRatings / data.reviews.length).toFixed(1);
         if (averageNumberSpan) averageNumberSpan.textContent = avgRating;
@@ -147,6 +136,7 @@ export async function renderReviews(pelicula_id) {
         });
 
     } catch (err) {
+        console.error(err);
         showError(translate('reviewLoadError'), 'error');
     }
 }
@@ -161,7 +151,11 @@ export function setupReviewForm(pelicula_id) {
         const lang = getCurrentLanguage();
 
         if (!token) {
-            formWrapper.innerHTML = `<p class="login-warning">${translate('loginMessage')}</p>`;
+            formWrapper.innerHTML = `
+                <p class="login-warning">
+                    ${lang === 'en-US' ? `You must <a href="./login.html">${translate('login')}</a> to write a review`
+                        : `Debes <a href="./login.html">${translate('login')}</a> para dejar una reseña`}
+                </p>`;
             return;
         }
 
@@ -173,25 +167,32 @@ export function setupReviewForm(pelicula_id) {
             const reviewData = await getReviewByUserAndMovie(pelicula_id);
             if (reviewData.success && reviewData.review) {
                 userReview = reviewData.review;
+
                 if (!isEditMode) {
-                    formWrapper.innerHTML = `<p class="login-warning">${translate('alreadyReviewed')}</p>`;
+                    formWrapper.innerHTML = `
+                        <p class="login-warning">
+                            ${translate('alreadyReviewed')}
+                        </p>`;
                     return;
                 }
             }
-        } catch {
+        } catch (err) {
+            console.error(err);
             showError(translate('reviewCheckError'), 'error');
             return;
         }
 
+        // ===================== CREAR FORMULARIO =====================
         formWrapper.innerHTML = `
             <div class="input-wrapper">
-                <input type="text" id="review-title" placeholder="${translate('reviewTitle')}" value="${userReview?.titulo || ''}" />
-                <textarea id="review-text" placeholder="${translate('reviewText')}">${userReview?.review || ''}</textarea>
+                <input type="text" id="review-title" placeholder="${translate('reviewTitle') || 'Título'}" value="${userReview?.titulo || ''}" />
+                <textarea id="review-text" placeholder="${translate('reviewText') || 'Escribe tu reseña...'}">${userReview?.review || ''}</textarea>
                 <div class="rating-form">
-                    ${[5,4,3,2,1].map(n => `
-                        <input type="radio" name="rating" id="star${n}" value="${n}" ${userReview?.puntuacion === n ? 'checked' : ''}>
-                        <label for="star${n}"></label>
-                    `).join('')}
+                    <input type="radio" name="rating" id="star5" value="5" ${userReview?.puntuacion === 5 ? 'checked' : ''}><label for="star5"></label>
+                    <input type="radio" name="rating" id="star4" value="4" ${userReview?.puntuacion === 4 ? 'checked' : ''}><label for="star4"></label>
+                    <input type="radio" name="rating" id="star3" value="3" ${userReview?.puntuacion === 3 ? 'checked' : ''}><label for="star3"></label>
+                    <input type="radio" name="rating" id="star2" value="2" ${userReview?.puntuacion === 2 ? 'checked' : ''}><label for="star2"></label>
+                    <input type="radio" name="rating" id="star1" value="1" ${userReview?.puntuacion === 1 ? 'checked' : ''}><label for="star1"></label>
                 </div>
                 <button class="send" id="send-review">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="white" viewBox="0 0 24 24" width="24" height="24">
@@ -215,11 +216,18 @@ export function setupReviewForm(pelicula_id) {
             }
 
             try {
+                let tituloTrad = titulo;
+                let reviewTrad = review;
+                if (lang.startsWith('en')) {
+                    tituloTrad = await traducirTexto(titulo, 'en');
+                    reviewTrad = await traducirTexto(review, 'en');
+                }
+
                 let result;
                 if (userReview) {
-                    result = await updateReview(pelicula_id, { titulo, review, puntuacion });
+                    result = await updateReview(pelicula_id, { titulo: tituloTrad, review: reviewTrad, puntuacion });
                 } else {
-                    result = await addReview(pelicula_id, review, puntuacion, titulo);
+                    result = await addReview(pelicula_id, reviewTrad, puntuacion, tituloTrad);
                 }
 
                 if (result.success) {
@@ -227,15 +235,18 @@ export function setupReviewForm(pelicula_id) {
                     await renderReviews(pelicula_id);
 
                     if (userReview) {
+                        // Redirige a la página de entrada después de actualizar
                         window.location.href = `entrada.html?id=${pelicula_id}`;
                         return;
                     }
 
+                    // Para nueva reseña: reemplaza formulario con mensaje
                     formWrapper.innerHTML = `<p class="login-warning">${translate('alreadyReviewed')}</p>`;
                 } else {
                     showError(result.error || result.message || translate("reviewProcessError"), "error");
                 }
             } catch (err) {
+                console.error(err);
                 showError(`${translate("reviewUnexpectedError")} ${err.message}`, "error");
             }
         };
@@ -243,5 +254,7 @@ export function setupReviewForm(pelicula_id) {
 
     window.onload = actualizarFormulario;
     document.addEventListener('languageChanged', actualizarFormulario);
-    document.addEventListener('languageChanged', async () => await renderReviews(pelicula_id));
+    document.addEventListener('languageChanged', async () => await renderReviews(pelicula_id, false));
 }
+
+
